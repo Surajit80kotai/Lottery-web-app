@@ -28,6 +28,7 @@ export const fetchLogin = createAsyncThunk(
             window.localStorage.setItem("user", JSON.stringify(result?.data?.user_details))
             navigate('/')
         } catch (err) {
+            // console.log(rejectWithValue(err.response.data));
             return rejectWithValue(err.response.data)
         }
 
@@ -70,6 +71,8 @@ export const AuthSlice = createSlice({
         builder.addCase(fetchSignUp.rejected, (state, { payload }) => {
             state.msg = "Failed"
             state.signupErr.push(payload)
+            // console.log("from slice",payload);
+            // console.log(  (payload?.first_name)? "First name required!" : null);
         })
 
 

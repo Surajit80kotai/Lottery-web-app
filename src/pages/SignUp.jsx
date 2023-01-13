@@ -123,7 +123,10 @@ const SignUp = () => {
                                                         value={formValues.first_name}
                                                         onChange={handleChange}
                                                         aria-describedby="emailHelp" />
-                                                    <p className='text-danger mt-2 fs-4'>{newSignupErr?.first_name?.message}</p>
+                                                    {/* <p>{v1 || v2}</p> */}
+                                                    <p className='text-danger mt-2 fs-4'>
+                                                        {(newSignupErr?.first_name) ? "First Name is required" : null}
+                                                    </p>
 
                                                 </div>
                                             </div>
@@ -140,7 +143,9 @@ const SignUp = () => {
                                                         value={formValues.last_name}
                                                         onChange={handleChange}
                                                         aria-describedby="emailHelp" />
-                                                    <p className='text-danger mt-2 fs-4'>{newSignupErr?.last_name?.message}</p> 
+                                                    <p className='text-danger mt-2 fs-4'>
+                                                        {(newSignupErr?.last_name) ? "Last Name is required" : null}
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>
@@ -157,7 +162,9 @@ const SignUp = () => {
                                             value={formValues.email}
                                             onChange={handleChange}
                                             aria-describedby="emailHelp" />
-                                        <p className='text-danger mt-2 fs-4'>{newSignupErr?.email?.message}</p>
+                                        <p className='text-danger mt-2 fs-4'>
+                                            {(newSignupErr?.email) ? "Email is required" : null}
+                                        </p>
 
                                     </div>
 
@@ -173,7 +180,7 @@ const SignUp = () => {
                                             onChange={handleChange}
                                             maxLength={10}
                                             aria-describedby="emailHelp" />
-                                        <p className='text-danger mt-2 fs-4'>{newSignupErr?.phone?.message}</p>
+                                        <p className='text-danger mt-2 fs-4'>{(newSignupErr?.phone) ? "Phone Number is required" : null}</p>
 
                                     </div>
 
@@ -188,7 +195,7 @@ const SignUp = () => {
                                             value={formValues.dob}
                                             onChange={handleChange}
                                             className="form-control form_input" />
-                                        <p className='text-danger mt-2 fs-4'>{newSignupErr?.dob?.message}</p>
+                                        <p className='text-danger mt-2 fs-4'>{(newSignupErr?.dob) ? "Date of birth is required" : null}</p>
 
                                     </div>
 
@@ -212,7 +219,7 @@ const SignUp = () => {
                                                 })
                                             }
                                         </select>
-                                        <p className='text-danger mt-2 fs-4'>{newSignupErr?.country?.message}</p>
+                                        <p className='text-danger mt-2 fs-4'>{(newSignupErr?.country) ? "Country is required" : null}</p>
 
                                     </div>
 
@@ -235,7 +242,7 @@ const SignUp = () => {
                                                 })
                                             }
                                         </select>
-                                        <p className='text-danger mt-2 fs-4'>{newSignupErr?.state?.message}</p>
+                                        <p className='text-danger mt-2 fs-4'>{(newSignupErr?.state)? "State is required" : null}</p>
                                     </div>
 
                                     {/* Password */}
