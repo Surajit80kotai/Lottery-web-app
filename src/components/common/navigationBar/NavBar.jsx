@@ -1,0 +1,198 @@
+import React, { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { Link, useNavigate } from 'react-router-dom'
+import { doLogOut } from '../../../services/slice/AuthSlice'
+
+const NavBar = () => {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const token = JSON.parse(window.localStorage.getItem("token"))
+  const user = JSON.parse(window.localStorage.getItem("user"))
+
+  const logOut = () => {
+    dispatch(doLogOut())
+    navigate('/')
+    // window.localStorage.removeItem("accessToken")
+    // window.localStorage.removeItem("displayName")
+    // const socialLogOut = async () => {
+    //     const result = await signOut(auth)
+    //     return result
+    // }
+    // socialLogOut()
+  }
+
+  useEffect(() => {
+    // console.log("Render");
+  }, [token])
+
+  return (
+    <>
+      <header>
+
+        {/* Bottom Navbar Area */}
+        <div className="navarea">
+          <nav className="main_nav">
+            <div className="left_nav">
+              <div className="companyLogo">
+                <img src="/assets/img/logo.png" alt="logo" className="img-fluid" />
+              </div>
+              <ul className="menu_list">
+                <li><Link to="" className="menu_links">Home</Link></li>
+                <li><Link to="" className="menu_links">About Us</Link></li>
+                <li><Link to="" className="menu_links">Product</Link></li>
+                <li><Link to="" className="menu_links">How To play</Link></li>
+                <li><Link to="" className="menu_links">Charities</Link></li>
+                <li><Link to="" className="menu_links">Contact</Link></li>
+              </ul>
+
+            </div>
+            <div className="right_nav">
+              {/* Currency */}
+              <div className="crncy_menu">
+                <input type="checkbox" id="drop-3" hidden />
+                <label className="dropHeader dropHeader-3 droplabel" htmlFor="drop-3"><span><img src="assets/img/currency.png" alt="" className="" /></span> Currency
+                  <i className="fas fa-chevron-down fa-sm"></i></label>
+                <div className="list list-3">
+                  <div className="item">
+                    <Link to="#">
+                      FCFA
+                    </Link>
+                  </div>
+                  <div className="item">
+                    <Link to="#">
+                      XAF
+                    </Link>
+                  </div>
+                  <div className="item">
+                    <Link to="#">
+                      XOF
+                    </Link>
+                  </div>
+                  <div className="item">
+                    <Link to="#">
+                      USD
+                    </Link>
+                  </div>
+                  <div className="item">
+                    <Link to="#">
+                      Euro
+                    </Link>
+                  </div>
+                  <div className="item">
+                    <Link to="#">
+                      Naira
+                    </Link>
+                  </div>
+                </div>
+              </div>
+
+              {/* Signup */}
+              {
+                !token ?
+                  <div className="sign">
+                    <Link to="/signup"><i className="bi bi-person-add"></i> SignUp</Link>
+                  </div>
+                  : null
+                // || !accessToken ?
+                //   <div className="sign">
+                //     <Link to="/signup"><i className="bi bi-person-add"></i> SignUp</Link>
+                //   </div>
+                //   : null
+              }
+              {/* Login */}
+              {
+                !token ?
+                  <div className="sign">
+                    <Link to="/login"><i className="bi bi-box-arrow-in-right"></i> Login</Link>
+                  </div>
+                  : null
+                // || !accessToken ?
+                //   <div className="sign">
+                //     <Link to="/login"><i className="bi bi-box-arrow-in-right"></i> Login</Link>
+                //   </div>
+                //   : null
+              }
+
+              {/* User Menu */}
+              <div className="user_menu mx-2">
+                <input type="checkbox" id="drop-4" hidden />
+                {
+                  token ?
+                    <label className="dropHeader dropHeader-4 droplabel" htmlFor="drop-4">
+                      <i className="fa-solid fa-user"></i>
+                    </label>
+                    : null
+                }
+
+                {
+                  token ?
+                    <div className="user_menulist list-4">
+                      <div className="menu-container">
+                        <ul className="user-menu">
+                          <div className="profile-highlight">
+                            {/* <img src="/assets/img/user.jpg" alt="profile-img" style={{ "width": "36px", "height": "36px" }} /> */}
+                            <div className="details">
+                              <div id="profile-name">{user?.first_name}&nbsp;{user?.last_name}</div>
+                              {/* <div id="profile-name">{displayName}</div> */}
+                            </div>
+                          </div>
+                          <li className="user-menu__item">
+                            <h1 className="user-menu-link" to="#">
+                              <span style={{ "color": "#f9772b" }}><i className="fa-regular fa-user fs-3"></i></span>
+                              <div>
+                                <Link to='/dashboard' className='text-dark'>Dashboard</Link>
+                              </div>
+                            </h1>
+                          </li>
+
+                          {/* <li className="user-menu__item">
+                              <Link className="user-menu-link" to="#">
+                                <img src="/assets/img/wallet.png" alt="team_icon" style={{ "width": "20px", "height": "20px" }} />
+                                <div>Acouunt Balance</div>
+                              </Link>
+                            </li>
+                            <li className="user-menu__item">
+                              <Link className="user-menu-link" to="#">
+                                <img src="/assets/img/history.png" alt="team_icon" style={{ "width": "20px", "height": "20px" }} />
+                                <div>Order History</div>
+                              </Link>
+                            </li> */}
+
+                          <div className="foot">
+                            <li className="user-menu__item">
+                              <Link onClick={logOut} className="user-menu-link" to="#!" style={{ "color": "#F44336" }}>Logout</Link>
+                            </li>
+                            {/* <li className="user-menu__item"><Link className="user-menu-link" to="#!">Settings</Link></li> */}
+                          </div>
+                        </ul>
+                      </div>
+                    </div>
+                    : null
+                }
+              </div>
+
+              {/* Cart */}
+              {
+                token ?
+                  <div className="cart mx-4">
+                    <Link to="" className="cartbtn"><i className="fas fa-shopping-cart"></i> <span className="label">23</span></Link>
+                  </div>
+                  : null
+              }
+
+
+              <div className="hamburger-menu" id="hamburger-menu">
+                <div className="menu-bar1"></div>
+                <div className="menu-bar2"></div>
+                <div className="menu-bar3"></div>
+              </div>
+            </div>
+          </nav>
+        </div>
+
+      </header>
+    </>
+  )
+}
+
+export default NavBar
