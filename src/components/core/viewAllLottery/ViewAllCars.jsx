@@ -13,6 +13,7 @@ const ViewAllCars = () => {
 
     useEffect(() => {
         dispatch(fetchLottery())
+        window.scrollTo(0, 0)
     }, [dispatch])
 
     return (
