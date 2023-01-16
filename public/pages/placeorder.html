@@ -103,12 +103,12 @@
   <div class="container pt-5">
     <div class="bred">
       <div class="product_title_top">
-    <h3>Your Order List</h3>
+    <h3>You Order Payment</h3>
       </div>
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="#">Home</a></li>
-          <li class="breadcrumb-item active" aria-current="page">Cart</li>
+          <li class="breadcrumb-item active" aria-current="page">Checkout</li>
         </ol>
       </nav>
       
@@ -117,135 +117,92 @@
   <div class="container">
     <div class="row">
       <div class="col-md-8">
-<div class="cart_list_area">
-  <!-- item one -->
-  <div class="cart_list_item">
-    <div class="cart_item_img">
-      <img src="assets/img/product1.jpg" alt="" class="img-fluid">
-    </div>
-    <div class="cart_item_content">
-      <div class="cart_title">
-        <h3>Appartement Costa del Sol-Spain</h3>
-      </div>
-      <div class="other_info">
-        <p class="amount">Number Of Ticket : 2</p>
-        <p class="tic_price">Price Of Ticket : 1235</p>
-      </div>
-      <div class="date_result">
-        <h5><span><img src="assets/img/3135783 1.png" alt=""></span>Result on <span class="fw-bold">Dec, 25</span></h5>
-      </div>
-    </div>
-    <div class="remove_btn">
-      <button><i class="bi bi-trash3"></i></button>
-    </div>
-  </div>
-  <div class="cart_list_item">
-    <div class="cart_item_img">
-      <img src="assets/img/car2.jpg" alt="" class="img-fluid">
-    </div>
-    <div class="cart_item_content">
-      <div class="cart_title">
-        <h3>Appartement Costa del Sol-Spain</h3>
-      </div>
-      <div class="other_info">
-        <p class="amount">Number Of Ticket : 2</p>
-        <p class="tic_price">Price Of Ticket : 1235</p>
-      </div>
-      <div class="date_result">
-        <h5><span><img src="assets/img/3135783 1.png" alt=""></span>Result on <span class="fw-bold">Fab, 25</span></h5>
-      </div>
-    </div>
-    <div class="remove_btn">
-      <button><i class="bi bi-trash3"></i></button>
-    </div>
-  </div>
-  <div class="cart_list_item">
-    <div class="cart_item_img">
-      <img src="assets/img/car4.jpg" alt="" class="img-fluid">
-    </div>
-    <div class="cart_item_content">
-      <div class="cart_title">
-        <h3>Appartement Costa del Sol-Spain</h3>
-      </div>
-      <div class="other_info">
-        <p class="amount">Number Of Ticket : 2</p>
-        <p class="tic_price">Price Of Ticket : 123</p>
-      </div>
-      <div class="date_result">
-        <h5><span><img src="assets/img/3135783 1.png" alt=""></span>Result on <span class="fw-bold">Fab, 25</span></h5>
-      </div>
-    </div>
-    <div class="remove_btn">
-      <button><i class="bi bi-trash3"></i></button>
-    </div>
-  </div>
-  <div class="cart_list_item">
-    <div class="cart_item_img">
-      <img src="assets/img/product1.jpg" alt="" class="img-fluid">
-    </div>
-    <div class="cart_item_content">
-      <div class="cart_title">
-        <h3>Appartement Costa del Sol-Spain</h3>
-      </div>
-      <div class="other_info">
-        <p class="amount">Number Of Ticket : 2</p>
-        <p class="tic_price">Price Of Ticket : 1235</p>
-      </div>
-      <div class="date_result">
-        <h5><span><img src="assets/img/3135783 1.png" alt=""></span>Result on <span class="fw-bold">Dec, 25</span></h5>
-      </div>
-    </div>
-    <div class="remove_btn">
-      <button><i class="bi bi-trash3"></i></button>
-    </div>
-  </div>
-  <div class="cart_list_item">
-    <div class="cart_item_img">
-      <img src="assets/img/car2.jpg" alt="" class="img-fluid">
-    </div>
-    <div class="cart_item_content">
-      <div class="cart_title">
-        <h3>Appartement Costa del Sol-Spain</h3>
-      </div>
-      <div class="other_info">
-        <p class="amount">Number Of Ticket : 2</p>
-        <p class="tic_price">Price Of Ticket : 1235</p>
-      </div>
-      <div class="date_result">
-        <h5><span><img src="assets/img/3135783 1.png" alt=""></span>Result on <span class="fw-bold">Fab, 25</span></h5>
-      </div>
-    </div>
-    <div class="remove_btn">
-      <button><i class="bi bi-trash3"></i></button>
-    </div>
-  </div>
-  <div class="cart_list_item">
-    <div class="cart_item_img">
-      <img src="assets/img/car4.jpg" alt="" class="img-fluid">
-    </div>
-    <div class="cart_item_content">
-      <div class="cart_title">
-        <h3>Appartement Costa del Sol-Spain</h3>
-      </div>
-      <div class="other_info">
-        <p class="amount">Number Of Ticket : 2</p>
-        <p class="tic_price">Price Of Ticket : 123</p>
-      </div>
-      <div class="date_result">
-        <h5><span><img src="assets/img/3135783 1.png" alt=""></span>Result on <span class="fw-bold">Fab, 25</span></h5>
-      </div>
-    </div>
-    <div class="remove_btn">
-      <button><i class="bi bi-trash3"></i></button>
-    </div>
-  </div>
+        <form class="accordion--form">
+          <fieldset class="accordion--form__fieldset" id="fieldset-one">
+            <legend class="accordion--form__legend accordion--form__legend-active">YOUR ADDRESS</legend>
+      
+            <div class="accordion--form__wrapper accordion--form__wrapper-active">
+      
+              <div class="accordion--form__row">
+                <label class="label_style" for="name">Address *</label> <br />
+                <input class="accordion--form__text required" type="text" name="address" id="address" placeholder="Enter You Address" required>
+              </div>
+              <div class="accordion--form__row">
+             <button class="locationbtn"><span><i class="bi bi-compass"></i></span> Use my current location</button>
+              </div>
+    
+              <a class="accordion--form__next-btn con">Continue</a>
+      
+              <div class="accordion--form__invalid">Please ensure all required fields are filled in</div>
+      
+            </div>
+          </fieldset>
+      
+      
+          <fieldset class="accordion--form__fieldset" id="fieldset-three">
+            <legend class="accordion--form__legend">PAYMENT OPTION</legend>
+      
+            <div class="accordion--form__wrapper">
 
- 
-</div>
-  <!-- place order area -->
-  <div class="placeorder_area sticky">
-    <a href="placeorder.html" class="orderplace">Place Order</a>
-  </div>
+             <div class="accordion" id="accordionExample">
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                   UPI
+                  </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                  <div class="accordion-body">
+                    <div class="option_one">
+                      <label class="radio">
+                      <input type="radio" name="r" value="1" checked> <span><img src="assets/img/pay (2).png" class="radio_img" alt=""></span> </label>
+                      <label class="radio">
+                        <input type="radio" name="r" value="1" checked> <span><img src="assets/img/pay (1).png" class="radio_img" alt=""></span> </label>
+                      </div>
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTwo">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    Credit or Debit card
+                  </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                  <div class="accordion-body">
+                    <div class="card_pay">
+                      <form action="">
+                        <div class="mb-3">
+                          <input type="text" class="form-control " id="card" name="card" aria-describedby="" placeholder="Enter Card Number">
+                        </div>
+                       
+                          <div class="row">
+                            <div class="col-md-6">
+                              <input type="text" class="form-control " id="" name="" aria-describedby="" placeholder="Expire Date">
+                            </div>
+                            <div class="col-md-6">
+                              <input type="text" class="form-control " id="" name="" aria-describedby="" placeholder="CVC/CCV">
+                            </div>
+                          </div>
+                    
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            
+            </div>
+        
+      <div class="btnarea mt-3">
+        <a class="accordion--form__prev-btn "><i class="bi bi-arrow-left"></i>Prev</a>
+        <button class="con">Continue</button>
+      </div>
+             
+            </div>
+          </fieldset>
+      
+        </form>
+  
  
       </div>
       <div class="col-md-4">

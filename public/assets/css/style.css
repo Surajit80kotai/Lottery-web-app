@@ -532,16 +532,16 @@ input:-webkit-autofill:active {
 
 .list {
 	width: 150px;
-    position: absolute;
-    z-index: 1;
+	position: absolute;
+	z-index: 1;
 	top: 84px;
-    right: 145px;
+	right: 145px;
 	border-radius: 1rem;
-    visibility: hidden;
-    opacity: 0;
-    cursor: pointer;
-    transition: 0.2s ease-in-out;
-	
+	visibility: hidden;
+	opacity: 0;
+	cursor: pointer;
+	transition: 0.2s ease-in-out;
+
 }
 
 .item {
@@ -1603,7 +1603,7 @@ margin: 0.5rem;
 }
 
 /* Quantity */
-.quantity_title{
+.quantity_title {
 	background: #EDEDED;
 	font-size: 24px;
 	width: 80px;
@@ -1785,9 +1785,334 @@ margin: 0.5rem;
 }
 
 
+/* Orderlist */
+.cart_list_wrapper {
+	background: #FFEACA;
+}
+
+.cart_list_area {
+	background: var(--white);
+	border-top-right-radius: 2rem;
+	border-top-left-radius: 2rem;
+	box-shadow: 7px 9px 52px -33px rgba(0, 0, 0, 0.35);
+	-webkit-box-shadow: 7px 9px 52px -33px rgba(0, 0, 0, 0.35);
+	-moz-box-shadow: 7px 9px 52px -33px rgba(0, 0, 0, 0.35);
+	padding: 2rem;
+	position: relative;
+	height: 400px;
+	overflow: scroll;
+}
+
+.cart_list_area::-webkit-scrollbar {
+	display: none;
+}
+
+/* / Hide scrollbar for IE, Edge and Firefox / */
+.cart_list_area {
+	-ms-overflow-style: none;
+	/* IE and Edge */
+	scrollbar-width: none;
+	/* Firefox */
+}
+
+.cart_list_item {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+	border: 1px solid #8B8989;
+	border-radius: 1rem;
+	padding: 1rem;
+	position: relative;
+	margin-bottom: 2rem;
+}
+
+.cart_item_img {
+	width: 10rem;
+	height: 10rem;
+}
+
+.cart_item_img img {
+	width: 100%;
+	height: 100%;
+	border-radius: 1rem;
+	object-fit: cover;
+}
+
+.remove_btn {
+	position: absolute;
+	right: 10px;
+	top: 10px;
+}
+
+.remove_btn button {
+	font-size: 2rem;
+	color: var(--black);
+	cursor: pointer;
+	opacity: 0.6;
+}
+
+.cart_title h3 {
+	font-size: 2rem;
+	color: var(--primary-color);
+	font-weight: 600;
+	margin-bottom: 1rem;
+}
+
+.other_info p {
+	line-height: 1rem;
+	font-size: 1.3rem;
+	color: #9C9696;
+}
+
+.date_result h5 {
+	font-size: 1.5rem;
+	color: #4B4B4B;
+}
+
+.placeorder_area {
+	/* position: -webkit-sticky;
+	position: sticky;
+	top: 0; */
+	width: 100%;
+	background: #fff;
+	padding: 1rem;
+	border-bottom-right-radius: 2rem;
+	border-bottom-left-radius: 2rem;
+	-webkit-box-shadow: -3px 5px 45px -1px rgba(0, 0, 0, 0.38);
+	-moz-box-shadow: -3px 5px 45px -1px rgba(0, 0, 0, 0.38);
+	box-shadow: -3px 5px 45px -1px rgba(0, 0, 0, 0.38);
+	text-align: center;
+}
+
+.orderplace {
+	text-align: center;
+	padding: 0.8rem 3rem;
+	background: var(--primary-color);
+	font-size: 1.5rem;
+	color: var(--white);
+	border-radius: 2rem;
+	margin-right: 1rem;
+	border: 1px solid transparent;
+	transition: 0.5s linear;
+	box-shadow: 7px 9px 52px -33px rgba(0, 0, 0, 0.35);
+	-webkit-box-shadow: 7px 9px 52px -33px rgba(0, 0, 0, 0.35);
+	-moz-box-shadow: 7px 9px 52px -33px rgba(0, 0, 0, 0.35);
+}
+
+.sticky {
+	position: -webkit-sticky;
+	position: sticky;
+	top: 0;
+	padding: 10px;
+	font-size: 20px;
+	z-index: 9;
+
+}
+
+.price_area_wrapper {
+	background: var(--white);
+	-webkit-box-shadow: -3px 5px 45px -1px rgba(0, 0, 0, 0.38);
+	-moz-box-shadow: -3px 5px 45px -1px rgba(0, 0, 0, 0.38);
+	box-shadow: -3px 5px 45px -1px rgba(0, 0, 0, 0.38);
+	border-radius: 1rem;
+	padding: 1rem;
+}
+
+.price_title {
+	font-size: 2rem;
+	color: var(--black);
+	text-transform: capitalize;
+	padding: 2rem 0;
+}
+
+.price_item {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 2rem;
+}
+
+.borderbottom {
+	border-bottom: 1px dashed #D7D7D7;
+}
+
+.price_text {
+	font-size: 1.5rem;
+	font-weight: 600;
+	color: var(--black);
+}
+
+.price_value {
+	font-size: 1.5rem;
+	font-weight: 600;
+	color: var(--black);
+}
+
+.delivery {
+	font-size: 1.5rem;
+	font-weight: 700;
+	color: rgb(177, 25, 248);
+}
 
 
+/* Payment form */
 
+.accordion--form {
+	background: var(--white);
+	padding: 50px;
+	width: 100%;
+	border-radius: 1rem;
+	box-shadow: 7px 9px 52px -33px rgba(0, 0, 0, 0.35);
+	-webkit-box-shadow: 7px 9px 52px -33px rgba(0, 0, 0, 0.35);
+	-moz-box-shadow: 7px 9px 52px -33px rgba(0, 0, 0, 0.35);
+
+}
+
+.accordion--form__fieldset {
+	border: 0;
+	margin: 0 0 1px 0;
+	padding: 0;
+}
+
+.accordion--form__legend {
+	background-color: #fa8231;
+	color: #fff;
+	display: block;
+	margin: 0;
+	padding: 5px 10px;
+	width: 100%;
+	border-radius: 0.5rem;
+}
+
+.accordion--form__legend-active {
+	background-color: rgb(253, 201, 171);
+	color: #000;
+	border-radius: 0.3rem;
+}
+
+.accordion--form__wrapper {
+	height: 0;
+	overflow: hidden;
+}
+
+.accordion--form__wrapper-active {
+	height: auto;
+	padding: 10px 0;
+}
+
+.accordion--form__row {
+	clear: both;
+	margin-bottom: 15px;
+	width: 100%;
+}
+
+.accordion--form__label {
+	display: inline-block;
+	margin-bottom: 5px;
+}
+
+.accordion--form__text {
+	color: #000;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 14px;
+	padding: 5px 10px;
+	width: 100%;
+	border-radius: 0.5rem;
+	border: 1px solid #686767;
+}
+
+.accordion--form__text:focus {
+
+	outline: none;
+}
+
+.accordion--form__textarea {
+	color: #000;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 14px;
+	padding: 5px 10px;
+}
+
+.accordion--form__invalid {
+	background-color: rgb(253, 158, 158);
+	color: #fff;
+	display: none;
+	margin: 20px 0;
+	padding: 5px 10px;
+	width: 100%;
+	border-radius: 0.5rem;
+	font-size: 1.2rem;
+}
+
+.accordion--form__next-btn,
+.accordion--form__prev-btn {
+	background: transparent;
+	color: var(--black);
+	cursor: pointer;
+	display: inline-block;
+	margin: 0 2px 0 0;
+	padding: 1rem 2rem;
+	text-align: center;
+	border-radius: 2rem;
+	font-size: 1.5rem;
+	transition: 0.5s ease-in;
+}
+
+.accordion--form__next-btn:hover,
+.accordion--form__prev-btn:hover {
+	background: #fcca90;
+	color: var(--black)
+}
+
+.locationbtn {
+	color: var(--primary-color);
+	font-size: 1.5rem;
+	font-weight: 700;
+}
+
+.payement_option_a h2 {
+	font-size: 1.4rem;
+	color: var(--black);
+	font-weight: 600;
+	text-transform: uppercase
+}
+
+.radio_img {
+	width: 60px;
+}
+
+.option_one {
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	padding: 1rem;
+}
+
+.option_one label {
+	display: block !important;
+	margin-bottom: 1rem;
+}
+
+.accordion-button {
+	font-size: 1.5rem !important;
+	color: var(--black) !important;
+	font-weight: 600 !important;
+	text-transform: uppercase !important
+}
+
+.btnarea {
+	text-align: center;
+}
+
+.con {
+	background: var(--primary-color);
+	color: #fff;
+	cursor: pointer;
+	display: inline-block;
+	margin: 0 2px 0 0;
+	padding: 1rem 2rem;
+	text-align: center;
+	border-radius: 2rem;
+	font-size: 1.5rem;
+	transition: 0.5s ease-in;
+}
 
 
 

@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import TrustedPayment from '../components/common/trustedPayment/TrustedPayment'
 import { useTimer } from '../customHooks/useTimer'
+import { useDispatch } from 'react-redux'
+import { addItem, decItem, incItem } from '../services/slice/CartSlice'
 // import Flickity from 'react-flickity-component'
 
 const LotteryInfo = () => {
     const { lid } = useParams()
     const [timerDays, timerHours, timerMinutes, timerSeconds, startTimer] = useTimer()
-    const [count, setCount] = useState(1)
-
+    // const [count, setCount] = useState(1)
+    const dispatch = useDispatch()
     const lottData = JSON.parse(window.localStorage.getItem("data"))
     const ticketInfo = lottData?.filter((item) => item._id === lid)
 
@@ -20,14 +22,19 @@ const LotteryInfo = () => {
 
 
     // IncCount function
-    const IncCount = () => {
-        setCount(count + 1)
-    }
-    // DecCount function
-    const DecCount = () => {
-        if (count > 1) {
-            setCount(count - 1)
-        }
+    // const IncCount = () => {
+    //     setCount(count + 1)
+    // }
+    // // DecCount function
+    // const DecCount = () => {
+    //     if (count > 1) {
+    //         setCount(count - 1)
+    //     }
+    // }
+
+    // Add ticket function
+    const addTicket = (ticket) => {
+        dispatch(addItem(ticket))
     }
 
     useEffect(() => {
@@ -71,8 +78,6 @@ const LotteryInfo = () => {
                                     }
                                 </div> */}
 
-
-
                             </div>
                         </div>
                         <div className="col-md-6">
@@ -108,18 +113,24 @@ const LotteryInfo = () => {
                                     <h3>Quantity</h3>
                                     <div className="col-md-4 mb-3">
                                         <div className="qty-container">
-                                            <button className="qty-btn-minus btn-light" type="button" onClick={DecCount}><i className="fa fa-minus"></i></button>
+                                            <button className="qty-btn-minus btn-light" type="button" onClick={() => dispatch(decItem(ticketInfo[0]._id))}><i className="fa fa-minus"></i></button>
                                             <div className="quantity_place">
-                                                <h1 className='quantity_title'>{count}</h1>
+                                                <h1 className='quantity_title'>{ticketInfo[0]?.ticket_quantity}</h1>
                                             </div>
-                                            <button className="qty-btn-plus btn-light" type="button" onClick={IncCount}><i className="fa fa-plus"></i></button>
+                                            <button className="qty-btn-plus btn-light" type="button" onClick={() => dispatch(incItem(ticketInfo[0]._id))}><i className="fa fa-plus"></i></button>
                                         </div>
                                     </div>
                                 </div>
+                                {/* Add to cart buttton */}
                                 <div className="btn_area mt-5">
-                                    <Link to="#" className="btn2">Add To Cart</Link>
                                     {
-                                        token ? <Link to="" className="btn2">Buy Ticket</Link>
+                                        token ?
+                                            <button onClick={() => addTicket(ticketInfo[0])} className="btn2">Add To Cart</button>
+                                            : <Link to="/login" className="btn2">Add To Cart</Link>
+                                    }
+
+                                    {
+                                        token ? <button onClick={() => addTicket(ticketInfo[0])} to="/cart" className="btn2">Buy Ticket</button>
                                             : <Link to="/login" className="btn2">Buy Ticket</Link>
                                     }
                                 </div>
