@@ -6,6 +6,7 @@ import LotteryInfo from './pages/LotteryInfo';
 import UserDashBoard from './pages/UserDashBoard';
 import ViewAllHome from './components/core/viewAllLottery/ViewAllHome';
 import ViewAllCars from './components/core/viewAllLottery/ViewAllCars';
+import Cart from './pages/Cart';
 // import Test from './pages/Test';
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path='/dashboard' element={<UserDashBoard />} />
         <Route path='/viewallhome' element={<ViewAllHome />} />
         <Route path='/viewallcars' element={<ViewAllCars />} />
+        <Route path='/cart' element={<Cart />} />
       </Routes>
       <FooterMain />
       {/* <Test/> */}

@@ -12,6 +12,9 @@ const LotteryInfo = () => {
     const lottData = JSON.parse(window.localStorage.getItem("data"))
     const ticketInfo = lottData?.filter((item) => item._id === lid)
 
+    // Accesing token
+    const token = JSON.parse(window.localStorage.getItem("token"))
+
     // const listimage = ticketInfo[0]?.list_image
     const mainimage = ticketInfo[0]?.main_image
 
@@ -115,7 +118,10 @@ const LotteryInfo = () => {
                                 </div>
                                 <div className="btn_area mt-5">
                                     <Link to="#" className="btn2">Add To Cart</Link>
-                                    <Link to="#" className="btn2">Buy Ticket</Link>
+                                    {
+                                        token ? <Link to="" className="btn2">Buy Ticket</Link>
+                                            : <Link to="/login" className="btn2">Buy Ticket</Link>
+                                    }
                                 </div>
                                 <div className="product_time">
                                     <div className="time_left_title">

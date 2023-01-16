@@ -7,7 +7,8 @@ const CarsBike = ({ item, index }) => {
     const navigate = useNavigate()
     const { time_left, ticket_name, ticket_price, currency, ticket_quantity, discount_percentage, _id } = item
     const discountedPrice = (ticket_price - ((ticket_price * discount_percentage) / 100))
-    
+    // Accesing token
+    const token = JSON.parse(window.localStorage.getItem("token"))
     // defining states timer
     const [timerDays, timerHours, timerMinutes, timerSeconds, startTimer] = useTimer()
 
@@ -21,8 +22,8 @@ const CarsBike = ({ item, index }) => {
             {
                 !index || index < 5 ?
                     <div className="col-md-4 product_item">
-                        <Link to={`/info/${_id}`}>
-                            <div className="product_item_one">
+                        <div className="product_item_one">
+                            <Link to={`/info/${_id}`}>
                                 <div className="product_img">
                                     <div className="pro_img">
                                         <img src="assets/img/car1.jpg" alt="" className="img-fluid " />
@@ -37,7 +38,9 @@ const CarsBike = ({ item, index }) => {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="product_content">
+                            </Link>
+                            <div className="product_content">
+                                <Link to={`/info/${_id}`}>
                                     <div className="product_price">
                                         <h3><span>{currency}</span>{discountedPrice}</h3>
                                     </div>
@@ -75,13 +78,16 @@ const CarsBike = ({ item, index }) => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="product_action">
-                                        <button to={`/info/${_id}`} className="btn2">Info</button>
-                                        <button to="" className="btn2">Buy Ticket</button>
-                                    </div>
+                                </Link>
+                                <div className="product_action">
+                                    <Link to={`/info/${_id}`} className="btn2">Info</Link>
+                                    {
+                                        token ? <Link to="" className="btn2">Buy Ticket</Link>
+                                            : <Link to="/login" className="btn2">Buy Ticket</Link>
+                                    }
                                 </div>
                             </div>
-                        </Link>
+                        </div>
                     </div>
                     :
                     <div className="col-md-4 product_item">

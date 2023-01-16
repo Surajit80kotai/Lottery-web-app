@@ -1,13 +1,16 @@
 import React, { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useTimer } from '../../../customHooks/useTimer'
+import ViewAllCard from '../../common/viewAllCard/ViewAllCard'
 
 const HomeLottery = ({ item, index }) => {
     const navigate = useNavigate()
     const { time_left, ticket_name, ticket_price, currency, ticket_quantity, discount_percentage, _id } = item
     const discountedPrice = Number((ticket_price - ((ticket_price * discount_percentage) / 100)))
 
-     // defining states timer
+    // Accesing token
+    const token = JSON.parse(window.localStorage.getItem("token"))
+    // defining states timer
     const [timerDays, timerHours, timerMinutes, timerSeconds, startTimer] = useTimer()
 
     useEffect(() => {
@@ -20,8 +23,8 @@ const HomeLottery = ({ item, index }) => {
             {
                 !index || index < 5 ?
                     <div className="col-md-4 product_item">
-                        <Link to={`/info/${_id}`}>
-                            <div className="product_item_one">
+                        <div className="product_item_one">
+                            <Link to={`/info/${_id}`}>
                                 <div className="product_img">
                                     <div className="pro_img">
                                         <img src="/assets/img/product1.jpg" alt="" className="img-fluid " />
@@ -36,8 +39,10 @@ const HomeLottery = ({ item, index }) => {
                                         </div>
                                     </div>
                                 </div>
+                            </Link>
 
-                                <div className="product_content">
+                            <div className="product_content">
+                                <Link to={`/info/${_id}`}>
                                     <div className="product_price">
                                         <h3><span>{currency}</span>{discountedPrice}</h3>
                                     </div>
@@ -75,25 +80,19 @@ const HomeLottery = ({ item, index }) => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="product_action">
-                                        <button to={`/info/${_id}`} className="btn2">Info</button>
-                                        <button to="" className="btn2">Buy Ticket</button>
-                                    </div>
+                                </Link>
+                                <div className="product_action">
+                                    <Link to={`/info/${_id}`} className="btn2">Info</Link>
+                                    {
+                                        token ? <Link to="" className="btn2">Buy Ticket</Link>
+                                            : <Link to="/login" className="btn2">Buy Ticket</Link>
+                                    }
                                 </div>
                             </div>
-                        </Link>
-                    </div>
-                    :
-                    <div className="col-md-4 product_item">
-                        <div className="viewall">
-                            <div className="viewall_content ">
-                                <h2>Best of <br /> Electronics</h2>
-                                <button className="btn2 mt-2" onClick={() => navigate('/viewallhome')}>View All</button>
-                            </div>
-
-                            <img src="/assets/img/viewmorecard.png" alt="" className="img-fluid" />
                         </div>
                     </div>
+                    :
+                    <ViewAllCard navigate={navigate} text="Home" />
             }
 
         </>

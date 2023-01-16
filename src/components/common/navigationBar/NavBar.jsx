@@ -33,9 +33,11 @@ const NavBar = () => {
         <div className="navarea">
           <nav className="main_nav">
             <div className="left_nav">
-              <div className="companyLogo">
-                <img src="/assets/img/logo.png" alt="logo" className="img-fluid" />
-              </div>
+              <Link to='/'>
+                <div className="companyLogo">
+                  <img src="/assets/img/logo.png" alt="logo" className="img-fluid" />
+                </div>
+              </Link>
               <ul className="menu_list">
                 <li><Link to="" className="menu_links">Home</Link></li>
                 <li><Link to="" className="menu_links">About Us</Link></li>
@@ -119,7 +121,7 @@ const NavBar = () => {
                 {
                   token ?
                     <label className="dropHeader dropHeader-4 droplabel" htmlFor="drop-4">
-                      <i className="fa-solid fa-user"></i>
+                      <i className="fa-solid fa-user"></i><span className='px-3'>{user.first_name}</span>
                     </label>
                     : null
                 }
@@ -136,14 +138,16 @@ const NavBar = () => {
                               {/* <div id="profile-name">{displayName}</div> */}
                             </div>
                           </div>
-                          <li className="user-menu__item">
-                            <h1 className="user-menu-link" to="#">
-                              <span style={{ "color": "#f9772b" }}><i className="fa-regular fa-user fs-3"></i></span>
-                              <div>
-                                <Link to='/dashboard' className='text-dark'>Dashboard</Link>
-                              </div>
-                            </h1>
-                          </li>
+                          <Link to='/dashboard'>
+                            <li className="user-menu__item">
+                              <h1 className="user-menu-link" to="#">
+                                <span style={{ "color": "#f9772b" }}><i className="fa-regular fa-user fs-3"></i></span>
+                                <div>
+                                  <h4 className='text-dark' style={{ "fontSize": "17px" }}>Dashboard</h4>
+                                </div>
+                              </h1>
+                            </li>
+                          </Link>
 
                           {/* <li className="user-menu__item">
                               <Link className="user-menu-link" to="#">
@@ -160,7 +164,7 @@ const NavBar = () => {
 
                           <div className="foot">
                             <li className="user-menu__item">
-                              <Link onClick={logOut} className="user-menu-link" to="#!" style={{ "color": "#F44336" }}>Logout</Link>
+                              <Link onClick={logOut} className="user-menu-link" to="#!" style={{ "color": "#F44336", "fontSize": "16px" }}>Logout</Link>
                             </li>
                             {/* <li className="user-menu__item"><Link className="user-menu-link" to="#!">Settings</Link></li> */}
                           </div>
@@ -175,7 +179,7 @@ const NavBar = () => {
               {
                 token ?
                   <div className="cart mx-4">
-                    <Link to="" className="cartbtn"><i className="fas fa-shopping-cart"></i> <span className="label">23</span></Link>
+                    <Link to="/cart" className="cartbtn"><i className="fas fa-shopping-cart"></i> <span className="label">23</span></Link>
                   </div>
                   : null
               }
