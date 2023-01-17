@@ -7,6 +7,7 @@ import UserDashBoard from './pages/UserDashBoard';
 import ViewAllHome from './components/core/viewAllLottery/ViewAllHome';
 import ViewAllCars from './components/core/viewAllLottery/ViewAllCars';
 import Cart from './pages/Cart';
+import PlaceOrder from './pages/PlaceOrder';
 // import Test from './pages/Test';
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path='/viewallhome' element={<ViewAllHome />} />
         <Route path='/viewallcars' element={<ViewAllCars />} />
         <Route path='/cart' element={<Cart />} />
+        <Route path='/placeorder' element={<PlaceOrder />} />
       </Routes>
       <FooterMain />
       {/* <Test/> */}
