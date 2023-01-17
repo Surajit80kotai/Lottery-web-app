@@ -1,16 +1,22 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { removeItem } from '../services/slice/CartSlice'
+import { removeItem, totalPrice } from '../services/slice/CartSlice'
+import { useEffect } from 'react'
 
 const Cart = () => {
-  const { cart_data } = useSelector((state) => state.cartslice)
+  const cartData = JSON.parse(window.localStorage.getItem("cart_data"))
+  const { total, sub_total } = useSelector((state) => state.cartslice)
   const dispatch = useDispatch()
 
   // Remove ticket function
   const removeTicket = (ticket) => {
     dispatch(removeItem(ticket))
   }
+
+  useEffect(() => {
+    dispatch(totalPrice())
+  }, [dispatch])
 
   return (
     <>
@@ -36,9 +42,9 @@ const Cart = () => {
                 {/* <!-- item one --> */}
 
                 {
-                  cart_data.map((item) => {
+                  cartData?.map((item, index) => {
                     return (
-                      <div className="cart_list_item" key={item._id}>
+                      <div className="cart_list_item" key={index}>
                         <div className="cart_item_img">
                           <img src="/assets/img/product1.jpg" alt="" className="img-fluid" />
                         </div>
@@ -64,9 +70,13 @@ const Cart = () => {
               </div>
 
               {/* <!-- place order area --> */}
-              <div className="placeorder_area sticky">
-                <Link to="/placeorder" className="orderplace">Place Order</Link>
-              </div>
+              {
+                cartData.length > 0 ?
+                  <div className="placeorder_area sticky">
+                    <Link to="/placeorder" className="orderplace">Place Order</Link>
+                  </div>
+                  : null
+              }
 
             </div>
             <div className="col-md-4">
@@ -74,16 +84,12 @@ const Cart = () => {
                 <h3 className="price_title">Purchase Summary</h3>
                 <div className="price_inner">
                   <div className="price_item borderbottom">
-                    <h4 className="price_text">Price <span> (1 Item):</span></h4>
-                    <h6 className="price_value"><span>€</span> 1,789</h6>
-                  </div>
-                  <div className="price_item mb-5">
-                    <h4 className="price_text">Delivery Charges:</h4>
-                    <h6 className="delivery">Free</h6>
+                    <h4 className="price_text">Price <span> ({cartData?.length} Item):</span></h4>
+                    <h6 className="price_value"><span>€</span>{total}</h6>
                   </div>
                   <div className="price_item mt-5">
                     <h4 className="price_text">Total Payables:</h4>
-                    <h6 className="price_value"><span>€</span> 1,789</h6>
+                    <h6 className="price_value"><span>€</span>{sub_total}</h6>
                   </div>
                 </div>
               </div>

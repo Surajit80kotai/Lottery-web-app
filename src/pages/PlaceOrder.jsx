@@ -1,7 +1,37 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useEffect } from 'react'
 
 const PlaceOrder = () => {
+    const cartData = JSON.parse(window.localStorage.getItem("cart_data"))
+    const { total, sub_total } = useSelector((state) => state.cartslice)
+    const [formValues, setFormValues] = useState({ address: "" })
+    const [formError, setFormError] = useState({})
+
+    //For onChange function
+    const handleChange = (e) => {
+        setFormValues({ ...formValues, [e.target.name]: e.target.value })
+    }
+    // For onSubmit function
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        setFormError(validate(formError))
+    }
+
+    // Validate Function
+    const validate = (value) => {
+        const error = {}
+        if(!value.address){
+            error.address = "Please ensure all required fields are filled in"
+        }
+        return error
+    }
+
+    useEffect(()=>{
+    },[formError])
+
     return (
         <>
             <div className="cart_list_wrapper pb-5">
@@ -23,6 +53,8 @@ const PlaceOrder = () => {
                     <div className="row">
                         <div className="col-md-8">
                             <form className="accordion--form">
+
+                                {/*********** Address Input section ***********/}
                                 <fieldset className="accordion--form__fieldset" id="fieldset-one">
                                     <legend className="accordion--form__legend accordion--form__legend-active">YOUR ADDRESS</legend>
 
@@ -30,15 +62,23 @@ const PlaceOrder = () => {
 
                                         <div className="accordion--form__row">
                                             <label className="label_style" htmlFor="name">Address *</label> <br />
-                                            <input className="accordion--form__text required" type="text" name="address" id="address" placeholder="Enter You Address" required/>
+                                            <input
+                                                className="accordion--form__text required"
+                                                type="text"
+                                                name="address"
+                                                value={formValues.address}
+                                                onChange={handleChange}
+                                                id="address"
+                                                placeholder="Enter You Address"
+                                                required />
                                         </div>
                                         <div className="accordion--form__row">
                                             <button className="locationbtn"><span><i className="bi bi-compass"></i></span> Use my current location</button>
                                         </div>
 
-                                        <a className="accordion--form__next-btn con">Continue</a>
+                                        <button className="accordion--form__next-btn con" onClick={handleSubmit}>Continue</button>
 
-                                        <div className="accordion--form__invalid">Please ensure all required fields are filled in</div>
+                                        <div className="accordion--form__invalid">{formError.address}</div>
 
                                     </div>
                                 </fieldset>
@@ -56,13 +96,23 @@ const PlaceOrder = () => {
                                                         UPI
                                                     </button>
                                                 </h2>
+
+                                                {/************ Radio Buttons section ************/}
                                                 <div id="collapseOne" className="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                                     <div className="accordion-body">
                                                         <div className="option_one">
                                                             <label className="radio">
-                                                                <input type="radio" name="r" value="1" checked/> <span><img src="/assets/img/pay (2).png" className="radio_img" alt=""/></span> </label>
+                                                                <input
+                                                                    type="radio"
+                                                                    name="r"
+                                                                    value="1"
+                                                                    defaultChecked /> <span><img src="/assets/img/pay (2).png" className="radio_img" alt="" /></span> </label>
                                                             <label className="radio">
-                                                                <input type="radio" name="r" value="1" checked/> <span><img src="/assets/img/pay (1).png" className="radio_img" alt=""/></span> </label>
+                                                                <input
+                                                                    type="radio"
+                                                                    name="r"
+                                                                    value="1"
+                                                                    defaultChecked /> <span><img src="/assets/img/pay (1).png" className="radio_img" alt="" /></span> </label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -73,24 +123,40 @@ const PlaceOrder = () => {
                                                         Credit or Debit card
                                                     </button>
                                                 </h2>
+
+                                                {/*********** Card Payment input ***********/}
                                                 <div id="collapseTwo" className="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                                                     <div className="accordion-body">
                                                         <div className="card_pay">
-                                                            <form action="">
-                                                                <div className="mb-3">
-                                                                    <input type="text" className="form-control " id="card" name="card" aria-describedby="" placeholder="Enter Card Number" />
-                                                                </div>
+                                                            <div className="mb-3">
+                                                                <input
+                                                                    type="text"
+                                                                    className="form-control "
+                                                                    id="card"
+                                                                    name="card"
+                                                                    aria-describedby=""
+                                                                    placeholder="Enter Card Number" />
+                                                            </div>
 
-                                                                <div className="row">
-                                                                    <div className="col-md-6">
-                                                                        <input type="text" className="form-control " id="" name="" aria-describedby="" placeholder="Expire Date" />
-                                                                    </div>
-                                                                    <div className="col-md-6">
-                                                                        <input type="text" className="form-control " id="" name="" aria-describedby="" placeholder="CVC/CCV" />
-                                                                    </div>
+                                                            <div className="row">
+                                                                <div className="col-md-6">
+                                                                    <input
+                                                                        type="text"
+                                                                        className="form-control "
+                                                                        id=""
+                                                                        name=""
+                                                                        aria-describedby=""
+                                                                        placeholder="Expire Date" />
                                                                 </div>
-
-                                                            </form>
+                                                                <div className="col-md-6">
+                                                                    <input
+                                                                        type="text"
+                                                                        className="form-control "
+                                                                        id="" name=""
+                                                                        aria-describedby=""
+                                                                        placeholder="CVC/CCV" />
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -99,7 +165,7 @@ const PlaceOrder = () => {
                                         </div>
 
                                         <div className="btnarea mt-3">
-                                            <a className="accordion--form__prev-btn "><i className="bi bi-arrow-left"></i>Prev</a>
+                                            <Link className="accordion--form__prev-btn "><i className="bi bi-arrow-left"></i>Prev</Link>
                                             <button className="con">Continue</button>
                                         </div>
 
@@ -110,21 +176,19 @@ const PlaceOrder = () => {
 
 
                         </div>
+
+                        {/*********** Purchase Summary ***********/}
                         <div className="col-md-4">
                             <div className="price_area_wrapper">
                                 <h3 className="price_title">Purchase Summary</h3>
                                 <div className="price_inner">
                                     <div className="price_item borderbottom">
-                                        <h4 className="price_text">Price <span> (1 Item):</span></h4>
-                                        <h6 className="price_value"><span>€</span> 1,789</h6>
-                                    </div>
-                                    <div className="price_item mb-5">
-                                        <h4 className="price_text">Delivery Charges:</h4>
-                                        <h6 className="delivery">Free</h6>
+                                        <h4 className="price_text">Price <span> ({cartData?.length} Item):</span></h4>
+                                        <h6 className="price_value"><span>€</span>{total}</h6>
                                     </div>
                                     <div className="price_item mt-5">
                                         <h4 className="price_text">Total Payables:</h4>
-                                        <h6 className="price_value"><span>€</span> 1,789</h6>
+                                        <h6 className="price_value"><span>€</span>{sub_total}</h6>
                                     </div>
                                 </div>
                             </div>

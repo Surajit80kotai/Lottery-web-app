@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { doLogOut } from '../../../services/slice/AuthSlice'
 
@@ -8,7 +8,7 @@ const NavBar = () => {
   const navigate = useNavigate()
   const token = JSON.parse(window.localStorage.getItem("token"))
   const user = JSON.parse(window.localStorage.getItem("user"))
-  const { cart_data } = useSelector((state) => state.cartslice)
+  const cart_data = JSON.parse(window.localStorage.getItem("cart_data"))
 
   const logOut = () => {
     dispatch(doLogOut())
@@ -24,7 +24,7 @@ const NavBar = () => {
 
   useEffect(() => {
     // console.log("Render");
-  }, [token])
+  }, [token, cart_data])
 
   return (
     <>
@@ -182,7 +182,7 @@ const NavBar = () => {
                   <div className="cart mx-4">
                     <Link to="/cart" className="cartbtn">
                       <i className="fas fa-shopping-cart"></i>
-                      {cart_data.length > 0 ? <span className="label">{cart_data.length}</span> : null}
+                      {cart_data?.length > 0 ? <span className="label">{cart_data.length}</span> : null}
                     </Link>
                   </div>
                   : null

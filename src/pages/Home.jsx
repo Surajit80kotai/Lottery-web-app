@@ -72,9 +72,6 @@ const Home = () => {
                                 }).slice(0, 6)
                             }
 
-                            {/* divider */}
-                            {/* <div className="divider"></div> */}
-
                             {/* <!-- stydy travel --> */}
                             <StudyTravel />
 

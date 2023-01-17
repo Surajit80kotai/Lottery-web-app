@@ -130,7 +130,7 @@ const LotteryInfo = () => {
                                     }
 
                                     {
-                                        token ? <button onClick={() => addTicket(ticketInfo[0])} to="/cart" className="btn2">Buy Ticket</button>
+                                        token ? <Link onClick={() => addTicket(ticketInfo[0])} to="/placeorder" className="btn2">Buy Ticket</Link>
                                             : <Link to="/login" className="btn2">Buy Ticket</Link>
                                     }
                                 </div>

@@ -1,17 +1,24 @@
 import React, { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { useTimer } from '../../../customHooks/useTimer'
+import { addItem } from '../../../services/slice/CartSlice'
 import ViewAllCard from '../../common/viewAllCard/ViewAllCard'
 
 const HomeLottery = ({ item, index }) => {
+    const dispatch = useDispatch()
     const navigate = useNavigate()
     const { time_left, ticket_name, ticket_price, currency, ticket_quantity, discount_percentage, _id } = item
     const discountedPrice = Number((ticket_price - ((ticket_price * discount_percentage) / 100)))
-
+    // console.log(item._id);
     // Accesing token
     const token = JSON.parse(window.localStorage.getItem("token"))
     // defining states timer
     const [timerDays, timerHours, timerMinutes, timerSeconds, startTimer] = useTimer()
+    // Add ticket function
+    const addTicket = (ticket) => {
+        dispatch(addItem(ticket))
+    }
 
     useEffect(() => {
         // console.log("render");
@@ -84,7 +91,7 @@ const HomeLottery = ({ item, index }) => {
                                 <div className="product_action">
                                     <Link to={`/info/${_id}`} className="btn2">Info</Link>
                                     {
-                                        token ? <Link to="" className="btn2">Buy Ticket</Link>
+                                        token ? <Link onClick={() => addTicket(item)} to="/placeorder" className="btn2">Buy Ticket</Link>
                                             : <Link to="/login" className="btn2">Buy Ticket</Link>
                                     }
                                 </div>
