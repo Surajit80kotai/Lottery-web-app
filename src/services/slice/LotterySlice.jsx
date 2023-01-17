@@ -7,8 +7,8 @@ const GET_TICKETS = "/ticket/get-tickets"
 export const fetchLottery = createAsyncThunk("ticket/get-tickets", async () => {
     try {
         const response = await API.get(GET_TICKETS)
-        // console.log(response.data)
-        return response.data
+        // console.log(response?.data)
+        return response?.data
     } catch (err) {
         console.log(err);
     }
