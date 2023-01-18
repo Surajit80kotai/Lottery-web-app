@@ -12,9 +12,11 @@ export const CartSlice = createSlice({
         addItem(state, { payload }) {
             const itemIndex = state.cart_data.findIndex(item => item._id === payload._id)
             if (itemIndex >= 0) {
-                alert("Item is already added to the cart")
+                state.cart_data[itemIndex].cartQuantity += 1
+                // alert("Item is already added to the cart")
             } else {
-                state.cart_data.push(payload)
+                const tempProduct = { ...payload, cartQuantity: 1 }
+                state.cart_data.push(tempProduct)
                 window.localStorage.setItem("cart_data", JSON.stringify(state.cart_data))
             }
         },

@@ -7,7 +7,7 @@ const ComputersPhones = () => {
             <div className="divider"></div>
 
             <div className="first_row_title">
-                <h2>computers & phones</h2>
+                <h2>Computers & Phones</h2>
             </div>
 
             <div className="col-md-4 product_item">

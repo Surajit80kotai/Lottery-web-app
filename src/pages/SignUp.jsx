@@ -11,7 +11,6 @@ const SignUp = () => {
     const newSignupErr = signupErr[0]
     const { countryData } = useSelector((state) => state.countrystateslice)
     const { stateData } = useSelector((state) => state.countrystateslice)
-    // const [countryId, setCountryId] = useState()
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -62,12 +61,14 @@ const SignUp = () => {
             if (item.name === name) {
                 return item?.countries_id
             }
+            return null
         })
         const id = c_Id[0]?.countries_id
         if (id) {
             dispatch(fetchStates(id))
         }
     }
+
 
 
     useEffect(() => {
@@ -196,7 +197,6 @@ const SignUp = () => {
                                                     onChange={handleChange}
                                                     className="form-control form_input" />
                                                 <p className='text-danger mt-2 fs-4'>{(newSignupErr?.dob) ? "Date of birth is required" : null}</p>
-
                                             </div>
 
                                             {/* Country */}
@@ -261,7 +261,7 @@ const SignUp = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    
+
                                     {/* Button */}
                                     <div className="text-center">
                                         <button type="submit" className="btn_one">Register</button>

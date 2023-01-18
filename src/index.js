@@ -9,6 +9,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import SignUp from './pages/SignUp';
 import Login from './pages/Login';
 import ForgetPassword from './pages/ForgetPassword';
+import ErrorPage from './privateroute/ErrorPage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -21,6 +22,7 @@ root.render(
         <Route path='/signup' element={<SignUp />} />
         <Route path='/login' element={<Login />} />
         <Route path='/f_password' element={<ForgetPassword />} />
+        <Route path='/error' element={<ErrorPage />} />
       </Routes>
     </Router>
   </Provider>
