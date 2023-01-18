@@ -1,13 +1,14 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { removeItem, totalPrice } from '../services/slice/CartSlice'
 import { useEffect } from 'react'
+import { removeItem, totalPrice } from '../services/slice/CartSlice'
 
 const Cart = () => {
   const cartData = JSON.parse(window.localStorage.getItem("cart_data"))
   const { total, sub_total } = useSelector((state) => state.cartslice)
   const dispatch = useDispatch()
+  // console.log(cartData.cartQuantity);
 
   // Remove ticket function
   const removeTicket = (ticket) => {

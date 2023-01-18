@@ -71,6 +71,7 @@ const StudyTravel = () => {
                     </div>
                 </div>
             </div>
+            
             <div className="col-md-4 product_item">
                 <div className="product_item_one">
                     <div className="product_img">

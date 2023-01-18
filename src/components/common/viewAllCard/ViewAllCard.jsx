@@ -1,6 +1,6 @@
 import React from 'react'
 
-const ViewAllCard = ({navigate , text}) => {
+const ViewAllCard = ({ navigate, text }) => {
     return (
         <>
             <div className="col-md-4 product_item">

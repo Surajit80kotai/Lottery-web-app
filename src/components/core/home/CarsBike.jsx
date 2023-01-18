@@ -51,33 +51,39 @@ const CarsBike = ({ item, index }) => {
                                     <div className="game_number">
                                         <h4>Game-1</h4>
                                     </div>
-                                    <div className="time_left">
-                                        <div className="time_left_title">
-                                            <h3><img src="assets/img/992700 1.png" alt="" />Timeleft</h3>
-                                        </div>
-                                        <div id="coundown" className="countdown">
-                                            <div className="timeleftarea">
-                                                <div id="days" className=" days">{timerDays}
+                                    {/* Condition for timer run-out */}
+                                    {
+                                        (timerDays && timerHours && timerMinutes && timerSeconds) >= 0 ?
+                                            <div className="time_left">
+                                                <div className="time_left_title">
+                                                    <h3><img src="/assets/img/992700 1.png" alt="" />Timeleft</h3>
                                                 </div>
-                                                <br /><span>Days</span>
-                                            </div>
-                                            <div className="timeleftarea">
-                                                <div id="hours" className=" hours">{timerHours}
+                                                <div id="coundown" className="countdown">
+                                                    <div className="timeleftarea">
+                                                        <div id="days" className=" days">{timerDays}
+                                                        </div>
+                                                        <br /><span>Days</span>
+                                                    </div>
+                                                    <div className="timeleftarea">
+                                                        <div id="hours" className=" hours">{timerHours}
+                                                        </div>
+                                                        <br /><span>Hours</span>
+                                                    </div>
+                                                    <div className="timeleftarea">
+                                                        <div id="minutes" className=" minutes">{timerMinutes}
+                                                        </div>
+                                                        <br /><span>Mins</span>
+                                                    </div>
+                                                    <div className="timeleftarea">
+                                                        <div id="seconds" className=" seconds">{timerSeconds}
+                                                        </div>
+                                                        <br /><span>Sec</span>
+                                                    </div>
                                                 </div>
-                                                <br /><span>Hours</span>
                                             </div>
-                                            <div className="timeleftarea">
-                                                <div id="minutes" className=" minutes">{timerMinutes}
-                                                </div>
-                                                <br /><span>Mins</span>
-                                            </div>
-                                            <div className="timeleftarea">
-                                                <div id="seconds" className=" seconds">{timerSeconds}
-                                                </div>
-                                                <br /><span>Sec</span>
-                                            </div>
-                                        </div>
-                                    </div>
+                                            : <h4 className='text-dark'>Ticket is unavailabe right now</h4>
+                                    }
+
                                 </Link>
                                 <div className="product_action">
                                     <Link to={`/info/${_id}`} className="btn2">Info</Link>
