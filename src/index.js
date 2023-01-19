@@ -4,12 +4,11 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
-import { Store } from './services/store/Store'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import SignUp from './pages/SignUp';
-import Login from './pages/Login';
-import ForgetPassword from './pages/ForgetPassword';
-import ErrorPage from './privateroute/ErrorPage';
+import SignUp from './USER/pages/SignUp';
+import Login from './USER/pages/Login';
+import ForgetPassword from './USER/pages/ForgetPassword';
+import { Store } from './USER/services/store/Store';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -22,7 +21,6 @@ root.render(
         <Route path='/signup' element={<SignUp />} />
         <Route path='/login' element={<Login />} />
         <Route path='/f_password' element={<ForgetPassword />} />
-        <Route path='/error' element={<ErrorPage />} />
       </Routes>
     </Router>
   </Provider>

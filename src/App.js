@@ -1,14 +1,14 @@
 import { Routes, Route } from 'react-router-dom'
-import Home from './pages/Home'
-import NavBar from './components/common/navigationBar/NavBar';
-import FooterMain from './components/common/footer/FooterMain';
-import LotteryInfo from './pages/LotteryInfo';
-import UserDashBoard from './pages/UserDashBoard';
-import ViewAllHome from './components/core/viewAllLottery/ViewAllHome';
-import ViewAllCars from './components/core/viewAllLottery/ViewAllCars';
-import Cart from './pages/Cart';
-import PlaceOrder from './pages/PlaceOrder';
-import PrivateRoute from './privateroute/PrivateRoute';
+import Home from './USER/pages/Home';
+import NavBar from './USER/components/common/navigationBar/NavBar';
+import FooterMain from './USER/components/common/footer/FooterMain';
+import LotteryInfo from './USER/pages/LotteryInfo';
+import ViewAllHome from './USER/components/core/viewAllLottery/ViewAllHome';
+import ViewAllCars from './USER/components/core/viewAllLottery/ViewAllCars';
+import PrivateRoute from './USER/privateroute/PrivateRoute';
+import UserDashBoard from './USER/pages/UserDashBoard';
+import Cart from './USER/pages/Cart';
+import PlaceOrder from './USER/pages/PlaceOrder';
 // import Test from './pages/Test';
 function App() {
   return (
