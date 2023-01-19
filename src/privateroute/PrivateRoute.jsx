@@ -6,7 +6,7 @@ const PrivateRoute = () => {
     return (
         <>
             {
-                token ? <Outlet /> : <Navigate to='/error'/>
+                token ? <Outlet /> : <Navigate to='/'/>
             }
         </>
     )

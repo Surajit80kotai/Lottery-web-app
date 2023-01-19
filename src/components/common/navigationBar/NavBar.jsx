@@ -13,6 +13,7 @@ const NavBar = () => {
   const logOut = () => {
     dispatch(doLogOut())
     navigate('/')
+
     // window.localStorage.removeItem("accessToken")
     // window.localStorage.removeItem("displayName")
     // const socialLogOut = async () => {
@@ -165,9 +166,8 @@ const NavBar = () => {
 
                           <div className="foot">
                             <li className="user-menu__item">
-                              <Link onClick={logOut} className="user-menu-link" to="#!" style={{ "color": "#F44336", "fontSize": "16px" }}>Logout</Link>
+                              <Link onClick={logOut} className="user-menu-link" to="/" style={{ "color": "#F44336", "fontSize": "16px" }}>Logout</Link>
                             </li>
-                            {/* <li className="user-menu__item"><Link className="user-menu-link" to="#!">Settings</Link></li> */}
                           </div>
                         </ul>
                       </div>
