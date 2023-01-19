@@ -1,15 +1,28 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { API } from "../api/Api";
+
+// Cart post request handle
+const ADD_CART = "/auth/add-cart"
+export const fetchCart = createAsyncThunk("/auth/add-cart", async ({ userId, productId, quantity }) => {
+    try {
+        await API.post(ADD_CART, { userId, productId, quantity })
+    } catch (err) {
+        console.log(err)
+    }
+})
 
 export const CartSlice = createSlice({
     name: "cartslice",
     initialState: {
         cart_data: [],
         sub_total: 0,
-        total: 0
+        total: 0,
+        tota_amount: 0
     },
     reducers: {
         // Add item
         addItem(state, { payload }) {
+            console.log(payload);
             const itemIndex = state.cart_data.findIndex(item => item._id === payload._id)
             if (itemIndex >= 0) {
                 state.cart_data[itemIndex].cartQuantity += 1

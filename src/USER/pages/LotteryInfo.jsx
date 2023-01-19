@@ -1,18 +1,19 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import TrustedPayment from '../components/common/trustedPayment/TrustedPayment'
 import { useTimer } from '../customHooks/useTimer'
 import { useDispatch } from 'react-redux'
-import { addItem, decItem, incItem } from '../services/slice/CartSlice'
+import { addItem } from '../services/slice/CartSlice'
 // import Flickity from 'react-flickity-component'
 
 const LotteryInfo = () => {
     const { lid } = useParams()
     const [timerDays, timerHours, timerMinutes, timerSeconds, startTimer] = useTimer()
-    // const [count, setCount] = useState(1)
+    const [amount, setAmount] = useState(1)
     const dispatch = useDispatch()
     const lottData = JSON.parse(window.localStorage.getItem("data"))
     const ticketInfo = lottData?.filter((item) => item._id === lid)
+    // console.log(ticketInfo[0]);
 
     // Accesing token
     const token = JSON.parse(window.localStorage.getItem("token"))
@@ -21,16 +22,18 @@ const LotteryInfo = () => {
     const mainimage = ticketInfo[0]?.main_image
 
 
-    // IncCount function
-    // const IncCount = () => {
-    //     setCount(count + 1)
-    // }
-    // // DecCount function
-    // const DecCount = () => {
-    //     if (count > 1) {
-    //         setCount(count - 1)
-    //     }
-    // }
+    // IncAmount function
+    const IncAmount = () => {
+        if (amount < 5) {
+            setAmount(amount + 1)
+        }
+    }
+    // DecAmount function
+    const DecAmount = () => {
+        if (amount > 1) {
+            setAmount(amount - 1)
+        }
+    }
 
     // Add ticket function
     const addTicket = (ticket) => {
@@ -113,11 +116,11 @@ const LotteryInfo = () => {
                                     <h3>Quantity</h3>
                                     <div className="col-md-4 mb-3">
                                         <div className="qty-container">
-                                            <button className="qty-btn-minus btn-light" type="button" onClick={() => dispatch(decItem(ticketInfo[0]._id))}><i className="fa fa-minus"></i></button>
+                                            <button className="qty-btn-minus btn-light" type="button" onClick={DecAmount}><i className="fa fa-minus"></i></button>
                                             <div className="quantity_place">
-                                                <h1 className='quantity_title'>{ticketInfo[0]?.ticket_quantity}</h1>
+                                                <input className='quantity_title' value={amount} />
                                             </div>
-                                            <button className="qty-btn-plus btn-light" type="button" onClick={() => dispatch(incItem(ticketInfo[0]._id))}><i className="fa fa-plus"></i></button>
+                                            <button className="qty-btn-plus btn-light" type="button" onClick={IncAmount}><i className="fa fa-plus"></i></button>
                                         </div>
                                     </div>
                                 </div>
@@ -125,7 +128,7 @@ const LotteryInfo = () => {
                                 <div className="btn_area mt-5">
                                     {
                                         token ?
-                                            <button onClick={() => addTicket(ticketInfo[0])} className="btn2">Add To Cart</button>
+                                            <button onClick={() => addTicket(ticketInfo)} className="btn2">Add To Cart</button>
                                             : <Link to="/login" className="btn2">Add To Cart</Link>
                                     }
 
