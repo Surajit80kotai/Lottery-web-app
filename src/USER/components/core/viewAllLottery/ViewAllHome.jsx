@@ -1,18 +1,27 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchLottery } from '../../../services/slice/LotterySlice'
+import { fetchCategory, fetchLottery } from '../../../services/slice/LotterySlice'
 import TrustedPayment from '../../common/trustedPayment/TrustedPayment'
 import HomeLottery from '../home/HomeLottery'
 
 const ViewAllHome = () => {
-    const { fetch_lott_data } = useSelector((state) => state.lotteryslice)
+    const { fetch_lott_data, category_data } = useSelector((state) => state.lotteryslice)
     const dispatch = useDispatch()
 
+    // Getting category_name & category_id
+    const categoryObj = category_data?.reduce((acc, cur) => {
+        return {
+            ...acc,
+            [cur.name]: cur._id
+        }
+    }, {});
+
     // Filtering category from data
-    const house = fetch_lott_data?.filter((item) => item.category === "house")
+    const house = fetch_lott_data?.filter((item) => item.category === categoryObj["house"])
 
     useEffect(() => {
         dispatch(fetchLottery())
+        dispatch(fetchCategory())
         window.scrollTo(0, 0)
     }, [dispatch])
 

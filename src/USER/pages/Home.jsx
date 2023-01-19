@@ -7,22 +7,33 @@ import Cosmetics from '../components/core/home/Cosmetics'
 import HomeLottery from '../components/core/home/HomeLottery'
 import StudyTravel from '../components/core/home/StudyTravel'
 import TrustedPayment from '../components/common/trustedPayment/TrustedPayment'
-import { fetchLottery } from '../services/slice/LotterySlice'
+import { fetchCategory, fetchLottery } from '../services/slice/LotterySlice'
 
 
 const Home = () => {
-    const { fetch_lott_data } = useSelector((state) => state.lotteryslice)
+    const { fetch_lott_data, category_data } = useSelector((state) => state.lotteryslice)
     const dispatch = useDispatch()
 
+    // Getting category_name & category_id
+    const categoryObj = category_data?.reduce((acc, cur) => {
+        return {
+            ...acc,
+            [cur.name]: cur._id
+        }
+    }, {});
+
     // Filtering category from data
-    const house = fetch_lott_data?.filter((item) => item.category === "house")
-    const vehicle = fetch_lott_data?.filter((item) => item.category === "vehicle")
-    // console.log(house);
+    const house = fetch_lott_data?.filter((item) => item.category === categoryObj["house"])
+    const vehicle = fetch_lott_data?.filter((item) => item.category === categoryObj["Cars & Bike"])
+    const cosmetics = fetch_lott_data?.filter((item) => item.category === categoryObj["Cosmetic products"])
+    const study_travel = fetch_lott_data?.filter((item) => item.category === categoryObj["Study abroad or travel abroad"])
+    const comp_phn = fetch_lott_data?.filter((item) => item.category === categoryObj["computers and phones"])
 
 
     useEffect(() => {
         window.scrollTo(0, 0)
         dispatch(fetchLottery())
+        dispatch(fetchCategory())
     }, [dispatch])
 
 
@@ -72,14 +83,55 @@ const Home = () => {
                                 }).slice(0, 6)
                             }
 
+                            {/* divider */}
+                            <div className="divider"></div>
                             {/* <!-- stydy travel --> */}
-                            <StudyTravel />
+                            <div className="first_row_title">
+                                <h2>Study & Travle</h2>
+                            </div>
+                            {
+                                study_travel.map((item, index) => {
+                                    return <StudyTravel
+                                        item={item}
+                                        key={item._id}
+                                        index={index}
+                                    />
+                                }).slice(0, 6)
+                            }
+
+                            {/* divider */}
+                            <div className="divider"></div>
 
                             {/* <!-- computers & phones --> */}
-                            <ComputersPhones />
+                            <div className="first_row_title">
+                                <h2>Computer & Phones</h2>
+                            </div>
+                            {
+                                comp_phn.map((item, index) => {
+                                    return <ComputersPhones
+                                        item={item}
+                                        key={item._id}
+                                        index={index}
+                                    />
+                                }).slice(0, 6)
+                            }
+
+                            {/* divider */}
+                            <div className="divider"></div>
 
                             {/* <!-- cosmetic --> */}
-                            <Cosmetics />
+                            <div className="first_row_title">
+                                <h2>Cosmetics</h2>
+                            </div>
+                            {
+                                cosmetics.map((item, index) => {
+                                    return <Cosmetics
+                                        item={item}
+                                        key={item._id}
+                                        index={index}
+                                    />
+                                }).slice(0, 6)
+                            }
 
                             {/* <div className="text-center ">
                                 <button className="btn3">Load More</button>

@@ -5,8 +5,8 @@ import { useTimer } from '../../../customHooks/useTimer'
 
 const CarsBike = ({ item, index }) => {
     const navigate = useNavigate()
-    const { time_left, ticket_name, ticket_price, currency, ticket_quantity, discount_percentage, _id } = item
-    const discountedPrice = (ticket_price - ((ticket_price * discount_percentage) / 100))
+    const { time_left, ticket_name, ticket_price, currency, ticket_quantity, discount_percentage, main_image, _id } = item
+    const discountedPrice = (Number(ticket_price - ((ticket_price * discount_percentage) / 100)))
     // Accesing token
     const token = JSON.parse(window.localStorage.getItem("token"))
     // defining states timer
@@ -26,15 +26,19 @@ const CarsBike = ({ item, index }) => {
                             <Link to={`/info/${_id}`}>
                                 <div className="product_img">
                                     <div className="pro_img">
-                                        <img src="assets/img/car1.jpg" alt="" className="img-fluid " />
+                                        <img src={main_image} alt="" className="img-fluid " />
                                     </div>
                                     <div className="label_area">
                                         <div className="label_tag_img">
-                                            <img src="assets/img/label.png" alt="" className="img-fluid" />
+                                            <img src="/assets/img/label.png" alt="" className="img-fluid" />
                                         </div>
                                         <div className="label_content">
                                             <h3 className="currencysymbol">{currency}</h3>
-                                            <h3 className="price">{ticket_price}</h3>
+                                            {
+                                                discountedPrice ?
+                                                    <h3 className="price">{discountedPrice}</h3>
+                                                    : <h3 className="price">{ticket_price}</h3>
+                                            }
                                         </div>
                                     </div>
                                 </div>
@@ -42,7 +46,7 @@ const CarsBike = ({ item, index }) => {
                             <div className="product_content">
                                 <Link to={`/info/${_id}`}>
                                     <div className="product_price">
-                                        <h3><span>{currency}</span>{discountedPrice}</h3>
+                                        <h3><span>{currency}</span>{ticket_price}</h3>
                                     </div>
                                     <div className="product_title">
                                         <h2>{ticket_name} </h2>

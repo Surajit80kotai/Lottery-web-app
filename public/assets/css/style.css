@@ -1504,6 +1504,19 @@ margin: 0.5rem;
 	margin-top: 5rem;
 }
 
+.mainproduct_image {
+	width: 500px;
+	height: 500px;
+
+}
+
+
+.mainproduct_image img{
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	
+}
 
 .quantity {
 	margin: 2rem 0;
@@ -1579,7 +1592,7 @@ margin: 0.5rem;
 	color: var(--primary-color);
 	font-family: var(--primary-font);
 	font-size: 2rem;
-	margin-bottom: 2rem;
+	margin-bottom: 0.5rem;
 	font-weight: 600;
 }
 
@@ -1951,6 +1964,14 @@ margin: 0.5rem;
 	font-weight: 700;
 	color: rgb(177, 25, 248);
 }
+
+
+.product_information_area{
+	margin-left: 2rem;
+}
+
+
+
 
 
 /* Payment form */

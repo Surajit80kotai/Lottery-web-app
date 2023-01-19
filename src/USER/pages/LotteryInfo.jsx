@@ -13,7 +13,6 @@ const LotteryInfo = () => {
     const dispatch = useDispatch()
     const lottData = JSON.parse(window.localStorage.getItem("data"))
     const ticketInfo = lottData?.filter((item) => item._id === lid)
-    // console.log(ticketInfo[0]);
 
     // Accesing token
     const token = JSON.parse(window.localStorage.getItem("token"))
@@ -63,10 +62,10 @@ const LotteryInfo = () => {
                             <div className="product_slider_images">
 
                                 {/* Main image  */}
-                                <div className="carousel carousel-main" data-flickity='{"pageDots": false }'>
-                                    <div className="carousel-cell"><img src={mainimage} alt='' /></div>
-                                </div>
+                                <div className="mainproduct_image img-fluid"><img src={mainimage} alt='' /></div>
 
+                                {/* <div className="carousel carousel-main" data-flickity='{"pageDots": false }'>
+                                </div> */}
                                 {/* Bottom slider  */}
                                 {/* <div className="carousel carousel-nav"
                                     data-flickity='{ "asNavFor": ".carousel-main", "contain": true, "pageDots": false,"prevNextButtons": true }'>
@@ -83,6 +82,7 @@ const LotteryInfo = () => {
 
                             </div>
                         </div>
+
                         <div className="col-md-6">
                             <div className="product_information_area">
                                 <div className="main_product_title">
@@ -111,19 +111,21 @@ const LotteryInfo = () => {
                                         : null
                                 }
 
-
+                                {/* Quantity area */}
                                 <div className="quantity">
                                     <h3>Quantity</h3>
                                     <div className="col-md-4 mb-3">
                                         <div className="qty-container">
                                             <button className="qty-btn-minus btn-light" type="button" onClick={DecAmount}><i className="fa fa-minus"></i></button>
                                             <div className="quantity_place">
-                                                <input className='quantity_title' value={amount} />
+                                                {/* <input className='quantity_title' value={amount} /> */}
+                                                <h1 className='quantity_title'>{amount}</h1>
                                             </div>
                                             <button className="qty-btn-plus btn-light" type="button" onClick={IncAmount}><i className="fa fa-plus"></i></button>
                                         </div>
                                     </div>
                                 </div>
+
                                 {/* Add to cart buttton */}
                                 <div className="btn_area mt-5">
                                     {
@@ -137,6 +139,8 @@ const LotteryInfo = () => {
                                             : <Link to="/login" className="btn2">Buy Ticket</Link>
                                     }
                                 </div>
+
+                                {/* Timer */}
                                 <div className="product_time">
                                     <div className="time_left_title">
                                         <h3 className=""><img src="/assets/img/time.png" alt="" />Timeleft</h3>
@@ -164,6 +168,8 @@ const LotteryInfo = () => {
                                         </div>
                                     </div>
                                 </div>
+
+                                {/* Ticket quantity Slider */}
                                 <div className="ticket_sold">
                                     <div className="ticket_sold_title">
                                         <h3><span><img src="/assets/img/9121436 1.png" alt="" /></span> Ticket Slod Already </h3>
@@ -192,39 +198,32 @@ const LotteryInfo = () => {
                             <hr />
                             <div className="description_item">
                                 <div className="describe_heading">
-                                    <h4>De Super SOCO TC is standaard voorzien van:</h4>
+                                    <h4>{ticketInfo[0]?.key_feature}:</h4>
                                 </div>
                                 <div className="bullet_points">
-                                    <li><span><i className="fas fa-circle"></i></span>LED-verlichting</li>
-                                    <li><span><i className="fas fa-circle"></i></span>Bluetooth voorbereiding</li>
-                                    <li><span><i className="fas fa-circle"></i></span>Anti-diefstal systeem</li>
-                                    <li><span><i className="fas fa-circle"></i></span>Start-Stop</li>
-                                    <li><span><i className="fas fa-circle"></i></span>Bosch 3000 watt elektromotor</li>
+                                    {
+                                        ticketInfo[0]?.key_feature_body?.map((item, index) => {
+                                            return (
+                                                <li key={index}><span><i className="fas fa-circle"></i></span>{item}</li>
+                                            )
+                                        })
+                                    }
                                 </div>
                             </div>
                             <hr />
-                            <div className="description_item">
-                                <div className="describe_heading">
-                                    <h4>100% Elektrisch</h4>
-                                </div>
-                                <p className="description_para">
-                                    De Super SOCO TC is 100% elektrisch. Er is geen verbranding, dus ook geen uitstoot. Super
-                                    milieuvriendelijk. De BOSCH electromotor
-                                    heeft een vermogen van 3kW. Tevens is het koppel vele malen hoger, zodat je ook met twee personen
-                                    éénvoudig optrekt.
-                                </p>
-                            </div>
-                            <hr />
-                            <div className="description_item">
-                                <div className="describe_heading">
-                                    <h4>Geschikt voor extra passagier</h4>
-                                </div>
-                                <p className="description_para">
-                                    De Super SOCO TC is geschikt voor elk type bestuurder, en heeft uitklapbare side steps voor een
-                                    passagier.
-                                </p>
-                            </div>
-                            <hr />
+                            {
+                                ticketInfo[0]?.features?.map((item, index) => {
+                                    return (
+                                        <div className="description_item" key={index}>
+                                            <div className="describe_heading">
+                                                <h4>{item?.key}</h4>
+                                            </div>
+                                            <p className="description_para">{item?.value}</p>
+                                            <hr />
+                                        </div>
+                                    )
+                                })
+                            }
                         </div>
                     </div>
                 </div>
