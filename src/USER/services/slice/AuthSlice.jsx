@@ -12,6 +12,7 @@ export const fetchSignUp = createAsyncThunk(
             await API.post(SIGN_UP, formValues)
             navigate('/login')
         } catch (err) {
+            // console.log("Sign Slice" ,rejectWithValue(err.response.data.errors));
             return rejectWithValue(err.response.data.errors)
         }
 

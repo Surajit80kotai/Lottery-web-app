@@ -23,11 +23,11 @@ const Home = () => {
     }, {});
 
     // Filtering category from data
-    const house = fetch_lott_data?.filter((item) => item.category === categoryObj["house"])
+    const house = fetch_lott_data?.filter((item) => item.category === categoryObj["House"])
     const vehicle = fetch_lott_data?.filter((item) => item.category === categoryObj["Cars & Bike"])
-    const cosmetics = fetch_lott_data?.filter((item) => item.category === categoryObj["Cosmetic products"])
-    const study_travel = fetch_lott_data?.filter((item) => item.category === categoryObj["Study abroad or travel abroad"])
-    const comp_phn = fetch_lott_data?.filter((item) => item.category === categoryObj["computers and phones"])
+    const cosmetics = fetch_lott_data?.filter((item) => item.category === categoryObj["Cosmetic"])
+    const study_travel = fetch_lott_data?.filter((item) => item.category === categoryObj["Study & abroad"])
+    const comp_phn = fetch_lott_data?.filter((item) => item.category === categoryObj["computers & phones"])
 
 
     useEffect(() => {
@@ -63,7 +63,7 @@ const Home = () => {
                                         key={item._id}
                                         index={index}
                                     />
-                                }).slice(0, 6)
+                                }).slice(0, 8)
                             }
 
                             {/* divider */}
@@ -80,7 +80,7 @@ const Home = () => {
                                         key={item._id}
                                         index={index}
                                     />
-                                }).slice(0, 6)
+                                }).slice(0, 8)
                             }
 
                             {/* divider */}
@@ -96,7 +96,7 @@ const Home = () => {
                                         key={item._id}
                                         index={index}
                                     />
-                                }).slice(0, 6)
+                                }).slice(0, 8)
                             }
 
                             {/* divider */}
@@ -113,7 +113,7 @@ const Home = () => {
                                         key={item._id}
                                         index={index}
                                     />
-                                }).slice(0, 6)
+                                }).slice(0, 8)
                             }
 
                             {/* divider */}
@@ -130,7 +130,7 @@ const Home = () => {
                                         key={item._id}
                                         index={index}
                                     />
-                                }).slice(0, 6)
+                                }).slice(0, 8)
                             }
 
                             {/* <div className="text-center ">

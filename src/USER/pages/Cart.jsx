@@ -72,7 +72,7 @@ const Cart = () => {
 
               {/* <!-- place order area --> */}
               {
-                cartData.length > 0 ?
+                cartData?.length > 0 ?
                   <div className="placeorder_area sticky">
                     <Link to="/placeorder" className="orderplace">Place Order</Link>
                   </div>

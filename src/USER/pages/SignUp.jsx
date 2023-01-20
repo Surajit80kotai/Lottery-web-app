@@ -9,6 +9,7 @@ import { fetchCountry, fetchStates } from '../services/slice/CountryStateSlice';
 const SignUp = () => {
     const { signupErr } = useSelector((state) => state.authslice)
     const newSignupErr = signupErr[0]
+    console.log("Sign up", newSignupErr);
     const { countryData } = useSelector((state) => state.countrystateslice)
     const { stateData } = useSelector((state) => state.countrystateslice)
 
@@ -30,6 +31,11 @@ const SignUp = () => {
     const handleChange = (e) => {
         setFormValues({ ...formValues, [e.target.name]: e.target.value })
         const countryId = e.target.value
+
+        if (e.target.value) {
+
+        }
+
         if (countryId) {
             getCountryId(countryId)
         }
@@ -73,7 +79,7 @@ const SignUp = () => {
 
     useEffect(() => {
         dispatch(fetchCountry())
-    }, [dispatch])
+    }, [dispatch, newSignupErr])
 
     return (
         <>
@@ -123,7 +129,6 @@ const SignUp = () => {
                                                         value={formValues.first_name}
                                                         onChange={handleChange}
                                                         aria-describedby="emailHelp" />
-                                                    {/* <p>{v1 || v2}</p> */}
                                                     <p className='text-danger mt-2 fs-4'>
                                                         {(newSignupErr?.first_name) ? "First Name is required" : null}
                                                     </p>

@@ -19,6 +19,7 @@ const LotteryInfo = () => {
 
     // const listimage = ticketInfo[0]?.list_image
     const mainimage = ticketInfo[0]?.main_image
+    const is_image = ticketInfo[0]?.is_image
 
 
     // IncAmount function
@@ -51,7 +52,6 @@ const LotteryInfo = () => {
     //     initialIndex: 2
     // }
 
-
     return (
         <>
             {/* Product Info */}
@@ -62,7 +62,12 @@ const LotteryInfo = () => {
                             <div className="product_slider_images">
 
                                 {/* Main image  */}
-                                <div className="mainproduct_image img-fluid"><img src={mainimage} alt='' /></div>
+                                <div className="mainproduct_image img-fluid">
+                                    {
+                                        (is_image?.length) ? <img src={mainimage} alt="" className="img-fluid " />
+                                            : <img src="/assets/img/imageunavailable.jpeg" alt="" className="img-fluid " />
+                                    }
+                                </div>
 
                                 {/* <div className="carousel carousel-main" data-flickity='{"pageDots": false }'>
                                 </div> */}
@@ -130,87 +135,103 @@ const LotteryInfo = () => {
                                 <div className="btn_area mt-5">
                                     {
                                         token ?
-                                            <button onClick={() => addTicket(ticketInfo)} className="btn2">Add To Cart</button>
+                                            <button onClick={() => addTicket(ticketInfo[0])} className="btn2">Add To Cart</button>
                                             : <Link to="/login" className="btn2">Add To Cart</Link>
                                     }
 
                                     {
-                                        token ? <Link onClick={() => addTicket(ticketInfo[0])} to="/placeorder" className="btn2">Buy Ticket</Link>
+                                        token ? <Link to="/placeorder" className="btn2">Buy Ticket</Link>
                                             : <Link to="/login" className="btn2">Buy Ticket</Link>
                                     }
                                 </div>
 
                                 {/* Timer */}
-                                <div className="product_time">
-                                    <div className="time_left_title">
-                                        <h3 className=""><img src="/assets/img/time.png" alt="" />Timeleft</h3>
-                                    </div>
-                                    <div id="coundown" className="countdown product_timeleftwrap">
-                                        <div className="product_timeleft">
-                                            <div id="days" className="time_left_style days">{timerDays}
+                                {
+                                    (timerDays && timerHours && timerMinutes && timerSeconds) >= 0 ?
+                                        <div className="product_time">
+                                            <div className="time_left_title">
+                                                <h3 className=""><img src="/assets/img/time.png" alt="" />Timeleft</h3>
                                             </div>
-                                            <br /><span>Days</span>
-                                        </div>
-                                        <div className="product_timeleft">
-                                            <div id="hours" className="time_left_style hours">{timerHours}
+                                            <div id="coundown" className="countdown product_timeleftwrap">
+                                                <div className="product_timeleft">
+                                                    <div id="days" className="time_left_style days">{timerDays}
+                                                    </div>
+                                                    <br /><span>Days</span>
+                                                </div>
+                                                <div className="product_timeleft">
+                                                    <div id="hours" className="time_left_style hours">{timerHours}
+                                                    </div>
+                                                    <br /><span>Hours</span>
+                                                </div>
+                                                <div className="product_timeleft">
+                                                    <div id="minutes" className="time_left_style minutes">{timerMinutes}
+                                                    </div>
+                                                    <br /><span>Mins</span>
+                                                </div>
+                                                <div className="product_timeleft">
+                                                    <div id="seconds" className="time_left_style seconds">{timerSeconds}
+                                                    </div>
+                                                    <br /><span>Sec</span>
+                                                </div>
                                             </div>
-                                            <br /><span>Hours</span>
                                         </div>
-                                        <div className="product_timeleft">
-                                            <div id="minutes" className="time_left_style minutes">{timerMinutes}
-                                            </div>
-                                            <br /><span>Mins</span>
-                                        </div>
-                                        <div className="product_timeleft">
-                                            <div id="seconds" className="time_left_style seconds">{timerSeconds}
-                                            </div>
-                                            <br /><span>Sec</span>
-                                        </div>
-                                    </div>
-                                </div>
+                                        : <h4 className='text-dark my-5'>Ticket is unavailabe right now</h4>
+                                }
 
                                 {/* Ticket quantity Slider */}
                                 <div className="ticket_sold">
                                     <div className="ticket_sold_title">
-                                        <h3><span><img src="/assets/img/9121436 1.png" alt="" /></span> Ticket Slod Already </h3>
+                                        <h3>
+                                            <span><img src="/assets/img/9121436 1.png" alt="" /></span>
+                                            Ticket Remains : <strong>{ticketInfo[0]?.ticket_quantity}</strong>
+                                        </h3>
                                     </div>
-                                    <div className="progressarea">
+
+                                    {/* Pogressbar area */}
+                                    {/* <div className="progressarea">
                                         <div data-progress={ticketInfo[0]?.ticket_quantity}></div>
-                                        <p className="text-center"><strong>{ticketInfo[0]?.ticket_quantity}%</strong></p>
-                                    </div>
+                                    </div> */}
+
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div className="row">
                         <div className="description_wrapper">
-                            <div className="des_title">
-                                <h3>DESCRIPTION</h3>
-                            </div>
-                            <div className="description_item">
-                                <div className="describe_heading">
-                                    <h4>{ticketInfo[0]?.ticket_name}</h4>
+                            {/* Description Section */}
+                            <div>
+                                <div className="des_title">
+                                    <h3>DESCRIPTION</h3>
                                 </div>
-                                <p className="description_para">
-                                    {ticketInfo[0]?.description}
-                                </p>
+                                <div className="description_item">
+                                    <div className="describe_heading">
+                                        <h4>{ticketInfo[0]?.ticket_name}</h4>
+                                    </div>
+                                    <p className="description_para">
+                                        {ticketInfo[0]?.description}
+                                    </p>
+                                </div>
+                                <hr />
                             </div>
-                            <hr />
+
+                            {/* Key feature body section */}
                             <div className="description_item">
                                 <div className="describe_heading">
                                     <h4>{ticketInfo[0]?.key_feature}:</h4>
                                 </div>
-                                <div className="bullet_points">
-                                    {
-                                        ticketInfo[0]?.key_feature_body?.map((item, index) => {
-                                            return (
-                                                <li key={index}><span><i className="fas fa-circle"></i></span>{item}</li>
-                                            )
-                                        })
-                                    }
+                                <div>
+                                    <div className="bullet_points">
+                                        {
+                                            ticketInfo[0]?.key_feature_body?.map((item, index) => {
+                                                return (
+                                                    <li key={index}><span><i className="fas fa-circle"></i></span>{item}</li>
+                                                )
+                                            })
+                                        }
+                                    </div>
+                                    <hr />
                                 </div>
                             </div>
-                            <hr />
                             {
                                 ticketInfo[0]?.features?.map((item, index) => {
                                     return (
@@ -219,7 +240,10 @@ const LotteryInfo = () => {
                                                 <h4>{item?.key}</h4>
                                             </div>
                                             <p className="description_para">{item?.value}</p>
-                                            <hr />
+                                            {
+                                                (item?.key && item?.value) ? <hr /> : null
+                                            }
+
                                         </div>
                                     )
                                 })

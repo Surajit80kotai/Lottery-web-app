@@ -2,13 +2,13 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useEffect } from 'react'
 
 const PlaceOrder = () => {
     const cartData = JSON.parse(window.localStorage.getItem("cart_data"))
     const { total, sub_total } = useSelector((state) => state.cartslice)
     const [formValues, setFormValues] = useState({ address: "" })
     const [formError, setFormError] = useState({})
+    const [isCheck, setIsCheck] = useState(false)
 
     //For onChange function
     const handleChange = (e) => {
@@ -17,20 +17,21 @@ const PlaceOrder = () => {
     // For onSubmit function
     const handleSubmit = (e) => {
         e.preventDefault()
-        setFormError(validate(formError))
+        setFormError(validate(formValues))
+        if (formValues.address) {
+            setIsCheck(true)
+        }
     }
 
     // Validate Function
     const validate = (value) => {
         const error = {}
-        if(!value.address){
+        if (!value.address) {
             error.address = "Please ensure all required fields are filled in"
+            console.log("Error");
         }
         return error
     }
-
-    useEffect(()=>{
-    },[formError])
 
     return (
         <>
@@ -76,101 +77,106 @@ const PlaceOrder = () => {
                                             <button className="locationbtn"><span><i className="bi bi-compass"></i></span> Use my current location</button>
                                         </div>
 
-                                        <button className="accordion--form__next-btn con" onClick={handleSubmit}>Continue</button>
-
                                         <div className="accordion--form__invalid">{formError.address}</div>
 
+                                        <button className="accordion--form__next-btn con" onClick={handleSubmit}>Continue</button>
+
+
                                     </div>
                                 </fieldset>
 
+                                {
+                                    isCheck ?
+                                        <fieldset className="accordion--form__fieldset" id="fieldset-three">
+                                            <legend className="accordion--form__legend">PAYMENT OPTION</legend>
 
-                                <fieldset className="accordion--form__fieldset" id="fieldset-three">
-                                    <legend className="accordion--form__legend">PAYMENT OPTION</legend>
+                                            <div className="accordion--form__wrapper">
 
-                                    <div className="accordion--form__wrapper">
+                                                <div className="accordion" id="accordionExample">
+                                                    <div className="accordion-item">
+                                                        <h2 className="accordion-header" id="headingOne">
+                                                            <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                                UPI
+                                                            </button>
+                                                        </h2>
 
-                                        <div className="accordion" id="accordionExample">
-                                            <div className="accordion-item">
-                                                <h2 className="accordion-header" id="headingOne">
-                                                    <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                        UPI
-                                                    </button>
-                                                </h2>
-
-                                                {/************ Radio Buttons section ************/}
-                                                <div id="collapseOne" className="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                                                    <div className="accordion-body">
-                                                        <div className="option_one">
-                                                            <label className="radio">
-                                                                <input
-                                                                    type="radio"
-                                                                    name="r"
-                                                                    value="1"
-                                                                    defaultChecked /> <span><img src="/assets/img/pay (2).png" className="radio_img" alt="" /></span> </label>
-                                                            <label className="radio">
-                                                                <input
-                                                                    type="radio"
-                                                                    name="r"
-                                                                    value="1"
-                                                                    defaultChecked /> <span><img src="/assets/img/pay (1).png" className="radio_img" alt="" /></span> </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="accordion-item">
-                                                <h2 className="accordion-header" id="headingTwo">
-                                                    <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                                        Credit or Debit card
-                                                    </button>
-                                                </h2>
-
-                                                {/*********** Card Payment input ***********/}
-                                                <div id="collapseTwo" className="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                                                    <div className="accordion-body">
-                                                        <div className="card_pay">
-                                                            <div className="mb-3">
-                                                                <input
-                                                                    type="text"
-                                                                    className="form-control "
-                                                                    id="card"
-                                                                    name="card"
-                                                                    aria-describedby=""
-                                                                    placeholder="Enter Card Number" />
-                                                            </div>
-
-                                                            <div className="row">
-                                                                <div className="col-md-6">
-                                                                    <input
-                                                                        type="text"
-                                                                        className="form-control "
-                                                                        id=""
-                                                                        name=""
-                                                                        aria-describedby=""
-                                                                        placeholder="Expire Date" />
-                                                                </div>
-                                                                <div className="col-md-6">
-                                                                    <input
-                                                                        type="text"
-                                                                        className="form-control "
-                                                                        id="" name=""
-                                                                        aria-describedby=""
-                                                                        placeholder="CVC/CCV" />
+                                                        {/************ Radio Buttons section ************/}
+                                                        <div id="collapseOne" className="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                                            <div className="accordion-body">
+                                                                <div className="option_one">
+                                                                    <label className="radio">
+                                                                        <input
+                                                                            type="radio"
+                                                                            name="r"
+                                                                            value="1"
+                                                                            defaultChecked /> <span><img src="/assets/img/pay (2).png" className="radio_img" alt="" /></span> </label>
+                                                                    <label className="radio">
+                                                                        <input
+                                                                            type="radio"
+                                                                            name="r"
+                                                                            value="1"
+                                                                            defaultChecked /> <span><img src="/assets/img/pay (1).png" className="radio_img" alt="" /></span> </label>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <div className="accordion-item">
+                                                        <h2 className="accordion-header" id="headingTwo">
+                                                            <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                                Credit or Debit card
+                                                            </button>
+                                                        </h2>
+
+                                                        {/*********** Card Payment input ***********/}
+                                                        <div id="collapseTwo" className="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                                                            <div className="accordion-body">
+                                                                <div className="card_pay">
+                                                                    <div className="mb-3">
+                                                                        <input
+                                                                            type="text"
+                                                                            className="form-control "
+                                                                            id="card"
+                                                                            name="card"
+                                                                            aria-describedby=""
+                                                                            placeholder="Enter Card Number" />
+                                                                    </div>
+
+                                                                    <div className="row">
+                                                                        <div className="col-md-6">
+                                                                            <input
+                                                                                type="text"
+                                                                                className="form-control "
+                                                                                id=""
+                                                                                name=""
+                                                                                aria-describedby=""
+                                                                                placeholder="Expire Date" />
+                                                                        </div>
+                                                                        <div className="col-md-6">
+                                                                            <input
+                                                                                type="text"
+                                                                                className="form-control "
+                                                                                id="" name=""
+                                                                                aria-describedby=""
+                                                                                placeholder="CVC/CCV" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
                                                 </div>
+
+                                                <div className="btnarea mt-3">
+                                                    <Link className="accordion--form__prev-btn "><i className="bi bi-arrow-left"></i>Prev</Link>
+                                                    <button className="con">Continue</button>
+                                                </div>
+
                                             </div>
+                                        </fieldset>
+                                        : null
+                                }
 
-                                        </div>
-
-                                        <div className="btnarea mt-3">
-                                            <Link className="accordion--form__prev-btn "><i className="bi bi-arrow-left"></i>Prev</Link>
-                                            <button className="con">Continue</button>
-                                        </div>
-
-                                    </div>
-                                </fieldset>
 
                             </form>
 

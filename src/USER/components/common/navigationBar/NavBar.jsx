@@ -43,7 +43,7 @@ const NavBar = () => {
               <ul className="menu_list">
                 <li><Link to="/" className="menu_links">Home</Link></li>
                 <li><Link to="/aboutus" className="menu_links">About Us</Link></li>
-                <li><Link to="/product" className="menu_links">Product</Link></li>
+                {/* <li><Link to="/product" className="menu_links">Product</Link></li> */}
                 <li><Link to="/howtoplay" className="menu_links">How To play</Link></li>
                 <li><Link to="/charities" className="menu_links">Charities</Link></li>
                 <li><Link to="/contact" className="menu_links">Contact</Link></li>
