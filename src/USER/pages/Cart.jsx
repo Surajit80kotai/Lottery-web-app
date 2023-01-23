@@ -1,8 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { useEffect } from 'react'
-import { removeItem, totalPrice } from '../services/slice/CartSlice'
+import { removeItem } from '../services/slice/CartSlice'
 
 const Cart = () => {
   const cartData = JSON.parse(window.localStorage.getItem("cart_data"))
@@ -15,9 +14,6 @@ const Cart = () => {
     dispatch(removeItem(ticket))
   }
 
-  useEffect(() => {
-    dispatch(totalPrice())
-  }, [dispatch])
 
   return (
     <>

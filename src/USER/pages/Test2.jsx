@@ -6,9 +6,10 @@ import "slick-carousel/slick/slick.css";
 import { Link, useNavigate } from 'react-router-dom'
 import { fetchCountry, fetchStates } from '../services/slice/CountryStateSlice';
 
-const Test = () => {
+const SignUp = () => {
     const { signupErr } = useSelector((state) => state.authslice)
     const newSignupErr = signupErr[0]
+    // console.log("Sign up", newSignupErr);
     const { countryData } = useSelector((state) => state.countrystateslice)
     const { stateData } = useSelector((state) => state.countrystateslice)
 
@@ -30,6 +31,11 @@ const Test = () => {
     const handleChange = (e) => {
         setFormValues({ ...formValues, [e.target.name]: e.target.value })
         const countryId = e.target.value
+
+        if (e.target.value) {
+
+        }
+
         if (countryId) {
             getCountryId(countryId)
         }
@@ -73,7 +79,7 @@ const Test = () => {
 
     useEffect(() => {
         dispatch(fetchCountry())
-    }, [dispatch])
+    }, [dispatch, newSignupErr])
 
     return (
         <>
@@ -280,4 +286,4 @@ const Test = () => {
     )
 }
 
-export default Test
+export default SignUp

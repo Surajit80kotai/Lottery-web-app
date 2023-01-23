@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchSignUp } from '../services/slice/AuthSlice'
-import Slider from 'react-slick'
 import "slick-carousel/slick/slick.css";
 import { Link, useNavigate } from 'react-router-dom'
 import { fetchCountry, fetchStates } from '../services/slice/CountryStateSlice';
@@ -11,17 +10,14 @@ const SignUp = () => {
     const newSignupErr = signupErr[0]
     // console.log("Sign up", newSignupErr);
     const { countryData } = useSelector((state) => state.countrystateslice)
-    const { stateData } = useSelector((state) => state.countrystateslice)
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const [formValues, setFormValues] = useState({
-        first_name: "",
-        last_name: "",
+        full_name: "",
         email: "",
         phone: "",
         dob: "",
-        state: "",
         country: "",
         password: ""
     })
@@ -50,15 +46,15 @@ const SignUp = () => {
     }
 
     // Slider Settings
-    const settings = {
-        dots: false,
-        arrows: false,
-        autoplay: true,
-        infinite: false,
-        speed: 300,
-        slidesToShow: 1,
-        slidesToScroll: 1
-    }
+    // const settings = {
+    //     dots: false,
+    //     arrows: false,
+    //     autoplay: true,
+    //     infinite: false,
+    //     speed: 300,
+    //     slidesToShow: 1,
+    //     slidesToScroll: 1
+    // }
 
     // getCountryId
     const getCountryId = (name) => {
@@ -83,138 +79,78 @@ const SignUp = () => {
 
     return (
         <>
-            {/* Left area */}
             <main className="main">
-                <div className="wrapper_area">
+
+                <div className="wrapper_area margin-top-5">
+
                     <div className="log_area">
-                        <div className="left_part">
-                            <div className="slider_area">
 
-                                {/* Left Side Slider */}
-                                <Slider {...settings}>
-                                    <div className="slider_item">
-                                        <img src="assets/img/s1.jpg" alt="" className="img-fluid" />
-                                    </div>
-                                    <div className="slider_item">
-                                        <img src="assets/img/s2.jpg" alt="" className="img-fluid" />
-                                    </div>
-                                    <div className="slider_item">
-                                        <img src="assets/img/s3.jpg" alt="" className="img-fluid" />
-                                    </div>
-                                    <div className="slider_item">
-                                        <img src="assets/img/s4.jpg" alt="" className="img-fluid" />
-                                    </div>
-                                </Slider>
-                            </div>
-                        </div>
-
-                        {/* <!-- Right area --> */}
                         <div className="right_part">
-                            <h2 className="heading_form">Register here</h2>
                             <div className="form_areas">
+                                <form method="post" enctype="multipart/form-data" onSubmit={handleSubmit}>
 
-                                {/* Right Side Form area*/}
-                                <form method="post" encType="multipart/form-data" onSubmit={handleSubmit}>
-                                    <div className="container">
-                                        <div className="row">
-                                            {/* First Name */}
-                                            <div className="col-md-6">
-                                                <div className="m_gap">
-                                                    <label htmlFor="first_name" className="form-label label_style">First Name</label>
-                                                    <input
-                                                        type="text"
-                                                        className="form-control form_input"
-                                                        id="first_name"
-                                                        name="first_name"
-                                                        value={formValues.first_name}
-                                                        onChange={handleChange}
-                                                        aria-describedby="emailHelp" />
-                                                    <p className='text-danger mt-2 fs-4'>
-                                                        {(newSignupErr?.first_name) ? "First Name is required" : null}
-                                                    </p>
+                                    {/* Full name */}
+                                    <div className="m_gap">
+                                        <label htmlFor="fullname" className="form-label label_style">Full Name</label>
+                                        <input
+                                            type="text"
+                                            className="form-control form_input"
+                                            id="fullname"
+                                            name="fullname"
+                                            placeholder="Enter Your Full Name"
+                                            aria-describedby="emailHelp"
+                                            value={formValues.full_name}
+                                            onChange={handleChange}
+                                        />
+                                    </div>
 
-                                                </div>
-                                            </div>
+                                    {/* Email */}
+                                    <div className="m_gap">
+                                        <label htmlFor="emailid" className="form-label label_style">Email</label>
+                                        <input
+                                            type="email"
+                                            className="form-control form_input"
+                                            id="emailid"
+                                            name="emailid"
+                                            aria-describedby="emailHelp"
+                                            placeholder="Enter Your Email Id"
+                                            value={formValues.email}
+                                            onChange={handleChange}
 
-                                            {/* Last Name */}
-                                            <div className="col-md-6">
-                                                <div className="m_gap">
-                                                    <label htmlFor="last_name" className="form-label label_style">Last Name</label>
-                                                    <input
-                                                        type="text"
-                                                        className="form-control form_input"
-                                                        id="last_name"
-                                                        name="last_name"
-                                                        value={formValues.last_name}
-                                                        onChange={handleChange}
-                                                        aria-describedby="emailHelp"
-                                                    />
-                                                    <p className='text-danger mt-2 fs-4'>
-                                                        {(newSignupErr?.last_name) ? "Last Name is required" : null}
-                                                    </p>
-                                                </div>
-                                            </div>
+                                        />
+                                    </div>
 
-                                            {/* Email */}
-                                            <div className="m_gap">
-                                                <label htmlFor="email" className="form-label label_style">Enter Email Address</label>
-                                                <input
-                                                    type="email"
-                                                    className="form-control form_input"
-                                                    id="email"
-                                                    name="email"
-                                                    value={formValues.email}
-                                                    onChange={handleChange}
-                                                    aria-describedby="emailHelp"
-                                                />
-                                                <p className='text-danger mt-2 fs-4'>
-                                                    {(newSignupErr?.email) ? "Email is required" : null}
-                                                </p>
+                                    <div className="row">
 
-                                            </div>
-
-                                            {/* Phone */}
-                                            <div className="m_gap">
-                                                <label htmlFor="phone" className="form-label label_style">Enter Phone Number</label>
-                                                <input
-                                                    type="tel"
-                                                    className="form-control form_input"
-                                                    id="phone"
-                                                    name="phone"
-                                                    value={formValues.phone}
-                                                    onChange={handleChange}
-                                                    aria-describedby="emailHelp"
-                                                    maxLength={10}
-                                                />
-                                                <p className='text-danger mt-2 fs-4'>{(newSignupErr?.phone) ? "Phone Number is required" : null}</p>
-
-                                            </div>
-
-                                            {/* Date of birth */}
+                                        {/* Date Of birth */}
+                                        <div className="col-md">
                                             <div className="m_gap dob">
                                                 <label htmlFor="dob" className="form-label label_style">Date Of Birth</label>
+                                                {/* <!-- <input type="date" value="2017-01-01" min="1960-01-01" max="2019-01-01" className="form-control form_input"> --> */}
                                                 <input
-                                                    type="date"
-                                                    min="1960-01-01"
-                                                    max="2019-01-01"
-                                                    name='dob'
+                                                    placeholder="Select your date"
+                                                    type="text"
+                                                    name="checkIn"
+                                                    id="datepicker"
+                                                    className="calendar form-control form_input cal_input"
                                                     value={formValues.dob}
                                                     onChange={handleChange}
-                                                    className="form-control form_input" />
-                                                <p className='text-danger mt-2 fs-4'>{(newSignupErr?.dob) ? "Date of birth is required" : null}</p>
+                                                />
                                             </div>
+                                        </div>
 
-                                            {/* Country */}
+                                        {/* Country */}
+                                        <div className="col-md">
                                             <div className="m_gap">
-                                                <label htmlFor="country" className="form-label label_style">Country</label>
+                                                <label htmlFor="Country" className="form-label label_style">Country</label>
                                                 <select
                                                     className="form-select form_input form_select"
                                                     aria-label="Default select example"
-                                                    name='country'
+                                                    id="selects"
                                                     value={formValues.country}
                                                     onChange={handleChange}
-                                                    id="selects">
-                                                    <option value=""></option>
+                                                >
+                                                    <option value="1"></option>
                                                     {
                                                         countryData?.map((country) => {
                                                             return (
@@ -224,64 +160,64 @@ const SignUp = () => {
                                                         })
                                                     }
                                                 </select>
-                                                <p className='text-danger mt-2 fs-4'>{(newSignupErr?.country) ? "Country is required" : null}</p>
-
                                             </div>
+                                        </div>
+                                    </div>
 
-                                            {/* State */}
-                                            <div className="m_gap">
-                                                <label htmlFor="state" className="form-label label_style">State</label>
-                                                <select
-                                                    className="form-select form_input form_select"
-                                                    id="select"
-                                                    name='state'
-                                                    value={formValues.state}
-                                                    onChange={handleChange}
-                                                    aria-label="Default select example">
-                                                    <option value=""></option>
-                                                    {
-                                                        stateData?.map((state) => {
-                                                            return (
-                                                                <option key={state.state_id} value={state.name}>{state.name}</option>
-                                                            )
-                                                        })
-                                                    }
-                                                </select>
-                                                <p className='text-danger mt-2 fs-4'>{(newSignupErr?.state) ? "State is required" : null}</p>
-                                            </div>
+                                    <div className="row">
 
-                                            {/* Password */}
+                                        {/* Create Password*/}
+                                        <div className="col-md">
                                             <div className="m_gap mb-3">
                                                 <label htmlFor="password" className="form-label label_style">Create Password</label>
                                                 <input
                                                     type="password"
                                                     className="form-control form_input"
-                                                    id="password"
-                                                    name="password"
+                                                    id="fullname"
+                                                    name="fullname"
+                                                    placeholder="Create Your Password"
+                                                    aria-describedby="emailHelp"
                                                     value={formValues.password}
                                                     onChange={handleChange}
+                                                />
+
+                                            </div>
+                                        </div>
+
+                                        {/* Confirm Password */}
+                                        <div className="col-md">
+                                            <div className="m_gap mb-3">
+                                                <label htmlFor="password" className="form-label label_style">Confirm Password</label>
+                                                <input
+                                                    type="password"
+                                                    className="form-control form_input"
+                                                    id="fullname"
+                                                    name="fullname"
                                                     aria-describedby="emailHelp"
+                                                    placeholder="Confrim Password"
                                                 />
 
                                             </div>
                                         </div>
                                     </div>
 
-                                    {/* Button */}
                                     <div className="text-center">
                                         <button type="submit" className="btn_one">Register</button>
-                                    </div>
-
-                                    {/* Redirect link for Login page */}
-                                    <div className="not_regis">
-                                        <h6 className="not_register">Already have an account?<span><Link to="/login"> Login Here</Link></span></h6>
                                     </div>
                                 </form>
                             </div>
                         </div>
+                        <div className="left_part">
+                            <div className="company_logo text-center">
+                                <Link to="/"><img src="/assets/img/logo2.png" alt="" className="img-fluid" /></Link>
+                            </div>
+                            <h2 className="log_title">Welcome To Registration</h2>
+                            <h6 className="dont">Already Have An Acount</h6>
+                            <Link to="/login" className="Signup">Sing In</Link>
+                        </div>
                     </div>
                 </div>
-            </main >
+            </main>
         </ >
     )
 }

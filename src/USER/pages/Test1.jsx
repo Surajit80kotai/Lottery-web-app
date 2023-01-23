@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { fetchLogin } from '../services/slice/AuthSlice'
-// import Slider from 'react-slick'
+import Slider from 'react-slick'
 import "slick-carousel/slick/slick.css";
 import { auth, google } from '../util/Firebase'
 import { signInWithPopup } from 'firebase/auth'
@@ -40,15 +40,15 @@ const Login = () => {
 
 
     // Slider Settings
-    // const settings = {
-    //     dots: false,
-    //     arrows: false,
-    //     autoplay: true,
-    //     infinite: false,
-    //     speed: 300,
-    //     slidesToShow: 1,
-    //     slidesToScroll: 1
-    // }
+    const settings = {
+        dots: false,
+        arrows: false,
+        autoplay: true,
+        infinite: false,
+        speed: 300,
+        slidesToShow: 1,
+        slidesToScroll: 1
+    }
 
     // Login With Google
     const loginWithGoogle = async (provider) => {
@@ -68,24 +68,38 @@ const Login = () => {
     return (
         <>
             <main className="main">
-
-                <div className="wrapper_area margin-top">
-
+                <div className="wrapper_area">
                     <div className="log_area">
 
-                        <div className="right_part">
-                            <div className="right_top">
-                                <h2 className="heading_form">Login</h2>
-                                <div className="social_sign">
-                                    <Link to="" className="social_signup"><i className="fab fa-facebook-f"></i></Link>
-                                    <Link onClick={() => loginWithGoogle(google)} className="social_signup"><i className="fab fa-google"></i></Link>
-                                </div>
-                            </div>
+                        {/* left area */}
+                        <div className="left_part">
+                            <div className="slider_area">
 
+                                {/* Left side Slider Area */}
+                                <Slider {...settings}>
+                                    <div className="slider_item">
+                                        <img src="assets/img/s1.jpg" alt="" className="img-fluid" />
+                                    </div>
+                                    <div className="slider_item">
+                                        <img src="assets/img/s2.jpg" alt="" className="img-fluid" />
+                                    </div>
+                                    <div className="slider_item">
+                                        <img src="assets/img/s3.jpg" alt="" className="img-fluid" />
+                                    </div>
+                                    <div className="slider_item">
+                                        <img src="assets/img/s4.jpg" alt="" className="img-fluid" />
+                                    </div>
+                                </Slider>
+                            </div>
+                        </div>
+
+                        {/* right area  */}
+                        <div className="right_part">
+                            <h2 className="heading_form">Login</h2>
                             <div className="form_area">
-                                <form method="post" enctype="multipart/form-data" onSubmit={handleSubmit}>
-                                    
-                                    {/* Email Input */}
+                                <form method="post" encType="multipart/form-data" onSubmit={handleSubmit}>
+
+                                    {/*Email */}
                                     <div className="mb-5">
                                         <label htmlFor="email" className="form-label label_style">Email</label>
                                         <input
@@ -93,51 +107,43 @@ const Login = () => {
                                             className="form-control form_input"
                                             id="email"
                                             name="email"
-                                            aria-describedby="emailHelp"
-                                            placeholder="Enter Email Id"
                                             value={formValues.email}
                                             onChange={handleChange}
-                                        />
+                                            aria-describedby="emailHelp" />
                                         {/* Form Vaidation */}
                                         <p className='text-danger fs-4 mt-2'>{error_user.error}</p>
-                                        {/*  <div className="alert alert-danger mt-2" role="alert">
-                                                Please Enter Email Or Phone Number
-                                            </div>  */}
+
                                     </div>
 
-                                    {/* Password input */}
-                                    <div className="">
+                                    {/*Password */}
+                                    <div className="mt-5">
                                         <label htmlFor="password" className="form-label label_style">Password</label>
                                         <input
                                             type="password"
                                             className="form-control form_input"
                                             id="password"
                                             name="password"
-                                            placeholder="Enter Password"
                                             value={formValues.password}
-                                            onChange={handleChange}
-                                        />
+                                            onChange={handleChange} />
                                         {/* Form Vaidation */}
                                         <p className='text-danger fs-4 mt-2'>{error_password.error}</p>
-                                        {/* <div className="alert alert-danger mt-2" role="alert">
-                                                Passwordis wrong
-                                            </div> */}
+
                                     </div>
+
                                     <div className="bottom_form">
 
-                                        {/* Remember Me section */}
+                                        {/*Remember Me Section*/}
                                         <div className="mb-3 form-check">
                                             <input
                                                 type="checkbox"
                                                 className="form-check-input check_input"
                                                 id="exampleCheck1"
                                                 value={click}
-                                                onChange={() => setClick(!click)}
-                                            />
+                                                onChange={() => setClick(!click)} />
                                             <label className="form-check-label check_label" htmlFor="exampleCheck1">Remember Me</label>
                                         </div>
 
-                                        {/* Forget password Link */}
+                                        {/* Forget Password Link */}
                                         <div className="forget_password">
                                             <Link to="/f_password" className="forget_pass">Forget Password?</Link>
                                         </div>
@@ -145,17 +151,25 @@ const Login = () => {
                                     <div className="text-center">
                                         <button type="submit" className="btn_one">Login</button>
                                     </div>
+
+                                    {/* Redirecting to signup */}
+                                    <div className="not_regis">
+                                        <h6 className="not_register">Not Register?<span><Link to="/signup"> Sign Up Here</Link></span></h6>
+                                    </div>
+                                    <div className="or_divider">
+                                        <h6 className="or_style">Or</h6>
+                                    </div>
+
+                                    {/* Login with social media accout */}
+
+                                    <div className="another_process">
+                                        <Link to="" className="login_withfb"><span><img src="assets/img/fb.png" alt="" /></span>Continue with Facebook</Link>
+                                        <Link onClick={() => loginWithGoogle(google)} className="login_withfb"><span><img src="/assets/img/google.png" alt="" /></span>Continue with Google</Link>
+                                    </div>
                                 </form>
                             </div>
                         </div>
-                        <div className="left_part">
-                            <div className="company_logo text-center">
-                                <Link to="/"><img src="/assets/img/logo2.png" alt="" className="img-fluid" /></Link>
-                            </div>
-                            <h2 className="log_title">Welcome To Login</h2>
-                            <h6 className="dont">Don't Have Account?</h6>
-                            <Link to="/signup" className="Signup">Sing Up</Link>
-                        </div>
+
                     </div>
                 </div>
             </main>
