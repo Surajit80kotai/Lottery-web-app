@@ -15,7 +15,7 @@ const ForgetPassword = () => {
     //  handleSubmit Function for form submit
     const handleSubmit = (e) => {
         e.preventDefault()
-        dispatch(fetchForgetPass(formValues))
+        dispatch(fetchForgetPass({formValues}))
         setFormValues({ email: "" })
     }
 

@@ -41,8 +41,7 @@ const FORGET_PASS = "/auth/forget"
 export const fetchForgetPass = createAsyncThunk(
     "forget", async ({ formValues }, { rejectWithValue }) => {
         try {
-            const result = await API.post(FORGET_PASS, formValues)
-            console.log(result)
+            await API.post(FORGET_PASS, formValues)
         } catch (err) {
             // console.log(rejectWithValue(err.response.data));
             return rejectWithValue(err.response.data)
@@ -122,12 +121,10 @@ export const AuthSlice = createSlice({
         builder.addCase(fetchForgetPass.fulfilled, (state, { payload }) => {
             state.msg = "Success"
             state.user = payload
-            // console.log(payload);
         })
         builder.addCase(fetchForgetPass.rejected, (state, { payload }) => {
             state.msg = "Failed"
             state.error = payload
-            // console.log(payload);
         })
     }
 })
