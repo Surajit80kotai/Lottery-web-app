@@ -3,9 +3,9 @@ import { API } from "../api/Api";
 
 // Cart post request handle
 const ADD_CART = "/auth/add-cart"
-export const fetchCart = createAsyncThunk("/auth/add-cart", async ({ userId, productId, quantity }) => {
+export const fetchCart = createAsyncThunk("/auth/add-cart", async ({ userId, productId, amount }) => {
     try {
-        await API.post(ADD_CART, { userId, productId, quantity })
+        await API.post(ADD_CART, { userId, productId, amount })
     } catch (err) {
         console.log(err)
     }
@@ -15,6 +15,7 @@ export const CartSlice = createSlice({
     name: "cartslice",
     initialState: {
         cart_data: [],
+        status: "",
         sub_total: 0,
         total: 0,
         tota_amount: 0
@@ -106,6 +107,20 @@ export const CartSlice = createSlice({
                 cart_data: []
             }
         }
+    },
+    extraReducers: (builder) => {
+        // Post request states for cart system
+        builder.addCase(fetchCart.pending, (state) => {
+            state.status = "Loading"
+        })
+        builder.addCase(fetchCart.fulfilled, (state, { payload }) => {
+            state.status = "Success"
+            state.cart_data = payload
+            console.log("Cart slice", payload);
+        })
+        builder.addCase(fetchCart.rejected, (state) => {
+            state.status = "Failed"
+        })
     }
 })
 

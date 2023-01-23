@@ -56,7 +56,7 @@ const HomeLottery = ({ item, index }) => {
                                     {
                                         (timerDays && timerHours && timerMinutes && timerSeconds) >= 0 ?
                                             <div className="time_left">
-                                                <div id="coundown" className="countdown">
+                                                <div id="coundown" className="countdown text-center">
                                                     <div className="timeleftarea">
                                                         <div id="days" className=" days">{timerDays}
                                                         </div>

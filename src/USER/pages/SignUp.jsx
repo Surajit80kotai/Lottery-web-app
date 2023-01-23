@@ -9,7 +9,7 @@ import { fetchCountry, fetchStates } from '../services/slice/CountryStateSlice';
 const SignUp = () => {
     const { signupErr } = useSelector((state) => state.authslice)
     const newSignupErr = signupErr[0]
-    console.log("Sign up", newSignupErr);
+    // console.log("Sign up", newSignupErr);
     const { countryData } = useSelector((state) => state.countrystateslice)
     const { stateData } = useSelector((state) => state.countrystateslice)
 

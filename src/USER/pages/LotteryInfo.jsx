@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom'
 import TrustedPayment from '../components/common/trustedPayment/TrustedPayment'
 import { useTimer } from '../customHooks/useTimer'
 import { useDispatch } from 'react-redux'
-import { addItem } from '../services/slice/CartSlice'
+import { fetchCart } from '../services/slice/CartSlice'
 // import Flickity from 'react-flickity-component'
 
 const LotteryInfo = () => {
@@ -13,6 +13,10 @@ const LotteryInfo = () => {
     const dispatch = useDispatch()
     const lottData = JSON.parse(window.localStorage.getItem("data"))
     const ticketInfo = lottData?.filter((item) => item._id === lid)
+    const user = JSON.parse(window.localStorage.getItem("user"))
+    const userID = user?.user_id
+    // console.log(userID);
+
 
     // Accesing token
     const token = JSON.parse(window.localStorage.getItem("token"))
@@ -21,6 +25,7 @@ const LotteryInfo = () => {
     const mainimage = ticketInfo[0]?.main_image
     const is_image = ticketInfo[0]?.is_image
 
+    // console.log(ticketInfo[0]);
 
     // IncAmount function
     const IncAmount = () => {
@@ -37,7 +42,8 @@ const LotteryInfo = () => {
 
     // Add ticket function
     const addTicket = (ticket) => {
-        dispatch(addItem(ticket))
+        // dispatch(addItem(ticket))
+        dispatch(fetchCart({ ticket, amount, userID }))
     }
 
     useEffect(() => {
@@ -119,7 +125,7 @@ const LotteryInfo = () => {
                                 {/* Quantity area */}
                                 <div className="quantity">
                                     <h3>Quantity</h3>
-                                    <div className="col-md-4 mb-3">
+                                    <div className="col-md-4">
                                         <div className="qty-container">
                                             <button className="qty-btn-minus btn-light" type="button" onClick={DecAmount}><i className="fa fa-minus"></i></button>
                                             <div className="quantity_place">
@@ -135,7 +141,7 @@ const LotteryInfo = () => {
                                 <div className="btn_area mt-5">
                                     {
                                         token ?
-                                            <button onClick={() => addTicket(ticketInfo[0])} className="btn2">Add To Cart</button>
+                                            <Link onClick={() => addTicket(ticketInfo[0])} className="btn2">Add To Cart</Link>
                                             : <Link to="/login" className="btn2">Add To Cart</Link>
                                     }
 
@@ -149,9 +155,6 @@ const LotteryInfo = () => {
                                 {
                                     (timerDays && timerHours && timerMinutes && timerSeconds) >= 0 ?
                                         <div className="product_time">
-                                            <div className="time_left_title">
-                                                <h3 className=""><img src="/assets/img/time.png" alt="" />Timeleft</h3>
-                                            </div>
                                             <div id="coundown" className="countdown product_timeleftwrap">
                                                 <div className="product_timeleft">
                                                     <div id="days" className="time_left_style days">{timerDays}
@@ -181,10 +184,14 @@ const LotteryInfo = () => {
                                 {/* Ticket quantity Slider */}
                                 <div className="ticket_sold">
                                     <div className="ticket_sold_title">
-                                        <h3>
-                                            <span><img src="/assets/img/9121436 1.png" alt="" /></span>
-                                            Ticket Remains : <strong>{ticketInfo[0]?.ticket_quantity}</strong>
-                                        </h3>
+                                        {
+                                            (ticketInfo[0]?.ticket_quantity) ?
+                                                <h3>
+                                                    <span><img src="/assets/img/9121436 1.png" alt="" /></span>
+                                                    Ticket Remains : <strong>{ticketInfo[0]?.ticket_quantity}</strong>
+                                                </h3> : <h3>All tickets sold</h3>
+                                        }
+
                                     </div>
 
                                     {/* Pogressbar area */}
@@ -207,46 +214,58 @@ const LotteryInfo = () => {
                                     <div className="describe_heading">
                                         <h4>{ticketInfo[0]?.ticket_name}</h4>
                                     </div>
-                                    <p className="description_para">
-                                        {ticketInfo[0]?.description}
-                                    </p>
+                                    {
+                                        (ticketInfo[0]?.description) ?
+                                            <p className="description_para">
+                                                {ticketInfo[0]?.description}
+                                            </p>
+                                            : null
+                                    }
+
                                 </div>
                                 <hr />
                             </div>
 
                             {/* Key feature body section */}
-                            <div className="description_item">
-                                <div className="describe_heading">
-                                    <h4>{ticketInfo[0]?.key_feature}:</h4>
-                                </div>
-                                <div>
-                                    <div className="bullet_points">
-                                        {
-                                            ticketInfo[0]?.key_feature_body?.map((item, index) => {
-                                                return (
-                                                    <li key={index}><span><i className="fas fa-circle"></i></span>{item}</li>
-                                                )
-                                            })
-                                        }
-                                    </div>
-                                    <hr />
-                                </div>
-                            </div>
                             {
-                                ticketInfo[0]?.features?.map((item, index) => {
-                                    return (
-                                        <div className="description_item" key={index}>
-                                            <div className="describe_heading">
-                                                <h4>{item?.key}</h4>
-                                            </div>
-                                            <p className="description_para">{item?.value}</p>
-                                            {
-                                                (item?.key && item?.value) ? <hr /> : null
-                                            }
-
+                                (ticketInfo[0]?.highlights) ?
+                                    <div className="description_item">
+                                        <div className="describe_heading">
+                                            <h4>Highlights:</h4>
                                         </div>
-                                    )
-                                })
+                                        <div className="bullet_points">
+                                            {
+                                                ticketInfo[0]?.highlights?.map((item, index) => {
+                                                    return (
+                                                        <li key={index}><span><i className="fas fa-circle"></i></span>{item}</li>
+                                                    )
+                                                })
+                                            }
+                                        </div>
+                                        <hr />
+                                    </div>
+                                    : null
+                            }
+
+                            {/* Specifications area */}
+                            {
+                                (ticketInfo[0]?.specification) ?
+                                    ticketInfo[0]?.specification?.map((item, index) => {
+                                        return (
+                                            <div className="description_item" key={index}>
+                                                <div className="describe_heading">
+                                                    <h4>{item?.key}</h4>
+                                                </div>
+                                                <p className="description_para">{item?.value}</p>
+                                                {
+                                                    (item?.key && item?.value) ? <hr /> : null
+                                                }
+
+                                            </div>
+                                        )
+                                    })
+                                    : null
+
                             }
                         </div>
                     </div>

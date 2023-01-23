@@ -36,6 +36,22 @@ export const fetchLogin = createAsyncThunk(
     })
 
 
+//AsyncThunk For ForgetPassword 
+const FORGET_PASS = "/auth/forget"
+export const fetchForgetPass = createAsyncThunk(
+    "forget", async ({ formValues }, { rejectWithValue }) => {
+        try {
+            const result = await API.post(FORGET_PASS, formValues)
+            console.log(result)
+        } catch (err) {
+            // console.log(rejectWithValue(err.response.data));
+            return rejectWithValue(err.response.data)
+        }
+
+    })
+
+
+
 // defining initialState
 const initialState = {
     user: null,
@@ -61,13 +77,14 @@ export const AuthSlice = createSlice({
         }
     },
     extraReducers: (builder) => {
-        // for Signup
+        //States for Signup
         builder.addCase(fetchSignUp.pending, (state) => {
             state.msg = "Pending"
         })
         builder.addCase(fetchSignUp.fulfilled, (state, { payload }) => {
             state.msg = "Success"
             state.user = payload
+            console.log("From authslice",payload);
         })
         builder.addCase(fetchSignUp.rejected, (state, { payload }) => {
             state.msg = "Failed"
@@ -77,7 +94,7 @@ export const AuthSlice = createSlice({
         })
 
 
-        // for Login
+        //States for Login
         builder.addCase(fetchLogin.pending, (state) => {
             state.msg = "Loading"
         })
@@ -95,6 +112,22 @@ export const AuthSlice = createSlice({
                 state.login.error_password = payload.data
                 state.login.error_user = ""
             }
+        })
+
+
+        //States for ForgetPass
+        builder.addCase(fetchForgetPass.pending, (state) => {
+            state.msg = "Loading"
+        })
+        builder.addCase(fetchForgetPass.fulfilled, (state, { payload }) => {
+            state.msg = "Success"
+            state.user = payload
+            // console.log(payload);
+        })
+        builder.addCase(fetchForgetPass.rejected, (state, { payload }) => {
+            state.msg = "Failed"
+            state.error = payload
+            // console.log(payload);
         })
     }
 })

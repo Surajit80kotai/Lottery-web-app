@@ -36,7 +36,7 @@ const CarsBike = ({ item, index }) => {
                                         {
                                             discountedPrice ?
                                                 <h3>
-                                                    <span className="discountprice">{currency}&nbsp;{discountedPrice}</span>&nbsp;&nbsp;<span>{currency}</span>
+                                                    <span className="discountprice">{currency}{discountedPrice}</span>&nbsp;&nbsp;<span>{currency}</span>
                                                     <span className="text-decoration-line-through">{ticket_price}</span>&nbsp;&nbsp;
                                                     <span className="discount_percent">{discount_percentage}%</span>
                                                 </h3>
@@ -55,7 +55,7 @@ const CarsBike = ({ item, index }) => {
                                     {
                                         (timerDays && timerHours && timerMinutes && timerSeconds) >= 0 ?
                                             <div className="time_left">
-                                                <div id="coundown" className="countdown">
+                                                <div id="coundown" className="countdown text-center">
                                                     <div className="timeleftarea">
                                                         <div id="days" className=" days">{timerDays}
                                                         </div>

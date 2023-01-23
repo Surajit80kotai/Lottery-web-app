@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { fetchForgetPass } from '../services/slice/AuthSlice'
 
 const ForgetPassword = () => {
-    const [formValues, setFormValues] = useState({
-        email: ""
-    })
+    const [formValues, setFormValues] = useState({ email: "" })
+    const dispatch = useDispatch()
+    // const { error } = useSelector((state) => state.authslice)
 
-     // handleChange Function for input change
+    // handleChange Function for input change
     const handleChange = (e) => {
         setFormValues({ ...formValues, [e.target.name]: e.target.value })
     }
@@ -13,10 +15,10 @@ const ForgetPassword = () => {
     //  handleSubmit Function for form submit
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log(formValues);
+        dispatch(fetchForgetPass(formValues))
         setFormValues({ email: "" })
     }
-    
+
     return (
         <>
             <main className="main">
@@ -32,7 +34,7 @@ const ForgetPassword = () => {
                         </p>
                         <form action="" method="post" encType="multipart/form-data" onSubmit={handleSubmit}>
 
-                            {/* Email */}
+                            {/* Email or Phone */}
                             <div className="forget ">
                                 <label htmlFor="email" className="form-label label_for">Phone Number Or Email Id</label>
                                 <input
@@ -43,6 +45,8 @@ const ForgetPassword = () => {
                                     value={formValues.email}
                                     onChange={handleChange}
                                     aria-describedby="emailHelp" />
+                                {/* Form Vaidation */}
+                                {/* <p className='text-danger fs-4 mt-2'>{error}</p> */}
 
                             </div>
 

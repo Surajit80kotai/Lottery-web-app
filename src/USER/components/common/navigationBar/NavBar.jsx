@@ -123,7 +123,7 @@ const NavBar = () => {
                 {
                   token ?
                     <label className="dropHeader dropHeader-4 droplabel" htmlFor="drop-4">
-                      <i className="fa-solid fa-user"></i><span className='px-3'>{user.first_name}</span>
+                      <i className="fa-solid fa-user"></i><span className='px-3'>{user.full_name}</span>
                     </label>
                     : null
                 }
@@ -136,7 +136,7 @@ const NavBar = () => {
                           <div className="profile-highlight">
                             {/* <img src="/assets/img/user.jpg" alt="profile-img" style={{ "width": "36px", "height": "36px" }} /> */}
                             <div className="details">
-                              <div id="profile-name">{user?.first_name}&nbsp;{user?.last_name}</div>
+                              <div id="profile-name">{user?.full_name}</div>
                               {/* <div id="profile-name">{displayName}</div> */}
                             </div>
                           </div>
