@@ -41,7 +41,7 @@ const LotteryInfo = () => {
     // Add ticket function
     const addTicket = () => {
         const cartData = { product_id: ticketInfo[0]._id, user_id: userID, qty: qty }
-        console.log(cartData);
+        // console.log(cartData);
         dispatch(addCart(cartData))
     }
 

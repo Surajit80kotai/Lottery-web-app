@@ -4,13 +4,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getCart, removeItem } from '../services/slice/CartSlice'
 import { useEffect } from 'react'
 
-const Cart = () => {
-  // const cartData = JSON.parse(window.localStorage.getItem("cart_data"))
+const image = process.env.REACT_APP_NODE_HOST
 
+const Cart = () => {
+  // const cart_data = JSON.parse(window.localStorage.getItem("cart_data"))
   const { total, sub_total, cart_data } = useSelector((state) => state.cartslice)
   // console.log(cart_data);
+
   const dispatch = useDispatch()
-  // console.log(cartData.cartQuantity);
 
   // Remove ticket function
   const removeTicket = (ticket) => {
@@ -42,36 +43,41 @@ const Cart = () => {
           <div className="row">
             <div className="col-md-8">
               <div className="cart_list_area">
-                {/* <!-- item one --> */}
-
                 {
-                  cart_data?.map((item, index) => {
-                    return (
-                      <div className="cart_list_item" key={index}>
-                        <div className="cart_item_img">
-                          <img src={item?.main_image} alt="" className="img-fluid" />
-                        </div>
-                        <div className="cart_item_content">
-                          <div className="cart_title">
-                            <h3>{item?.ticket_name}</h3>
+                  cart_data?.length ?
+                    cart_data?.map((item) => {
+                      // cart_data?.map((item) => {
+                      return (
+                        <div className="cart_list_item" key={item._id}>
+                          <div className="cart_item_img">
+                            <img src={image + item?.main_image} alt="" className="img-fluid" />
                           </div>
-                          <div className="other_info">
-                            <p className="amount">Number Of Ticket : {item?.ticket_quantity}</p>
-                            <p className="tic_price">Price Of Ticket : {item?.ticket_price}</p>
+                          <div className="cart_item_content">
+                            <div className="cart_title">
+                              <h3>{item?.ticket_name}</h3>
+                            </div>
+                            <div className="other_info">
+                              <p className="amount">Number Of Ticket : {item?.ticket_quantity}</p>
+                              <p className="tic_price">Price Of Ticket : {item?.ticket_price}</p>
+                            </div>
+                            <div className="date_result">
+                              <h5><span><img src="/assets/img/3135783 1.png" alt="" /></span>Result on <span className="fw-bold">Dec, 25</span></h5>
+                            </div>
                           </div>
-                          <div className="date_result">
-                            <h5><span><img src="/assets/img/3135783 1.png" alt="" /></span>Result on <span className="fw-bold">Dec, 25</span></h5>
+                          <div className="remove_btn">
+                            <button onClick={() => removeTicket(item._id)}><i className="bi bi-trash3"></i></button>
                           </div>
                         </div>
-                        <div className="remove_btn">
-                          <button onClick={() => removeTicket(item._id)}><i className="bi bi-trash3"></i></button>
-                        </div>
-                      </div>
-                    )
-                  })
+                      )
+                    })
+                    :
+                    <div className='text-center' >
+                      <img src="/assets/img/emptycart.png" alt="" />
+                      <h2>Your Cart Is Empty</h2>
+                    </div>
+
                 }
               </div>
-
               {/* <!-- place order area --> */}
               {
                 cart_data?.length > 0 ?
@@ -82,6 +88,8 @@ const Cart = () => {
               }
 
             </div>
+
+            {/* Purchase Summery Section */}
             <div className="col-md-4">
               <div className="price_area_wrapper">
                 <h3 className="price_title">Purchase Summary</h3>

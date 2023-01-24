@@ -4,8 +4,9 @@ const OrderHistory = () => {
     return (
         <>
             <div className="content_wrapper">
+                
                 {/* Extra Products  */}
-                <div className="container">
+                {/* <div className="container">
                     <div className="row">
                         <div className="col-md-4">
                             <div className="order_top_product">
@@ -129,10 +130,9 @@ const OrderHistory = () => {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> */}
 
                 {/* order history  */}
-
                 <div className="container ">
                     <div className="order_histry_wrapper">
                         {/* order his item  */}
