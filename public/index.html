@@ -29,6 +29,17 @@
   <noscript>You need to enable JavaScript to run this app.</noscript>
   <div id="root"></div>
 
+  <!-- datepicker -->
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+  <script>
+    jQuery(document).ready(function () {
+      jQuery('#datepicker').datepicker({
+        format: 'yyyy-dd-mm',
+        startDate: '+1d'
+      });
+    });
+  </script>
   <!-- Using Bootstrap v5.0.2-->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>

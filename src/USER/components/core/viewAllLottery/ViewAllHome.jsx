@@ -17,7 +17,7 @@ const ViewAllHome = () => {
     }, {});
 
     // Filtering category from data
-    const house = fetch_lott_data?.filter((item) => item.category === categoryObj["house"])
+    const house = fetch_lott_data?.filter((item) => item.category === categoryObj["House"])
 
     useEffect(() => {
         dispatch(fetchLottery())

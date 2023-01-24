@@ -35,17 +35,17 @@ const HomeLottery = ({ item, index }) => {
                                 <div className="product_content">
                                     <div className="product_price">
                                         {
-                                            discountedPrice ?
+                                            discount_percentage ?
                                                 <h3>
                                                     <span className="discountprice">{currency}{discountedPrice}</span>&nbsp;&nbsp;<span>{currency}</span>
                                                     <span className="text-decoration-line-through">{ticket_price}</span>&nbsp;&nbsp;
                                                     <span className="discount_percent">{discount_percentage}%</span>
                                                 </h3>
-                                                : <h3>
-                                                    <span>{currency}</span><span className="text-decoration-line-through">{ticket_price}</span>
+                                                :
+                                                <h3>
+                                                    <span className="discountprice">{currency}{ticket_price}</span>
                                                 </h3>
                                         }
-
                                     </div>
                                     <div className="product_title">
                                         <h2 className="card_title">{ticket_name}</h2>

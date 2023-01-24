@@ -83,7 +83,7 @@ const Login = () => {
                             </div>
 
                             <div className="form_area">
-                                <form method="post" enctype="multipart/form-data" onSubmit={handleSubmit}>
+                                <form method="post" encType="multipart/form-data" onSubmit={handleSubmit}>
                                     
                                     {/* Email Input */}
                                     <div className="mb-5">

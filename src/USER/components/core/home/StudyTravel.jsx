@@ -4,7 +4,7 @@ import { useTimer } from '../../../customHooks/useTimer'
 
 const StudyTravel = ({ item, index }) => {
     const navigate = useNavigate()
-    const { time_left, ticket_name, ticket_price, currency, ticket_quantity, discount_percentage, main_image,is_image, _id } = item
+    const { time_left, ticket_name, ticket_price, currency, ticket_quantity, discount_percentage, main_image, is_image, _id } = item
     const discountedPrice = Number((ticket_price - ((ticket_price * discount_percentage) / 100)))
     // defining states timer
     const [timerDays, timerHours, timerMinutes, timerSeconds, startTimer] = useTimer()
@@ -35,14 +35,15 @@ const StudyTravel = ({ item, index }) => {
                                 <div className="product_content">
                                     <div className="product_price">
                                         {
-                                            discountedPrice ?
+                                            discount_percentage ?
                                                 <h3>
                                                     <span className="discountprice">{currency}{discountedPrice}</span>&nbsp;&nbsp;<span>{currency}</span>
                                                     <span className="text-decoration-line-through">{ticket_price}</span>&nbsp;&nbsp;
                                                     <span className="discount_percent">{discount_percentage}%</span>
                                                 </h3>
-                                                : <h3>
-                                                    <span>{currency}</span><span className="text-decoration-line-through">{ticket_price}</span>
+                                                :
+                                                <h3>
+                                                    <span className="discountprice">{currency}{ticket_price}</span>
                                                 </h3>
                                         }
 

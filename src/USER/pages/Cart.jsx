@@ -1,11 +1,14 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { removeItem } from '../services/slice/CartSlice'
+import { getCart, removeItem } from '../services/slice/CartSlice'
+import { useEffect } from 'react'
 
 const Cart = () => {
-  const cartData = JSON.parse(window.localStorage.getItem("cart_data"))
-  const { total, sub_total } = useSelector((state) => state.cartslice)
+  // const cartData = JSON.parse(window.localStorage.getItem("cart_data"))
+
+  const { total, sub_total, cart_data } = useSelector((state) => state.cartslice)
+  // console.log(cart_data);
   const dispatch = useDispatch()
   // console.log(cartData.cartQuantity);
 
@@ -14,6 +17,9 @@ const Cart = () => {
     dispatch(removeItem(ticket))
   }
 
+  useEffect(() => {
+    dispatch(getCart())
+  }, [dispatch])
 
   return (
     <>
@@ -39,26 +45,26 @@ const Cart = () => {
                 {/* <!-- item one --> */}
 
                 {
-                  cartData?.map((item, index) => {
+                  cart_data?.map((item, index) => {
                     return (
                       <div className="cart_list_item" key={index}>
                         <div className="cart_item_img">
-                          <img src="/assets/img/product1.jpg" alt="" className="img-fluid" />
+                          <img src={item?.main_image} alt="" className="img-fluid" />
                         </div>
                         <div className="cart_item_content">
                           <div className="cart_title">
-                            <h3>{item.ticket_name}</h3>
+                            <h3>{item?.ticket_name}</h3>
                           </div>
                           <div className="other_info">
-                            <p className="amount">Number Of Ticket : {item.ticket_quantity}</p>
-                            <p className="tic_price">Price Of Ticket : {item.ticket_price}</p>
+                            <p className="amount">Number Of Ticket : {item?.ticket_quantity}</p>
+                            <p className="tic_price">Price Of Ticket : {item?.ticket_price}</p>
                           </div>
                           <div className="date_result">
                             <h5><span><img src="/assets/img/3135783 1.png" alt="" /></span>Result on <span className="fw-bold">Dec, 25</span></h5>
                           </div>
                         </div>
                         <div className="remove_btn">
-                          <button onClick={() => removeTicket(item)}><i className="bi bi-trash3"></i></button>
+                          <button onClick={() => removeTicket(item._id)}><i className="bi bi-trash3"></i></button>
                         </div>
                       </div>
                     )
@@ -68,7 +74,7 @@ const Cart = () => {
 
               {/* <!-- place order area --> */}
               {
-                cartData?.length > 0 ?
+                cart_data?.length > 0 ?
                   <div className="placeorder_area sticky">
                     <Link to="/placeorder" className="orderplace">Place Order</Link>
                   </div>
@@ -81,7 +87,7 @@ const Cart = () => {
                 <h3 className="price_title">Purchase Summary</h3>
                 <div className="price_inner">
                   <div className="price_item borderbottom">
-                    <h4 className="price_text">Price <span> ({cartData?.length} Item):</span></h4>
+                    <h4 className="price_text">Price <span> ({cart_data?.length} Item):</span></h4>
                     <h6 className="price_value"><span>€</span>{total}</h6>
                   </div>
                   <div className="price_item mt-5">

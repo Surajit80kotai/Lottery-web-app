@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { doLogOut } from '../../../services/slice/AuthSlice'
 
@@ -8,7 +8,8 @@ const NavBar = () => {
   const navigate = useNavigate()
   const token = JSON.parse(window.localStorage.getItem("token"))
   const user = JSON.parse(window.localStorage.getItem("user"))
-  const cart_data = JSON.parse(window.localStorage.getItem("cart_data"))
+  // const cart_data = JSON.parse(window.localStorage.getItem("cart_data"))
+  const { cart_data } = useSelector((state) => state.cartslice)
 
   const logOut = () => {
     dispatch(doLogOut())
@@ -25,7 +26,7 @@ const NavBar = () => {
 
   useEffect(() => {
     // console.log("Render");
-  }, [token, cart_data])
+  }, [token])
 
   return (
     <>
@@ -123,7 +124,7 @@ const NavBar = () => {
                 {
                   token ?
                     <label className="dropHeader dropHeader-4 droplabel" htmlFor="drop-4">
-                      <i className="fa-solid fa-user"></i><span className='px-3'>{user.full_name}</span>
+                      <i className="fa-solid fa-user"></i><span className='px-3'>{user?.full_name}</span>
                     </label>
                     : null
                 }

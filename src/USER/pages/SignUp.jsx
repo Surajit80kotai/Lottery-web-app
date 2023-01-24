@@ -7,15 +7,15 @@ import { fetchCountry, fetchStates } from '../services/slice/CountryStateSlice';
 
 const SignUp = () => {
     const { signupErr } = useSelector((state) => state.authslice)
-    const newSignupErr = signupErr[0]
-    // console.log("Sign up", newSignupErr);
+    // console.log(signupErr);
+
     const { countryData } = useSelector((state) => state.countrystateslice)
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const [formValues, setFormValues] = useState({
-        full_name: "",
-        email: "",
+        fullname: "",
+        emailid: "",
         phone: "",
         dob: "",
         country: "",
@@ -75,7 +75,7 @@ const SignUp = () => {
 
     useEffect(() => {
         dispatch(fetchCountry())
-    }, [dispatch, newSignupErr])
+    }, [dispatch])
 
     return (
         <>
@@ -87,7 +87,7 @@ const SignUp = () => {
 
                         <div className="right_part">
                             <div className="form_areas">
-                                <form method="post" enctype="multipart/form-data" onSubmit={handleSubmit}>
+                                <form method="post" encType="multipart/form-data" onSubmit={handleSubmit}>
 
                                     {/* Full name */}
                                     <div className="m_gap">
@@ -99,9 +99,11 @@ const SignUp = () => {
                                             name="fullname"
                                             placeholder="Enter Your Full Name"
                                             aria-describedby="emailHelp"
-                                            value={formValues.full_name}
+                                            value={formValues.fullname}
                                             onChange={handleChange}
                                         />
+                                        {/* Form Vaidation */}
+                                        <p className='text-danger fs-4 mt-2'>{signupErr?.full_name?.message}</p>
                                     </div>
 
                                     {/* Email */}
@@ -114,10 +116,31 @@ const SignUp = () => {
                                             name="emailid"
                                             aria-describedby="emailHelp"
                                             placeholder="Enter Your Email Id"
-                                            value={formValues.email}
+                                            value={formValues.emailid}
                                             onChange={handleChange}
 
                                         />
+                                        {/* Form Vaidation */}
+                                        <p className='text-danger fs-4 mt-2'>{signupErr?.email?.message}</p>
+                                    </div>
+
+                                    {/* Phone */}
+                                    <div className="m_gap">
+                                        <label htmlFor="phone" className="form-label label_style">Phone</label>
+                                        <input
+                                            type="tel"
+                                            className="form-control form_input"
+                                            id="phone"
+                                            name="phone"
+                                            aria-describedby="emailHelp"
+                                            placeholder="Enter Your Phone Number"
+                                            value={formValues.phone}
+                                            onChange={handleChange}
+                                            maxLength={10}
+
+                                        />
+                                        {/* Form Vaidation */}
+                                        <p className='text-danger fs-4 mt-2'>{signupErr?.phone?.message}</p>
                                     </div>
 
                                     <div className="row">
@@ -130,12 +153,14 @@ const SignUp = () => {
                                                 <input
                                                     placeholder="Select your date"
                                                     type="text"
-                                                    name="checkIn"
+                                                    name="dob"
                                                     id="datepicker"
                                                     className="calendar form-control form_input cal_input"
                                                     value={formValues.dob}
                                                     onChange={handleChange}
                                                 />
+                                                {/* Form Vaidation */}
+                                                <p className='text-danger fs-4 mt-2'>{signupErr?.dob?.message}</p>
                                             </div>
                                         </div>
 
@@ -147,10 +172,11 @@ const SignUp = () => {
                                                     className="form-select form_input form_select"
                                                     aria-label="Default select example"
                                                     id="selects"
+                                                    name='country'
                                                     value={formValues.country}
                                                     onChange={handleChange}
                                                 >
-                                                    <option value="1"></option>
+                                                    <option value="1">Select...</option>
                                                     {
                                                         countryData?.map((country) => {
                                                             return (
@@ -160,6 +186,8 @@ const SignUp = () => {
                                                         })
                                                     }
                                                 </select>
+                                                {/* Form Vaidation */}
+                                                <p className='text-danger fs-4 mt-2'>{signupErr?.country?.message}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -173,8 +201,8 @@ const SignUp = () => {
                                                 <input
                                                     type="password"
                                                     className="form-control form_input"
-                                                    id="fullname"
-                                                    name="fullname"
+                                                    id="password"
+                                                    name="password"
                                                     placeholder="Create Your Password"
                                                     aria-describedby="emailHelp"
                                                     value={formValues.password}
@@ -187,12 +215,12 @@ const SignUp = () => {
                                         {/* Confirm Password */}
                                         <div className="col-md">
                                             <div className="m_gap mb-3">
-                                                <label htmlFor="password" className="form-label label_style">Confirm Password</label>
+                                                <label htmlFor="con_password" className="form-label label_style">Confirm Password</label>
                                                 <input
                                                     type="password"
                                                     className="form-control form_input"
-                                                    id="fullname"
-                                                    name="fullname"
+                                                    id="con_password"
+                                                    name="con_password"
                                                     aria-describedby="emailHelp"
                                                     placeholder="Confrim Password"
                                                 />

@@ -9,10 +9,11 @@ export const fetchSignUp = createAsyncThunk(
     async ({ formValues, navigate }, { rejectWithValue }) => {
 
         try {
-            await API.post(SIGN_UP, formValues)
+            const res = await API.post(SIGN_UP, formValues)
             navigate('/login')
+            return res?.data
         } catch (err) {
-            // console.log("Sign Slice" ,rejectWithValue(err.response.data.errors));
+            // console.log("Sign Slice", rejectWithValue(err.response.data.errors));
             return rejectWithValue(err.response.data.errors)
         }
 
@@ -28,6 +29,7 @@ export const fetchLogin = createAsyncThunk(
             window.localStorage.setItem("token", JSON.stringify(result?.data?.token))
             window.localStorage.setItem("user", JSON.stringify(result?.data?.user_details))
             navigate('/')
+            return result?.data
         } catch (err) {
             // console.log(rejectWithValue(err.response.data));
             return rejectWithValue(err.response.data)
@@ -41,7 +43,8 @@ const FORGET_PASS = "/auth/forget"
 export const fetchForgetPass = createAsyncThunk(
     "forget", async ({ formValues }, { rejectWithValue }) => {
         try {
-            await API.post(FORGET_PASS, formValues)
+            const res = await API.post(FORGET_PASS, formValues)
+            return res?.data
         } catch (err) {
             // console.log(rejectWithValue(err.response.data));
             return rejectWithValue(err.response.data)
@@ -61,7 +64,7 @@ const initialState = {
         error_user: "",
         error_password: ""
     },
-    signupErr: []
+    signupErr: {}
 }
 
 // Creating Slice
@@ -83,11 +86,11 @@ export const AuthSlice = createSlice({
         builder.addCase(fetchSignUp.fulfilled, (state, { payload }) => {
             state.msg = "Success"
             state.user = payload
-            console.log("From authslice",payload);
+            console.log("From authslice", payload);
         })
         builder.addCase(fetchSignUp.rejected, (state, { payload }) => {
             state.msg = "Failed"
-            state.signupErr.push(payload)
+            state.signupErr = payload
             // console.log("from slice",payload);
             // console.log(  (payload?.first_name)? "First name required!" : null);
         })

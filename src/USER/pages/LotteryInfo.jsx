@@ -3,55 +3,52 @@ import { Link, useParams } from 'react-router-dom'
 import TrustedPayment from '../components/common/trustedPayment/TrustedPayment'
 import { useTimer } from '../customHooks/useTimer'
 import { useDispatch } from 'react-redux'
-import { fetchCart } from '../services/slice/CartSlice'
+import { addCart } from '../services/slice/CartSlice'
 // import Flickity from 'react-flickity-component'
 
 const LotteryInfo = () => {
     const { lid } = useParams()
     const [timerDays, timerHours, timerMinutes, timerSeconds, startTimer] = useTimer()
-    const [qualtity, setQualtity] = useState(1)
+    const [qty, setQty] = useState(1)
     const dispatch = useDispatch()
     const lottData = JSON.parse(window.localStorage.getItem("data"))
     const ticketInfo = lottData?.filter((item) => item._id === lid)
-    const user = JSON.parse(window.localStorage.getItem("user"))
-    const userID = user?.user_id
-    // console.log(userID);
+    const userID = (JSON.parse(window.localStorage.getItem("user")))?.user_id
 
 
     // Accesing token
     const token = JSON.parse(window.localStorage.getItem("token"))
 
-    // const listimage = ticketInfo[0]?.list_image
     const mainimage = ticketInfo[0]?.main_image
     const is_image = ticketInfo[0]?.is_image
 
-    // console.log(ticketInfo[0]);
 
     // IncAmount function
     const IncAmount = () => {
-        if (qualtity < 5) {
-            setQualtity(qualtity + 1)
+        if (qty < 5) {
+            setQty(qty + 1)
         }
+        return qty
     }
     // DecAmount function
     const DecAmount = () => {
-        if (qualtity > 1) {
-            setQualtity(qualtity - 1)
+        if (qty > 1) {
+            setQty(qty - 1)
         }
+        return qty
     }
 
     // Add ticket function
-    const addTicket = (ticket) => {
-        // dispatch(addItem(ticket))
-        dispatch(fetchCart({ ticket, qualtity, userID }))
+    const addTicket = () => {
+        const cartData = { product_id: ticketInfo[0]._id, user_id: userID, qty: qty }
+        console.log(cartData);
+        dispatch(addCart(cartData))
     }
 
     useEffect(() => {
         window.scrollTo(0, 0)
-        // console.log("Inside Render");
     }, [])
-    startTimer(ticketInfo[0].time_left)
-    // console.log("Outside render");
+    startTimer(ticketInfo[0]?.time_left)
 
 
     // const flickityOptions = {
@@ -130,7 +127,7 @@ const LotteryInfo = () => {
                                             <button className="qty-btn-minus btn-light" type="button" onClick={DecAmount}><i className="fa fa-minus"></i></button>
                                             <div className="quantity_place">
                                                 {/* <input className='quantity_title' value={amount} /> */}
-                                                <h1 className='quantity_title'>{qualtity}</h1>
+                                                <h1 className='quantity_title'>{qty}</h1>
                                             </div>
                                             <button className="qty-btn-plus btn-light" type="button" onClick={IncAmount}><i className="fa fa-plus"></i></button>
                                         </div>
@@ -141,7 +138,7 @@ const LotteryInfo = () => {
                                 <div className="btn_area mt-5">
                                     {
                                         token ?
-                                            <Link onClick={() => addTicket((ticketInfo[0]._id), qualtity, userID)} className="btn2">Add To Cart</Link>
+                                            <Link onClick={addTicket} className="btn2">Add To Cart</Link>
                                             : <Link to="/login" className="btn2">Add To Cart</Link>
                                     }
 
@@ -228,11 +225,12 @@ const LotteryInfo = () => {
 
                             {/* Key feature body section */}
                             {
-                                (ticketInfo[0]?.highlights) ?
+                                (ticketInfo[0]?.highlights?.length) ?
                                     <div className="description_item">
                                         <div className="describe_heading">
                                             <h4>Highlights:</h4>
                                         </div>
+
                                         <div className="bullet_points">
                                             {
                                                 ticketInfo[0]?.highlights?.map((item, index) => {
@@ -241,11 +239,12 @@ const LotteryInfo = () => {
                                                     )
                                                 })
                                             }
+                                            <hr />
                                         </div>
-                                        <hr />
                                     </div>
                                     : null
                             }
+
 
                             {/* Specifications area */}
                             {
