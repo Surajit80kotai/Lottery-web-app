@@ -23,8 +23,22 @@ export const addCart = createAsyncThunk("/auth/add-cart", async (cartData) => {
 })
 
 
+// Cart post request handle
+const DEL_CART = "/auth/cart/delete"
+export const delCartItem = createAsyncThunk("/auth/cart/delete", async () => {
+    // console.log(cartData);
+    try {
+        const res = await API.post(`${DEL_CART}/${id}`, header)
+        return res?.data
+    } catch (err) {
+        console.log(err)
+    }
+})
+
+
 // Cart get request handle
 const GET_CART = "auth/cart"
+//Getting The ID
 const id = (JSON.parse(window.localStorage.getItem("user")))?.user_id
 export const getCart = createAsyncThunk("/auth/cart", async () => {
     try {
@@ -62,6 +76,19 @@ export const CartSlice = createSlice({
             state.cart_data = payload
         })
         builder.addCase(addCart.rejected, (state) => {
+            state.status = "Failed"
+        })
+
+
+        // Post request states for cart system
+        builder.addCase(delCartItem.pending, (state) => {
+            state.status = "Loading"
+        })
+        builder.addCase(delCartItem.fulfilled, (state, { payload }) => {
+            state.status = "Success"
+            state.cart_data = payload
+        })
+        builder.addCase(delCartItem.rejected, (state) => {
             state.status = "Failed"
         })
 

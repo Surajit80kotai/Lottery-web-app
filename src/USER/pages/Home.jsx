@@ -8,7 +8,6 @@ import HomeLottery from '../components/core/home/HomeLottery'
 import StudyTravel from '../components/core/home/StudyTravel'
 import TrustedPayment from '../components/common/trustedPayment/TrustedPayment'
 import { fetchCategory, fetchLottery } from '../services/slice/LotterySlice'
-import { getCart } from '../services/slice/CartSlice'
 
 
 const Home = () => {
@@ -30,12 +29,10 @@ const Home = () => {
     const study_travel = fetch_lott_data?.filter((item) => item.category === categoryObj["Study & abroad"])
     const comp_phn = fetch_lott_data?.filter((item) => item.category === categoryObj["computers & phones"])
 
-
     useEffect(() => {
         window.scrollTo(0, 0)
         dispatch(fetchLottery())
         dispatch(fetchCategory())
-        dispatch(getCart()  )
     }, [dispatch])
 
 

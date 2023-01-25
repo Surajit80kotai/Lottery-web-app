@@ -1,22 +1,16 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { getCart, removeItem } from '../services/slice/CartSlice'
+import { delCartItem, getCart } from '../services/slice/CartSlice'
 import { useEffect } from 'react'
 
 const image = process.env.REACT_APP_NODE_HOST
 
 const Cart = () => {
   // const cart_data = JSON.parse(window.localStorage.getItem("cart_data"))
-  const { total, sub_total, cart_data } = useSelector((state) => state.cartslice)
-  // console.log(cart_data);
+  const { cart_data } = useSelector((state) => state.cartslice)
 
   const dispatch = useDispatch()
-
-  // Remove ticket function
-  const removeTicket = (ticket) => {
-    dispatch(removeItem(ticket))
-  }
 
   useEffect(() => {
     dispatch(getCart())
@@ -48,24 +42,36 @@ const Cart = () => {
                     cart_data?.map((item) => {
                       // cart_data?.map((item) => {
                       return (
-                        <div className="cart_list_item" key={item._id}>
+                        <div className="cart_list_item" key={item.resp._id}>
                           <div className="cart_item_img">
-                            <img src={image + item?.main_image} alt="" className="img-fluid" />
+                            <img src={image + item?.info[0]?.main_image} alt="" className="img-fluid" />
                           </div>
                           <div className="cart_item_content">
                             <div className="cart_title">
-                              <h3>{item?.ticket_name}</h3>
+                              <h3>{item?.info[0]?.ticket_name}</h3>
                             </div>
                             <div className="other_info">
-                              <p className="amount">Number Of Ticket : {item?.ticket_quantity}</p>
-                              <p className="tic_price">Price Of Ticket : {item?.ticket_price}</p>
+                              <p className="amount">Item Quantity : {item?.resp?.quantity}</p>
+                              {/* Calculation of discounted price */}
+                              <p className="tic_price">Price Of Ticket :
+                                {
+                                  (Number(item?.info[0]?.ticket_price - ((item?.info[0]?.ticket_price * item?.info[0]?.discount_percentage) / 100)) * item?.resp?.quantity)
+                                }
+                              </p>
                             </div>
                             <div className="date_result">
-                              <h5><span><img src="/assets/img/3135783 1.png" alt="" /></span>Result on <span className="fw-bold">Dec, 25</span></h5>
+                              {/* Calculating the data */}
+                              <h5><span><img src="/assets/img/3135783 1.png" alt="" /></span>Result on <span className="fw-bold">
+                                {new Date(item?.info[0]?.time_left).toLocaleString('en-US', {
+                                  month: 'short',
+                                  day: '2-digit',
+                                  year: 'numeric'
+                                })}
+                              </span></h5>
                             </div>
                           </div>
                           <div className="remove_btn">
-                            <button onClick={() => removeTicket(item._id)}><i className="bi bi-trash3"></i></button>
+                            <button onClick={() => dispatch(delCartItem(item._id))}><i className="bi bi-trash3"></i></button>
                           </div>
                         </div>
                       )
@@ -96,11 +102,19 @@ const Cart = () => {
                 <div className="price_inner">
                   <div className="price_item borderbottom">
                     <h4 className="price_text">Price <span> ({cart_data?.length} Item):</span></h4>
-                    <h6 className="price_value"><span>€</span>{total}</h6>
+                    <h6 className="price_value"><span>€</span>000</h6>
                   </div>
                   <div className="price_item mt-5">
                     <h4 className="price_text">Total Payables:</h4>
-                    <h6 className="price_value"><span>€</span>{sub_total}</h6>
+                    <h6 className="price_value"><span>€</span>
+                      {
+                        cart_data?.reduce((subTotal, arr) => {
+                          return (
+                            subTotal += ((Number(arr?.info[0]?.ticket_price - ((arr?.info[0]?.ticket_price * arr?.info[0]?.discount_percentage) / 100)) * arr?.resp?.quantity))
+                          )
+                        }, 0)
+                      }
+                    </h6>
                   </div>
                 </div>
               </div>
