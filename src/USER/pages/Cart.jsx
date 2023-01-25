@@ -103,19 +103,36 @@ const Cart = () => {
               <div className="price_area_wrapper">
                 <h3 className="price_title">Purchase Summary</h3>
                 <div className="price_inner">
+
+                  {/* Total Price calculation */}
                   <div className="price_item borderbottom">
                     <h4 className="price_text">Price <span> ({cart_data?.length} Item):</span></h4>
                     <h6 className="price_value"><span>€</span>
                       {
                         cart_data?.length && cart_data?.reduce((subTotal, arr) => {
                           return (
-                            subTotal += ((Number(arr?.info[0]?.ticket_price - ((arr?.info[0]?.ticket_price * arr?.info[0]?.discount_percentage) / 100)) * arr?.resp?.quantity))
+                            subTotal += (Number(arr?.info[0]?.ticket_price * arr?.resp?.quantity))
                           )
                         }, 0).toFixed(2)
                       }
                     </h6>
-
                   </div>
+
+                  {/* Discount Calculation */}
+                  {/* <div className="price_item borderbottom">
+                    <h4 className="price_text">Discount :</h4>
+                    <h6 className="price_value text-success">-
+                      {
+                        cart_data?.length && cart_data?.reduce((subTotal, arr) => {
+                          return (
+                            subTotal += (Number(arr?.info[0]?.discount_percentage)) * arr?.resp?.quantity)
+                        }, 0).toFixed(1)
+                      }
+                      <span className='fw-bolder text-success'>%</span>
+                    </h6>
+                  </div> */}
+
+                  {/* Sub Total calculation */}
                   <div className="price_item mt-5">
                     <h4 className="price_text">Total Payables:</h4>
                     <h6 className="price_value"><span>€</span>

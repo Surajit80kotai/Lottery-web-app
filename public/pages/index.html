@@ -21,7 +21,7 @@
 
 <body>
 
-  <header>
+  <!-- <header>
     <div class="topheader">
       <div class="searchbar">
         <div class="ser_bar_inn">
@@ -148,9 +148,125 @@
         </div>
       </nav>
     </div>
-  </header>
+  </header> -->
+  <!-- New Nav Bar With bootstrap -->
+  <nav class="navbar navbar-expand-lg bg-body-tertiary bg-dark fixed-top">
+
+    <div class="container-fluid">
+      <div class="nv_lf">
+        <a class="navbar-brand" href="#">
+          <div class="companyLogo">
+            <img src="assets/img/logo2.png" alt="logo" class="img-fluid">
+          </div>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">About Us</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Product</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">How To play</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Charities</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Contact</a>
+            </li>
+          </ul>
+
+        </div>
 
 
+      </div>
+      <div class="nv_rt">
+        <div class="cart">
+          <a href="orderlist.html" class="cartbtn"><i class="fas fa-shopping-cart"></i> <span
+              class="label">23</span></a>
+
+        </div>
+        <div class="counrency">
+          <div class="dropdown">
+            <a class=" dropdown-toggle userbtn" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <span><img src="assets/img/currency.png" alt="" class=""></span> currency
+            </a>
+
+            <ul class="dropdown-menu">
+              <div class="item">
+                <a href="#">
+                  FCFA
+                </a>
+              </div>
+              <div class="item">
+                <a href="#">
+                  XAF
+                </a>
+              </div>
+              <div class="item">
+                <a href="#">
+                  XOF
+                </a>
+              </div>
+              <div class="item">
+                <a href="#">
+                  USD
+                </a>
+              </div>
+              <div class="item">
+                <a href="#">
+                  Euro
+                </a>
+              </div>
+              <div class="item">
+                <a href="#">
+                  Naira
+                </a>
+              </div>
+              </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="area_profile">
+          <div class="dropdown">
+            <a class=" dropdown-toggle userbtn" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              User Name <i class="fas fa-user"></i>
+            </a>
+
+            <ul class="dropdown-menu">
+              <div class="user_name">
+                <h3>User Name</h3>
+              </div>
+              <li class="user-menu__item">
+                <a class="user-menu-link dropdown-item" href="#">
+
+                  <div>Dashboard</div>
+                </a>
+              </li>
+              <li class="user-menu__item">
+                <a class="user-menu-link dropdown-item" href="#">
+
+
+                  <div>Logout</div>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </nav>
 
   <main>
     <!-- banner -->
@@ -401,15 +517,15 @@
                 </div>
               </div>
             </div>
-            
+
             <div class="col-md-4 product_item">
               <div class="viewall">
                 <div class="viewall_content ">
                   <h2>Best of <br> Electronics</h2>
                   <button class="btn2 mt-2">Viewall</button>
                 </div>
-             
-              <img src="assets/img/viewmorecard.png" alt="" class="img-fluid">
+
+                <img src="assets/img/viewmorecard.png" alt="" class="img-fluid">
               </div>
             </div>
 
