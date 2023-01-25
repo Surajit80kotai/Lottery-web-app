@@ -9,13 +9,15 @@ import PrivateRoute from './USER/privateroute/PrivateRoute';
 import UserDashBoard from './USER/pages/UserDashBoard';
 import Cart from './USER/pages/Cart';
 import PlaceOrder from './USER/pages/PlaceOrder';
+import Contact from './USER/pages/Contact';
 // import Test from './pages/Test';
 function App() {
   return (
     <div>
       <NavBar />
       <Routes>
-        <Route path='/' element={<Home />} exact/>
+        <Route path='/' element={<Home />} exact />
+        <Route path='/contact' element={<Contact />} />
         <Route path='/info/:lid' element={<LotteryInfo />} />
         <Route path='/viewallhome' element={<ViewAllHome />} />
         <Route path='/viewallcars' element={<ViewAllCars />} />

@@ -9,12 +9,15 @@ const image = process.env.REACT_APP_NODE_HOST
 const Cart = () => {
   // const cart_data = JSON.parse(window.localStorage.getItem("cart_data"))
   const { cart_data } = useSelector((state) => state.cartslice)
-
   const dispatch = useDispatch()
+
+  // useEffect(() => {
+  // }, [cart_data])
 
   useEffect(() => {
     dispatch(getCart())
   }, [dispatch])
+
 
   return (
     <>
@@ -51,11 +54,11 @@ const Cart = () => {
                               <h3>{item?.info[0]?.ticket_name}</h3>
                             </div>
                             <div className="other_info">
-                              <p className="amount">Item Quantity : {item?.resp?.quantity}</p>
+                              <p className="amount fw-bold text-dark">Item Quantity : {item?.resp?.quantity}</p>
                               {/* Calculation of discounted price */}
-                              <p className="tic_price">Price Of Ticket :
+                              <p className="tic_price fw-bold text-dark">Price Of Ticket :
                                 {
-                                  (Number(item?.info[0]?.ticket_price - ((item?.info[0]?.ticket_price * item?.info[0]?.discount_percentage) / 100)) * item?.resp?.quantity)
+                                  (Number(item?.info[0]?.ticket_price - ((item?.info[0]?.ticket_price * item?.info[0]?.discount_percentage) / 100)) * item?.resp?.quantity).toFixed(2)
                                 }
                               </p>
                             </div>
@@ -71,7 +74,7 @@ const Cart = () => {
                             </div>
                           </div>
                           <div className="remove_btn">
-                            <button onClick={() => dispatch(delCartItem(item._id))}><i className="bi bi-trash3"></i></button>
+                            <button onClick={() => dispatch(delCartItem(item?.resp?._id))}><i className="bi bi-trash3"></i></button>
                           </div>
                         </div>
                       )
@@ -102,17 +105,26 @@ const Cart = () => {
                 <div className="price_inner">
                   <div className="price_item borderbottom">
                     <h4 className="price_text">Price <span> ({cart_data?.length} Item):</span></h4>
-                    <h6 className="price_value"><span>€</span>000</h6>
+                    <h6 className="price_value"><span>€</span>
+                      {
+                        cart_data?.length && cart_data?.reduce((subTotal, arr) => {
+                          return (
+                            subTotal += ((Number(arr?.info[0]?.ticket_price - ((arr?.info[0]?.ticket_price * arr?.info[0]?.discount_percentage) / 100)) * arr?.resp?.quantity))
+                          )
+                        }, 0).toFixed(2)
+                      }
+                    </h6>
+
                   </div>
                   <div className="price_item mt-5">
                     <h4 className="price_text">Total Payables:</h4>
                     <h6 className="price_value"><span>€</span>
                       {
-                        cart_data?.reduce((subTotal, arr) => {
+                        cart_data?.length && cart_data?.reduce((subTotal, arr) => {
                           return (
                             subTotal += ((Number(arr?.info[0]?.ticket_price - ((arr?.info[0]?.ticket_price * arr?.info[0]?.discount_percentage) / 100)) * arr?.resp?.quantity))
                           )
-                        }, 0)
+                        }, 0).toFixed(2)
                       }
                     </h6>
                   </div>

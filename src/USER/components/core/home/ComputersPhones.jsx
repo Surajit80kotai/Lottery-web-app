@@ -38,7 +38,7 @@ const ComputersPhones = ({ item, index }) => {
                                                 <h3>
                                                     <span className="discountprice">{currency}{discountedPrice}</span>&nbsp;&nbsp;<span>{currency}</span>
                                                     <span className="text-decoration-line-through">{ticket_price}</span>&nbsp;&nbsp;
-                                                    <span className="discount_percent">{discount_percentage}%</span>
+                                                    <span className="discount_percent">{discount_percentage}% off</span>
                                                 </h3>
                                                 :
                                                 <h3>

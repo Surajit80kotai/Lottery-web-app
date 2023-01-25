@@ -12,8 +12,10 @@ const LotteryInfo = () => {
     const [qty, setQty] = useState(1)
     const dispatch = useDispatch()
     const lottData = JSON.parse(window.localStorage.getItem("data"))
-    const ticketInfo = lottData?.filter((item) => item._id === lid)
     const userID = (JSON.parse(window.localStorage.getItem("user")))?.user_id
+    const ticketInfo = lottData?.filter((item) => item._id === lid)
+    const discountedPrice = Number((ticketInfo[0]?.ticket_price - ((ticketInfo[0]?.ticket_price * ticketInfo[0]?.discount_percentage) / 100)))
+    // console.log(discountedPrice);
 
 
     // Accesing token
@@ -97,10 +99,20 @@ const LotteryInfo = () => {
                                     <h1>{ticketInfo[0]?.ticket_name}</h1>
                                 </div>
                                 <div className="tic_of_price">
-                                    <h4 className="price_tic">Ticket Price :
-                                        <span>{ticketInfo[0]?.currency}</span>
-                                        <span>{ticketInfo[0]?.ticket_price}</span>
-                                    </h4>
+                                    {
+                                        ticketInfo[0]?.discount_percentage ?
+                                            <h3>Ticket Price :&nbsp;&nbsp;
+                                                <span className="discountprice">{ticketInfo[0]?.currency}{discountedPrice}</span>&nbsp;&nbsp;
+                                                <span className="text-decoration-line-through fs-4 fw-light">
+                                                    {ticketInfo[0]?.currency}{ticketInfo[0]?.ticket_price}
+                                                </span>&nbsp;&nbsp;
+                                                <span className="discount_percent fs-4 ">{ticketInfo[0]?.discount_percentage}% off</span>
+                                            </h3>
+                                            :
+                                            <h3>Ticket Price :&nbsp;&nbsp;
+                                                <span className="discountprice">{ticketInfo[0]?.currency}{ticketInfo[0]?.ticket_price}</span>
+                                            </h3>
+                                    }
                                 </div>
                                 {/* Promo area */}
                                 {

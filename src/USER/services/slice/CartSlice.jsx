@@ -10,7 +10,7 @@ const header = {
 };
 
 
-// Cart post request handle
+// AddCart post request handle
 const ADD_CART = "/auth/add-cart"
 export const addCart = createAsyncThunk("/auth/add-cart", async (cartData) => {
     // console.log(cartData);
@@ -23,12 +23,12 @@ export const addCart = createAsyncThunk("/auth/add-cart", async (cartData) => {
 })
 
 
-// Cart post request handle
+// DeleteCart post request handle
 const DEL_CART = "/auth/cart/delete"
-export const delCartItem = createAsyncThunk("/auth/cart/delete", async () => {
-    // console.log(cartData);
+export const delCartItem = createAsyncThunk("/auth/cart/delete", async (c_id) => {
     try {
-        const res = await API.post(`${DEL_CART}/${id}`, header)
+        const res = await API.get(`${DEL_CART}/${c_id}`, header)
+        // console.log("cart_slice after", res.data)
         return res?.data
     } catch (err) {
         console.log(err)
@@ -36,7 +36,7 @@ export const delCartItem = createAsyncThunk("/auth/cart/delete", async () => {
 })
 
 
-// Cart get request handle
+// GetCart get request handle
 const GET_CART = "auth/cart"
 //Getting The ID
 const id = (JSON.parse(window.localStorage.getItem("user")))?.user_id
@@ -45,7 +45,7 @@ export const getCart = createAsyncThunk("/auth/cart", async () => {
         const res = await API.get(`${GET_CART}/${id}`, header)
         return res?.data
     } catch (err) {
-        // console.log(err)
+        console.log(err)
     }
 })
 
@@ -57,17 +57,9 @@ export const CartSlice = createSlice({
         sub_total: 0,
         total: 0
     },
-    reducers: {
-        // Remove Item
-        removeItem(state, { payload }) {
-            // const newCart = JSON.parse(window.localStorage.getItem("cart_data"))
-            // state.cart_data = newCart.filter((item) => item._id !== payload)
-            // window.localStorage.setItem("cart_data", JSON.stringify(state.cart_data))
-            state.cart_data = state.cart_data.filter((item) => item._id !== payload)
-        },
-    },
+    reducers: {},
     extraReducers: (builder) => {
-        // Post request states for cart system
+        // Post request states for Addcart system
         builder.addCase(addCart.pending, (state) => {
             state.status = "Loading"
         })
@@ -80,7 +72,7 @@ export const CartSlice = createSlice({
         })
 
 
-        // Post request states for cart system
+        // Get request states for Deletecart system
         builder.addCase(delCartItem.pending, (state) => {
             state.status = "Loading"
         })
@@ -90,10 +82,11 @@ export const CartSlice = createSlice({
         })
         builder.addCase(delCartItem.rejected, (state) => {
             state.status = "Failed"
+            console.log(state.status)
         })
 
 
-        // Get request states for cart system
+        // Get request states for Gatcart system
         builder.addCase(getCart.pending, (state) => {
             state.status = "Loading"
         })
@@ -109,5 +102,4 @@ export const CartSlice = createSlice({
 })
 
 
-export const { removeItem, } = CartSlice.actions
 export default CartSlice.reducer
