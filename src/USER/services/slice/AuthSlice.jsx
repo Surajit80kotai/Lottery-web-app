@@ -86,7 +86,6 @@ export const AuthSlice = createSlice({
         builder.addCase(fetchSignUp.fulfilled, (state, { payload }) => {
             state.msg = "Success"
             state.user = payload
-            console.log("From authslice", payload);
         })
         builder.addCase(fetchSignUp.rejected, (state, { payload }) => {
             state.msg = "Failed"

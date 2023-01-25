@@ -31,11 +31,6 @@ const SignUp = () => {
     const handleChange = (e) => {
         setFormValues({ ...formValues, [e.target.name]: e.target.value })
         const countryId = e.target.value
-
-        if (e.target.value) {
-
-        }
-
         if (countryId) {
             getCountryId(countryId)
         }

@@ -5,32 +5,31 @@ import "slick-carousel/slick/slick.css";
 import { Link, useNavigate } from 'react-router-dom'
 import { fetchCountry, fetchStates } from '../services/slice/CountryStateSlice';
 
+
+const initialState = {
+    full_name: "",
+    email: "",
+    phone: "",
+    dob: "",
+    country: "",
+    password: "",
+    confirmPassword: ""
+}
+
 const SignUp = () => {
     const { signupErr } = useSelector((state) => state.authslice)
     // console.log(signupErr);
-
     const { countryData } = useSelector((state) => state.countrystateslice)
-
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const [formValues, setFormValues] = useState({
-        fullname: "",
-        emailid: "",
-        phone: "",
-        dob: "",
-        country: "",
-        password: ""
-    })
-
+    const [formValues, setFormValues] = useState(initialState)
+    const { full_name, email, phone, dob, country, password, confirmPassword } = formValues
+    const [error, setError] = useState("")
 
     // handleChange Function for input change
     const handleChange = (e) => {
         setFormValues({ ...formValues, [e.target.name]: e.target.value })
         const countryId = e.target.value
-
-        if (e.target.value) {
-
-        }
 
         if (countryId) {
             getCountryId(countryId)
@@ -42,7 +41,12 @@ const SignUp = () => {
     // handleSubmit Function for form submit
     const handleSubmit = (e) => {
         e.preventDefault()
-        dispatch(fetchSignUp({ formValues, navigate }))
+        if (password !== confirmPassword) {
+            return setError("Pasword did not matched")
+        } else {
+            dispatch(fetchSignUp({ formValues, navigate }))
+            setError("")
+        }
     }
 
     // Slider Settings
@@ -75,7 +79,7 @@ const SignUp = () => {
 
     useEffect(() => {
         dispatch(fetchCountry())
-    }, [dispatch])
+    }, [dispatch, signupErr])
 
     return (
         <>
@@ -91,18 +95,18 @@ const SignUp = () => {
 
                                     {/* Full name */}
                                     <div className="m_gap">
-                                        <label htmlFor="fullname" className="form-label label_style">Full Name</label>
+                                        <label htmlFor="full_name" className="form-label label_style">Full Name</label>
                                         <input
                                             type="text"
                                             className="form-control form_input"
-                                            id="fullname"
-                                            name="fullname"
+                                            id="full_name"
+                                            name="full_name"
                                             placeholder="Enter Your Full Name"
                                             aria-describedby="emailHelp"
-                                            value={formValues.fullname}
+                                            value={full_name}
                                             onChange={handleChange}
                                         />
-                                        {/* Form Vaidation */}
+                                        {/* Full Name Vaidation */}
                                         <p className='text-danger fs-4 mt-2'>{signupErr?.full_name?.message}</p>
                                     </div>
 
@@ -112,15 +116,15 @@ const SignUp = () => {
                                         <input
                                             type="email"
                                             className="form-control form_input"
-                                            id="emailid"
-                                            name="emailid"
+                                            id="email"
+                                            name="email"
                                             aria-describedby="emailHelp"
                                             placeholder="Enter Your Email Id"
-                                            value={formValues.emailid}
+                                            value={email}
                                             onChange={handleChange}
 
                                         />
-                                        {/* Form Vaidation */}
+                                        {/* Email Vaidation */}
                                         <p className='text-danger fs-4 mt-2'>{signupErr?.email?.message}</p>
                                     </div>
 
@@ -134,12 +138,12 @@ const SignUp = () => {
                                             name="phone"
                                             aria-describedby="emailHelp"
                                             placeholder="Enter Your Phone Number"
-                                            value={formValues.phone}
+                                            value={phone}
                                             onChange={handleChange}
                                             maxLength={10}
 
                                         />
-                                        {/* Form Vaidation */}
+                                        {/* Phone Vaidation */}
                                         <p className='text-danger fs-4 mt-2'>{signupErr?.phone?.message}</p>
                                     </div>
 
@@ -152,14 +156,14 @@ const SignUp = () => {
                                                 {/* <!-- <input type="date" value="2017-01-01" min="1960-01-01" max="2019-01-01" className="form-control form_input"> --> */}
                                                 <input
                                                     placeholder="Select your date"
-                                                    type="text"
+                                                    type="date"
                                                     name="dob"
                                                     id="datepicker"
                                                     className="calendar form-control form_input cal_input"
-                                                    value={formValues.dob}
+                                                    value={dob}
                                                     onChange={handleChange}
                                                 />
-                                                {/* Form Vaidation */}
+                                                {/* DOB Vaidation */}
                                                 <p className='text-danger fs-4 mt-2'>{signupErr?.dob?.message}</p>
                                             </div>
                                         </div>
@@ -173,7 +177,7 @@ const SignUp = () => {
                                                     aria-label="Default select example"
                                                     id="selects"
                                                     name='country'
-                                                    value={formValues.country}
+                                                    value={country}
                                                     onChange={handleChange}
                                                 >
                                                     <option value="1">Select...</option>
@@ -186,7 +190,7 @@ const SignUp = () => {
                                                         })
                                                     }
                                                 </select>
-                                                {/* Form Vaidation */}
+                                                {/* Country Vaidation */}
                                                 <p className='text-danger fs-4 mt-2'>{signupErr?.country?.message}</p>
                                             </div>
                                         </div>
@@ -205,26 +209,28 @@ const SignUp = () => {
                                                     name="password"
                                                     placeholder="Create Your Password"
                                                     aria-describedby="emailHelp"
-                                                    value={formValues.password}
+                                                    value={password}
                                                     onChange={handleChange}
                                                 />
-
                                             </div>
                                         </div>
 
                                         {/* Confirm Password */}
                                         <div className="col-md">
                                             <div className="m_gap mb-3">
-                                                <label htmlFor="con_password" className="form-label label_style">Confirm Password</label>
+                                                <label htmlFor="confirmPassword" className="form-label label_style">Confirm Password</label>
                                                 <input
                                                     type="password"
                                                     className="form-control form_input"
-                                                    id="con_password"
-                                                    name="con_password"
+                                                    id="confirmPassword"
+                                                    name="confirmPassword"
                                                     aria-describedby="emailHelp"
                                                     placeholder="Confrim Password"
+                                                    value={confirmPassword}
+                                                    onChange={handleChange}
                                                 />
-
+                                                {/* ConfirmPassword Vaidation */}
+                                                <p className='text-danger fs-4 mt-2'>{error}</p>
                                             </div>
                                         </div>
                                     </div>

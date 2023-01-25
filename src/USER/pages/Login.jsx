@@ -2,10 +2,8 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { fetchLogin } from '../services/slice/AuthSlice'
-// import Slider from 'react-slick'
 import "slick-carousel/slick/slick.css";
-import { auth, google } from '../util/Firebase'
-import { signInWithPopup } from 'firebase/auth'
+// import { useEffect } from 'react';
 
 const Login = () => {
     const { login } = useSelector((state) => state.authslice)
@@ -39,30 +37,12 @@ const Login = () => {
     }
 
 
-    // Slider Settings
-    // const settings = {
-    //     dots: false,
-    //     arrows: false,
-    //     autoplay: true,
-    //     infinite: false,
-    //     speed: 300,
-    //     slidesToShow: 1,
-    //     slidesToScroll: 1
-    // }
-
-    // Login With Google
-    const loginWithGoogle = async (provider) => {
-        try {
-            const result = await signInWithPopup(auth, provider)
-            // console.log(result?.user);
-            window.localStorage.setItem("displayName", result?.user?.displayName)
-            window.localStorage.setItem("accessToken", result?.user?.stsTokenManager?.accessToken)
-            navigate('/')
-            return result?.user
-        } catch (err) {
-            console.log(err)
-        }
-    }
+    // useEffect(() => {
+    //     // golobal google
+    //     google.accounts.id.initialize({
+    //         client_id: "500684738770-76qgk032h22dar4b6pgosa1u07uhmhkg.apps.googleusercontent.com",
+    //     })
+    // }, [])
 
 
     return (
@@ -78,13 +58,13 @@ const Login = () => {
                                 <h2 className="heading_form">Login</h2>
                                 <div className="social_sign">
                                     <Link to="" className="social_signup"><i className="fab fa-facebook-f"></i></Link>
-                                    <Link onClick={() => loginWithGoogle(google)} className="social_signup"><i className="fab fa-google"></i></Link>
+                                    <Link className="social_signup"><i className="fab fa-google"></i></Link>
                                 </div>
                             </div>
 
                             <div className="form_area">
                                 <form method="post" encType="multipart/form-data" onSubmit={handleSubmit}>
-                                    
+
                                     {/* Email Input */}
                                     <div className="mb-5">
                                         <label htmlFor="email" className="form-label label_style">Email</label>
