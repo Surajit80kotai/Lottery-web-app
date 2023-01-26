@@ -13,6 +13,7 @@ const NavBar = () => {
 
   const logOut = () => {
     dispatch(doLogOut())
+    window.location.reload()
     navigate('/')
 
     // window.localStorage.removeItem("accessToken")
@@ -29,7 +30,7 @@ const NavBar = () => {
 
   // useEffect(() => {
   //   dispatch(getCart())
-  // }, [dispatch, token, cart_data])
+  // }, [dispatch])
 
   return (
     <>

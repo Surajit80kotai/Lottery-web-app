@@ -39,300 +39,169 @@ const PlaceOrder = () => {
 
     return (
         <>
-            <main>
-                <div className="cart_list_wrapper pb-5">
-
-                    {/* Home/CheckOut */}
-                    <div className="container pt-5">
-                        <div className="bred">
-                            <div className="product_title_top">
-                                <h3>You Order Payment</h3>
-                            </div>
-                            <nav aria-label="breadcrumb">
-                                <ol className="breadcrumb">
-                                    <li className="breadcrumb-item"><Link to="/">Home</Link></li>
-                                    <li className="breadcrumb-item active" aria-current="page">Checkout</li>
-                                </ol>
-                            </nav>
-
+            <div className="cart_list_wrapper pb-5">
+                <div className="container pt-5">
+                    <div className="bred">
+                        <div className="product_title_top">
+                            <h3>You Order Payment</h3>
                         </div>
+                        <nav aria-label="breadcrumb">
+                            <ol className="breadcrumb">
+                                <li className="breadcrumb-item"><Link to="/">Home</Link></li>
+                                <li className="breadcrumb-item active" aria-current="page">Checkout</li>
+                            </ol>
+                        </nav>
+
                     </div>
+                </div>
+                <div className="container">
+                    <div className="row">
+                        <div className="col-md-8">
+                            <form className="accordion--form">
 
-                    <div className="container">
-                        <div className="row">
+                                {/*********** Address Input section ***********/}
+                                <fieldset className="accordion--form__fieldset" id="fieldset-one">
+                                    <legend className="accordion--form__legend accordion--form__legend-active">YOUR ADDRESS</legend>
 
-                            <div className="col-md-8">
-                                <form action="" onSubmit={handleSubmit}>
-                                    <div className="payment_form_area">
-                                        <div className="delivery_address">
-                                            <h2 className="mb-2"> Address Imformation</h2>
-                                            <hr />
-                                        </div>
+                                    <div className="accordion--form__wrapper accordion--form__wrapper-active">
 
-                                        {/* Address */}
-                                        <div className="mb-3">
-                                            <label htmlFor="address" className="form-label label_style">Delivey Address</label>
+                                        <div className="accordion--form__row">
+                                            <label className="label_style" htmlFor="name">Address *</label> <br />
                                             <input
+                                                className="accordion--form__text required"
                                                 type="text"
-                                                className="form-control form_input"
-                                                id="address"
-                                                aria-describedby="emailHelp"
-                                                placeholder="Enter Your Delivery Address"
-                                                name='address'
+                                                name="address"
                                                 value={formValues.address}
                                                 onChange={handleChange}
-                                            />
-                                            <div className="alert alert-danger mt-3 fs-4  " role="alert">
-                                                A simple danger alert—check it out!
-                                            </div>
+                                                id="address"
+                                                placeholder="Enter You Address"
+                                                required />
+                                        </div>
+                                        <div className="accordion--form__row">
+                                            <button className="locationbtn"><span><i className="bi bi-compass"></i></span> Use my current location</button>
                                         </div>
 
-                                        {/* Road Name/ Area / Colony */}
-                                        <div className="mb-3">
-                                            <label htmlFor="roadName" className="form-label label_style">Road Name/ Area / Colony</label>
-                                            <input
-                                                type="text"
-                                                className="form-control form_input"
-                                                id="roadName"
-                                                aria-describedby="emailHelp"
-                                                placeholder="Enter Your Delivery Address"
-                                                name='roadName'
-                                                value={formValues.roadName}
-                                                onChange={handleChange}
-                                            />
-                                            <div className="alert alert-danger mt-3 fs-4  " role="alert">
-                                                A simple danger alert—check it out!
-                                            </div>
-                                        </div>
+                                        {/* <div className="accordion--form__invalid">{formError.address}</div> */}
 
-                                        {/* Pincode */}
-                                        <div className="mb-3">
-                                            <label htmlFor="pincode" className="form-label label_style">Pincode</label>
-                                            <input
-                                                type="text"
-                                                className="form-control form_input"
-                                                id="pincode"
-                                                aria-describedby="emailHelp"
-                                                placeholder="Enter Your Pincode"
-                                                name='pincode'
-                                                value={formValues.pincode}
-                                                onChange={handleChange}
-                                            />
-                                            <div className="alert alert-danger mt-3 fs-4  " role="alert">
-                                                A simple danger alert—check it out!
-                                            </div>
-                                        </div>
-                                        <div className="row">
+                                        <button className="accordion--form__next-btn con" onClick={handleSubmit}>Continue</button>
 
-                                            {/* Country */}
-                                            <div className="col-md">
-                                                <label htmlFor="Country" className="form-label label_style">City</label>
-                                                <select className="form-select form_input form_select" aria-label="Default select example" id="selects">
 
-                                                    <option value="1">One</option>
-                                                    <option value="2">Two</option>
-                                                    <option value="3">Three</option>
-                                                </select>
-                                            </div>
+                                    </div>
+                                </fieldset>
 
-                                            {/* State */}
-                                            <div className="col-md mb-5">
-                                                <label htmlFor="Country" className="form-label label_style">State</label>
-                                                <select className="form-select form_input form_select" aria-label="Default select example" id="selects">
+                                <fieldset className="accordion--form__fieldset" id="fieldset-three">
+                                    <legend className="accordion--form__legend">PAYMENT OPTION</legend>
 
-                                                    <option value="1">One</option>
-                                                    <option value="2">Two</option>
-                                                    <option value="3">Three</option>
-                                                </select>
-                                            </div>
-                                        </div>
+                                    <div className="accordion--form__wrapper">
 
-                                        {/* <!-- payment information --> */}
-                                        <div className="delivery_address">
-                                            <h2 className="mb-2">Payment Imformation</h2>
-                                            <hr />
-                                        </div>
-                                        <div className="payment_form">
+                                        <div className="accordion" id="accordionExample">
+                                            <div className="accordion-item">
+                                                <h2 className="accordion-header" id="headingOne">
+                                                    <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                        UPI
+                                                    </button>
+                                                </h2>
 
-                                            <div className="row">
-
-                                                {/* MTN Mobile Money */}
-                                                <div className="col-md-6">
-                                                    <div className="upi_one">
-                                                        <div className="form-check form-check-inline">
-                                                            <input
-                                                                className="form-check-input"
-                                                                type="radio"
-                                                                name="inlineRadioOptions"
-                                                                id="inlineRadio1/"
-                                                                value="option1"
-                                                            />
-                                                            <label className="form-check-label" htmlFor="inlineRadio1">
-                                                                MTN Mobile Money <span className="upi_icon"><img src="/assets/img/pay (2).png" alt="" /></span>
-                                                            </label>
+                                                {/************ Radio Buttons section ************/}
+                                                <div id="collapseOne" className="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                                    <div className="accordion-body">
+                                                        <div className="option_one">
+                                                            <label className="radio">
+                                                                <input
+                                                                    type="radio"
+                                                                    name="r"
+                                                                    value="1"
+                                                                    defaultChecked /> <span><img src="/assets/img/pay (2).png" className="radio_img" alt="" /></span> </label>
+                                                            <label className="radio">
+                                                                <input
+                                                                    type="radio"
+                                                                    name="r"
+                                                                    value="1"
+                                                                    defaultChecked /> <span><img src="/assets/img/pay (1).png" className="radio_img" alt="" /></span> </label>
                                                         </div>
                                                     </div>
                                                 </div>
-
-                                                {/* Ornage Money */}
-                                                <div className="col-md-6">
-                                                    <div className="upi_one">
-                                                        <div className="form-check form-check-inline">
-                                                            <input
-                                                                className="form-check-input"
-                                                                type="radio"
-                                                                name="inlineRadioOptions"
-                                                                id="inlineRadio1/"
-                                                                value="option1"
-                                                            />
-                                                            <label className="form-check-label" htmlFor="inlineRadio1">
-                                                                Ornage Money <span className="upi_icon"><img src="/assets/img/pay (1).png" alt="" /></span>
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-
                                             </div>
+                                            <div className="accordion-item">
+                                                <h2 className="accordion-header" id="headingTwo">
+                                                    <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                        Credit or Debit card
+                                                    </button>
+                                                </h2>
 
-                                            {/* <!-- credit card payment --> */}
-                                            <div className="accordion" id="accordionExample">
-                                                <div className="accordion-item">
-                                                    <h2 className="accordion-header" id="headingOne">
-                                                        <button className="accordion-button" type="button" data-bs-toggle="collapse"
-                                                            data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                            Credit Or Debit Card
-                                                        </button>
-                                                    </h2>
-                                                    <div id="collapseOne" className="accordion-collapse collapse show" aria-labelledby="headingOne"
-                                                        data-bs-parent="#accordionExample">
-                                                        <div className="accordion-body">
-
-                                                            {/* Card Number */}
+                                                {/*********** Card Payment input ***********/}
+                                                <div id="collapseTwo" className="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                                                    <div className="accordion-body">
+                                                        <div className="card_pay">
                                                             <div className="mb-3">
-                                                                <label htmlFor="cardNumber" className="form-label label_style">Card Number</label>
                                                                 <input
                                                                     type="text"
-                                                                    className="form-control form_input"
-                                                                    id="cardNumber"
-                                                                    name="cardNumber"
-                                                                    value={formValues.cardNumber}
-                                                                    onChange={handleChange}
-                                                                    placeholder="Enter Card Number"
-                                                                />
-                                                                <div className="alert alert-danger mt-3 fs-4  " role="alert">
-                                                                    A simple danger alert—check it out!
-                                                                </div>
+                                                                    className="form-control "
+                                                                    id="card"
+                                                                    name="card"
+                                                                    aria-describedby=""
+                                                                    placeholder="Enter Card Number" />
                                                             </div>
 
                                                             <div className="row">
-
-                                                                {/* Expiry Date */}
                                                                 <div className="col-md-6">
-                                                                    <div className="mb-3">
-                                                                        <label htmlFor="exdate" className="form-label label_style">Expiry Date</label>
-                                                                        <input
-                                                                            type="text"
-                                                                            className="form-control form_input" id="exdate"
-                                                                            name="exdate"
-                                                                            value={formValues.exdate}
-                                                                            onChange={handleChange}
-                                                                            placeholder="Enter Expiry Date"
-                                                                        />
-                                                                        <div className="alert alert-danger mt-3 fs-4  " role="alert">
-                                                                            A simple danger alert—check it out!
-                                                                        </div>
-                                                                    </div>
+                                                                    <input
+                                                                        type="text"
+                                                                        className="form-control "
+                                                                        id=""
+                                                                        name=""
+                                                                        aria-describedby=""
+                                                                        placeholder="Expire Date" />
                                                                 </div>
-
-                                                                {/* CVV */}
                                                                 <div className="col-md-6">
-                                                                    <div className="mb-3">
-                                                                        <label htmlFor="cvv" className="form-label label_style">CVV</label>
-                                                                        <input
-                                                                            type="text"
-                                                                            className="form-control form_input"
-                                                                            id="cvv"
-                                                                            name='cvv'
-                                                                            value={formValues.cvv}
-                                                                            onChange={handleChange}
-                                                                            aria-describedby="emailHelp" placeholder="Enter CVV"
-                                                                        />
-                                                                        <div className="alert alert-danger mt-3 fs-4  " role="alert">
-                                                                            A simple danger alert—check it out!
-                                                                        </div>
-                                                                    </div>
+                                                                    <input
+                                                                        type="text"
+                                                                        className="form-control "
+                                                                        id="" name=""
+                                                                        aria-describedby=""
+                                                                        placeholder="CVC/CCV" />
                                                                 </div>
-
-
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-
                                             </div>
+
                                         </div>
-                                        <div className="text-center mt-5">
-                                            <button className="btn2">Procced</button>
+
+                                        <div className="btnarea mt-3">
+                                            <Link className="accordion--form__prev-btn "><i className="bi bi-arrow-left"></i>Prev</Link>
+                                            <button className="con">Continue</button>
                                         </div>
+
                                     </div>
-                                </form>
-
-                            </div>
+                                </fieldset>
 
 
-                            <div className="col-md-4 ">
-                                <div className="purches_sum fixed_right">
+                            </form>
 
-                                    {/* Purchase summary */}
-                                    <div className="price_area_wrapper ">
-                                        <h3 className="price_title">Purchase Summary</h3>
-                                        <div className="price_inner">
-                                            <div className="price_item borderbottom">
-                                                <h4 className="price_text">Price <span> (1 Item):</span></h4>
-                                                <h6 className="price_value"><span>€</span> 1,789</h6>
-                                            </div>
-                                            <div className="price_item mb-5">
-                                                <h4 className="price_text">Delivery Charges:</h4>
-                                                <h6 className="delivery">Free</h6>
-                                            </div>
-                                            <div className="price_item mt-5">
-                                                <h4 className="price_text">Total Payables:</h4>
-                                                <h6 className="price_value"><span>€</span> 1,789</h6>
-                                            </div>
-                                        </div>
+
+                        </div>
+
+                        {/*********** Purchase Summary ***********/}
+                        <div className="col-md-4">
+                            <div className="price_area_wrapper">
+                                <h3 className="price_title">Purchase Summary</h3>
+                                <div className="price_inner">
+                                    <div className="price_item borderbottom">
+                                        <h4 className="price_text">Price <span> (0 Item):</span></h4>
+                                        <h6 className="price_value"><span>€</span>0000</h6>
                                     </div>
-
-                                    {/* Order History */}
-                                    <div className="order_history_summary">
-                                        <div className="order_itrm_one">
-                                            <div className="product_order_img">
-                                                <img src="/assets/img/product1.jpg" alt="" />
-                                            </div>
-                                            <div className="order_information">
-                                                <div className="product_order_title">
-                                                    <h6>Dual Action Exfoliator</h6>
-                                                </div>
-                                                <div className="other_info">
-                                                    <p className="amount">Number Of Ticket : 2</p>
-                                                    <p className="tic_price">Price Of Ticket : 1235</p>
-                                                    <h6> <span className="text-danger fs-4">€5,000</span>&nbsp;&nbsp;<span>€</span><span className="text-decoration-line-through">10,000</span>&nbsp;&nbsp;<span className="discount_percent">50%</span></h6>
-                                                </div>
-                                            </div>
-                                        </div>
-
-
+                                    <div className="price_item mt-5">
+                                        <h4 className="price_text">Total Payables:</h4>
+                                        <h6 className="price_value"><span>€</span>0000</h6>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
-
-
                 </div>
-
-            </main>
+            </div>
         </>
     )
 }
