@@ -4,7 +4,6 @@ const Contact = () => {
     return (
         <>
             <main>
-
                 <div className="contact_wrapper">
                     <div className="container ">
                         <h2 className="text-center contact_title">Contact Us</h2>

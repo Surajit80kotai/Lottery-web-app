@@ -27,33 +27,35 @@ const ViewAllCars = () => {
 
     return (
         <>
-            <div className="prodcut_wrapper">
-                <div className="one_row">
+            <main>
+                <div className="prodcut_wrapper">
+                    <div className="one_row">
 
-                    <div className="container">
-                        <div className="row ">
+                        <div className="container">
+                            <div className="row ">
 
-                            {/* Home Lottery */}
-                            <div className="first_row_title">
-                                <h2>Cars & Bikes</h2>
+                                {/* Home Lottery */}
+                                <div className="first_row_title">
+                                    <h2>Cars & Bikes</h2>
+                                </div>
+                                {
+                                    vehicle.map((item) => {
+                                        return <CarsBike
+                                            item={item}
+                                            key={item._id}
+                                        />
+                                    })
+                                }
+                                {/* trused payment */}
+                                <TrustedPayment />
+
                             </div>
-                            {
-                                vehicle.map((item) => {
-                                    return <CarsBike
-                                        item={item}
-                                        key={item._id}
-                                    />
-                                })
-                            }
-                            {/* trused payment */}
-                            <TrustedPayment />
 
                         </div>
-
                     </div>
-                </div>
 
-            </div>
+                </div>
+            </main>
         </>
     )
 }

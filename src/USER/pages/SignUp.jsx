@@ -84,7 +84,6 @@ const SignUp = () => {
     return (
         <>
             <main className="main">
-
                 <div className="wrapper_area margin-top-5">
 
                     <div className="log_area">
@@ -185,7 +184,7 @@ const SignUp = () => {
                                                         countryData?.map((country) => {
                                                             return (
                                                                 <option key={country.countries_id
-                                                                } value={country.name}>{country.name}</option>
+                                                                } value={country.name + "||" + country.countries_id}>{country.name}</option>
                                                             )
                                                         })
                                                     }

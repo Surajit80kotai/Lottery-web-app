@@ -2,9 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import TrustedPayment from '../components/common/trustedPayment/TrustedPayment'
 import { useTimer } from '../customHooks/useTimer'
-import { useDispatch } from 'react-redux'
-import { addCart } from '../services/slice/CartSlice'
-// import Flickity from 'react-flickity-component'
+import { useDispatch, useSelector } from 'react-redux'
+import { addCart, getCart } from '../services/slice/CartSlice'
 
 const LotteryInfo = () => {
     const { lid } = useParams()
@@ -15,7 +14,8 @@ const LotteryInfo = () => {
     const userID = (JSON.parse(window.localStorage.getItem("user")))?.user_id
     const ticketInfo = lottData?.filter((item) => item._id === lid)
     const discountedPrice = Number((ticketInfo[0]?.ticket_price - ((ticketInfo[0]?.ticket_price * ticketInfo[0]?.discount_percentage) / 100)))
-    // console.log(discountedPrice);
+    const { cart_data } = useSelector((state) => state.cartslice)
+    const len = cart_data?.length
 
 
     // Accesing token
@@ -41,15 +41,15 @@ const LotteryInfo = () => {
     }
 
     // Add ticket function
-    const addTicket = () => {
+    const addToCart = () => {
         const cartData = { product_id: ticketInfo[0]._id, user_id: userID, qty: qty }
-        // console.log(cartData);
         dispatch(addCart(cartData))
+        dispatch(getCart())
     }
 
     useEffect(() => {
         window.scrollTo(0, 0)
-    }, [])
+    }, [dispatch, len])
     startTimer(ticketInfo[0]?.time_left)
 
 
@@ -59,25 +59,26 @@ const LotteryInfo = () => {
 
     return (
         <>
-            {/* Product Info */}
-            <div className="product_info_wraper">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-md-6 ">
-                            <div className="product_slider_images">
+            <main>
+                {/* Product Info */}
+                <div className="product_info_wraper">
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-md-6 ">
+                                <div className="product_slider_images">
 
-                                {/* Main image  */}
-                                <div className="mainproduct_image img-fluid">
-                                    {
-                                        (is_image?.length) ? <img src={mainimage} alt="" className="img-fluid " />
-                                            : <img src="/assets/img/imageunavailable.jpeg" alt="" className="img-fluid " />
-                                    }
-                                </div>
+                                    {/* Main image  */}
+                                    <div className="mainproduct_image img-fluid">
+                                        {
+                                            (is_image?.length) ? <img src={mainimage} alt="" className="img-fluid " />
+                                                : <img src="/assets/img/imageunavailable.jpeg" alt="" className="img-fluid " />
+                                        }
+                                    </div>
 
-                                {/* <div className="carousel carousel-main" data-flickity='{"pageDots": false }'>
+                                    {/* <div className="carousel carousel-main" data-flickity='{"pageDots": false }'>
                                 </div> */}
-                                {/* Bottom slider  */}
-                                {/* <div className="carousel carousel-nav"
+                                    {/* Bottom slider  */}
+                                    {/* <div className="carousel carousel-nav"
                                     data-flickity='{ "asNavFor": ".carousel-main", "contain": true, "pageDots": false,"prevNextButtons": true }'>
                                     {
                                         listimage?.map((curImg, index) => {
@@ -90,201 +91,202 @@ const LotteryInfo = () => {
                                     }
                                 </div> */}
 
+                                </div>
+                            </div>
+
+                            <div className="col-md-6">
+                                <div className="product_information_area">
+                                    <div className="main_product_title">
+                                        <h1>{ticketInfo[0]?.ticket_name}</h1>
+                                    </div>
+                                    <div className="tic_of_price">
+                                        {
+                                            ticketInfo[0]?.discount_percentage ?
+                                                <h3>Ticket Price :&nbsp;&nbsp;
+                                                    <span className="discountprice">{ticketInfo[0]?.currency}{discountedPrice}</span>&nbsp;&nbsp;
+                                                    <span className="text-decoration-line-through fs-4 fw-light">
+                                                        {ticketInfo[0]?.currency}{ticketInfo[0]?.ticket_price}
+                                                    </span>&nbsp;&nbsp;
+                                                    <span className="discount_percent fs-4 ">{ticketInfo[0]?.discount_percentage}% off</span>
+                                                </h3>
+                                                :
+                                                <h3>Ticket Price :&nbsp;&nbsp;
+                                                    <span className="discountprice">{ticketInfo[0]?.currency}{ticketInfo[0]?.ticket_price}</span>
+                                                </h3>
+                                        }
+                                    </div>
+                                    {/* Promo area */}
+                                    {
+                                        ticketInfo[0]?.is_promo ?
+                                            <div className="promo_area">
+                                                <h3>Add a Promo</h3>
+                                                <div className="promo_form">
+                                                    <form action="">
+                                                        <div className="promo_input_wrapper">
+                                                            <input type="text" placeholder="Enter Your Promo Code" />
+                                                            <button className="promobtn">Apply</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            : null
+                                    }
+
+                                    {/* Quantity area */}
+                                    <div className="quantity">
+                                        <h3>Quantity</h3>
+                                        <div className="col-md-4">
+                                            <div className="qty-container">
+                                                <button className="qty-btn-minus btn-light" type="button" onClick={DecAmount}><i className="fa fa-minus"></i></button>
+                                                <div className="quantity_place">
+                                                    {/* <input className='quantity_title' value={amount} /> */}
+                                                    <h1 className='quantity_title'>{qty}</h1>
+                                                </div>
+                                                <button className="qty-btn-plus btn-light" type="button" onClick={IncAmount}><i className="fa fa-plus"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Add to cart buttton */}
+                                    <div className="btn_area mt-5">
+                                        {
+                                            token ?
+                                                <Link onClick={addToCart} className="btn2">Add To Cart</Link>
+                                                : <Link to="/login" className="btn2">Add To Cart</Link>
+                                        }
+
+                                        {
+                                            token ? <Link to="/placeorder" className="btn2">Buy Ticket</Link>
+                                                : <Link to="/login" className="btn2">Buy Ticket</Link>
+                                        }
+                                    </div>
+
+                                    {/* Timer */}
+                                    {
+                                        (timerDays && timerHours && timerMinutes && timerSeconds) >= 0 ?
+                                            <div className="product_time">
+                                                <div id="coundown" className="countdown product_timeleftwrap">
+                                                    <div className="product_timeleft">
+                                                        <div id="days" className="time_left_style days">{timerDays}
+                                                        </div>
+                                                        <br /><span>Days</span>
+                                                    </div>
+                                                    <div className="product_timeleft">
+                                                        <div id="hours" className="time_left_style hours">{timerHours}
+                                                        </div>
+                                                        <br /><span>Hours</span>
+                                                    </div>
+                                                    <div className="product_timeleft">
+                                                        <div id="minutes" className="time_left_style minutes">{timerMinutes}
+                                                        </div>
+                                                        <br /><span>Mins</span>
+                                                    </div>
+                                                    <div className="product_timeleft">
+                                                        <div id="seconds" className="time_left_style seconds">{timerSeconds}
+                                                        </div>
+                                                        <br /><span>Sec</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            : <h4 className='text-dark my-5'>Ticket is unavailabe right now</h4>
+                                    }
+
+                                    {/* Ticket quantity Slider */}
+                                    <div className="ticket_sold">
+                                        <div className="ticket_sold_title">
+                                            {
+                                                (ticketInfo[0]?.ticket_quantity) ?
+                                                    <h3>
+                                                        <span><img src="/assets/img/9121436 1.png" alt="" /></span>
+                                                        Ticket Remains : <strong>{ticketInfo[0]?.ticket_quantity}</strong>
+                                                    </h3> : <h3>All tickets sold</h3>
+                                            }
+
+                                        </div>
+
+                                        {/* Pogressbar area */}
+                                        {/* <div className="progressarea">
+                                        <div data-progress={ticketInfo[0]?.ticket_quantity}></div>
+                                    </div> */}
+
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                        <div className="row">
+                            <div className="description_wrapper">
+                                {/* Description Section */}
+                                <div>
+                                    <div className="des_title">
+                                        <h3>DESCRIPTION</h3>
+                                    </div>
+                                    <div className="description_item">
+                                        <div className="describe_heading">
+                                            <h4>{ticketInfo[0]?.ticket_name}</h4>
+                                        </div>
+                                        {
+                                            (ticketInfo[0]?.description) ?
+                                                <p className="description_para">
+                                                    {ticketInfo[0]?.description}
+                                                </p>
+                                                : null
+                                        }
 
-                        <div className="col-md-6">
-                            <div className="product_information_area">
-                                <div className="main_product_title">
-                                    <h1>{ticketInfo[0]?.ticket_name}</h1>
+                                    </div>
+                                    <hr />
                                 </div>
-                                <div className="tic_of_price">
-                                    {
-                                        ticketInfo[0]?.discount_percentage ?
-                                            <h3>Ticket Price :&nbsp;&nbsp;
-                                                <span className="discountprice">{ticketInfo[0]?.currency}{discountedPrice}</span>&nbsp;&nbsp;
-                                                <span className="text-decoration-line-through fs-4 fw-light">
-                                                    {ticketInfo[0]?.currency}{ticketInfo[0]?.ticket_price}
-                                                </span>&nbsp;&nbsp;
-                                                <span className="discount_percent fs-4 ">{ticketInfo[0]?.discount_percentage}% off</span>
-                                            </h3>
-                                            :
-                                            <h3>Ticket Price :&nbsp;&nbsp;
-                                                <span className="discountprice">{ticketInfo[0]?.currency}{ticketInfo[0]?.ticket_price}</span>
-                                            </h3>
-                                    }
-                                </div>
-                                {/* Promo area */}
+
+                                {/* Key feature body section */}
                                 {
-                                    ticketInfo[0]?.is_promo ?
-                                        <div className="promo_area">
-                                            <h3>Add a Promo</h3>
-                                            <div className="promo_form">
-                                                <form action="">
-                                                    <div className="promo_input_wrapper">
-                                                        <input type="text" placeholder="Enter Your Promo Code" />
-                                                        <button className="promobtn">Apply</button>
-                                                    </div>
-                                                </form>
+                                    (ticketInfo[0]?.highlights?.length) ?
+                                        <div className="description_item">
+                                            <div className="describe_heading">
+                                                <h4>Highlights:</h4>
+                                            </div>
+
+                                            <div className="bullet_points">
+                                                {
+                                                    ticketInfo[0]?.highlights?.map((item, index) => {
+                                                        return (
+                                                            <li key={index}><span><i className="fas fa-circle"></i></span>{item}</li>
+                                                        )
+                                                    })
+                                                }
+                                                <hr />
                                             </div>
                                         </div>
                                         : null
                                 }
 
-                                {/* Quantity area */}
-                                <div className="quantity">
-                                    <h3>Quantity</h3>
-                                    <div className="col-md-4">
-                                        <div className="qty-container">
-                                            <button className="qty-btn-minus btn-light" type="button" onClick={DecAmount}><i className="fa fa-minus"></i></button>
-                                            <div className="quantity_place">
-                                                {/* <input className='quantity_title' value={amount} /> */}
-                                                <h1 className='quantity_title'>{qty}</h1>
-                                            </div>
-                                            <button className="qty-btn-plus btn-light" type="button" onClick={IncAmount}><i className="fa fa-plus"></i></button>
-                                        </div>
-                                    </div>
-                                </div>
 
-                                {/* Add to cart buttton */}
-                                <div className="btn_area mt-5">
-                                    {
-                                        token ?
-                                            <Link onClick={addTicket} className="btn2">Add To Cart</Link>
-                                            : <Link to="/login" className="btn2">Add To Cart</Link>
-                                    }
-
-                                    {
-                                        token ? <Link to="/placeorder" className="btn2">Buy Ticket</Link>
-                                            : <Link to="/login" className="btn2">Buy Ticket</Link>
-                                    }
-                                </div>
-
-                                {/* Timer */}
+                                {/* Specifications area */}
                                 {
-                                    (timerDays && timerHours && timerMinutes && timerSeconds) >= 0 ?
-                                        <div className="product_time">
-                                            <div id="coundown" className="countdown product_timeleftwrap">
-                                                <div className="product_timeleft">
-                                                    <div id="days" className="time_left_style days">{timerDays}
+                                    (ticketInfo[0]?.specification) ?
+                                        ticketInfo[0]?.specification?.map((item, index) => {
+                                            return (
+                                                <div className="description_item" key={index}>
+                                                    <div className="describe_heading">
+                                                        <h4>{item?.key}</h4>
                                                     </div>
-                                                    <br /><span>Days</span>
+                                                    <p className="description_para">{item?.value}</p>
+                                                    {
+                                                        (item?.key && item?.value) ? <hr /> : null
+                                                    }
+
                                                 </div>
-                                                <div className="product_timeleft">
-                                                    <div id="hours" className="time_left_style hours">{timerHours}
-                                                    </div>
-                                                    <br /><span>Hours</span>
-                                                </div>
-                                                <div className="product_timeleft">
-                                                    <div id="minutes" className="time_left_style minutes">{timerMinutes}
-                                                    </div>
-                                                    <br /><span>Mins</span>
-                                                </div>
-                                                <div className="product_timeleft">
-                                                    <div id="seconds" className="time_left_style seconds">{timerSeconds}
-                                                    </div>
-                                                    <br /><span>Sec</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        : <h4 className='text-dark my-5'>Ticket is unavailabe right now</h4>
+                                            )
+                                        })
+                                        : null
+
                                 }
-
-                                {/* Ticket quantity Slider */}
-                                <div className="ticket_sold">
-                                    <div className="ticket_sold_title">
-                                        {
-                                            (ticketInfo[0]?.ticket_quantity) ?
-                                                <h3>
-                                                    <span><img src="/assets/img/9121436 1.png" alt="" /></span>
-                                                    Ticket Remains : <strong>{ticketInfo[0]?.ticket_quantity}</strong>
-                                                </h3> : <h3>All tickets sold</h3>
-                                        }
-
-                                    </div>
-
-                                    {/* Pogressbar area */}
-                                    {/* <div className="progressarea">
-                                        <div data-progress={ticketInfo[0]?.ticket_quantity}></div>
-                                    </div> */}
-
-                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="description_wrapper">
-                            {/* Description Section */}
-                            <div>
-                                <div className="des_title">
-                                    <h3>DESCRIPTION</h3>
-                                </div>
-                                <div className="description_item">
-                                    <div className="describe_heading">
-                                        <h4>{ticketInfo[0]?.ticket_name}</h4>
-                                    </div>
-                                    {
-                                        (ticketInfo[0]?.description) ?
-                                            <p className="description_para">
-                                                {ticketInfo[0]?.description}
-                                            </p>
-                                            : null
-                                    }
-
-                                </div>
-                                <hr />
-                            </div>
-
-                            {/* Key feature body section */}
-                            {
-                                (ticketInfo[0]?.highlights?.length) ?
-                                    <div className="description_item">
-                                        <div className="describe_heading">
-                                            <h4>Highlights:</h4>
-                                        </div>
-
-                                        <div className="bullet_points">
-                                            {
-                                                ticketInfo[0]?.highlights?.map((item, index) => {
-                                                    return (
-                                                        <li key={index}><span><i className="fas fa-circle"></i></span>{item}</li>
-                                                    )
-                                                })
-                                            }
-                                            <hr />
-                                        </div>
-                                    </div>
-                                    : null
-                            }
-
-
-                            {/* Specifications area */}
-                            {
-                                (ticketInfo[0]?.specification) ?
-                                    ticketInfo[0]?.specification?.map((item, index) => {
-                                        return (
-                                            <div className="description_item" key={index}>
-                                                <div className="describe_heading">
-                                                    <h4>{item?.key}</h4>
-                                                </div>
-                                                <p className="description_para">{item?.value}</p>
-                                                {
-                                                    (item?.key && item?.value) ? <hr /> : null
-                                                }
-
-                                            </div>
-                                        )
-                                    })
-                                    : null
-
-                            }
                         </div>
                     </div>
                 </div>
-            </div>
 
-            {/* Trusted Pay */}
-            <TrustedPayment />
+                {/* Trusted Pay */}
+                <TrustedPayment />
+            </main>
         </>
     )
 }

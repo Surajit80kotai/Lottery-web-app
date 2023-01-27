@@ -27,33 +27,35 @@ const ViewAllHome = () => {
 
     return (
         <>
-            <div className="prodcut_wrapper">
-                <div className="one_row">
+            <main>
+                <div className="prodcut_wrapper">
+                    <div className="one_row">
 
-                    <div className="container">
-                        <div className="row ">
+                        <div className="container">
+                            <div className="row ">
 
-                            {/* Home Lottery */}
-                            <div className="first_row_title">
-                                <h2>Home Lottery</h2>
+                                {/* Home Lottery */}
+                                <div className="first_row_title">
+                                    <h2>Home Lottery</h2>
+                                </div>
+                                {
+                                    house.map((item) => {
+                                        return <HomeLottery
+                                            item={item}
+                                            key={item._id}
+                                        />
+                                    })
+                                }
+                                {/* trused payment */}
+                                <TrustedPayment />
+
                             </div>
-                            {
-                                house.map((item) => {
-                                    return <HomeLottery
-                                        item={item}
-                                        key={item._id}
-                                    />
-                                })
-                            }
-                            {/* trused payment */}
-                            <TrustedPayment />
 
                         </div>
-
                     </div>
-                </div>
 
-            </div>
+                </div>
+            </main>
         </>
     )
 }

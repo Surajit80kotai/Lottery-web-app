@@ -51,7 +51,6 @@ const Login = () => {
     return (
         <>
             <main className="main">
-
                 <div className="wrapper_area margin-top">
 
                     <div className="log_area">
