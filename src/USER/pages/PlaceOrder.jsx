@@ -375,40 +375,24 @@ const PlaceOrder = () => {
                                         <div className="price_inner">
                                             <div className="price_item borderbottom">
                                                 <h4 className="price_text">Price <span> ({cart_data?.length} Item):</span></h4>
-                                                <h6 className="price_value"><span>€</span>
+                                                <h6 className="price_value">
+                                                    {cart_data ? <span>{cart_data[0]?.info[0]?.currency}</span> : 0}
+
                                                     {(amount.total).toFixed(2)}
-                                                    {/* {
-                                                        cart_data?.length && cart_data?.reduce((subTotal, arr) => {
-                                                            return (
-                                                                subTotal += (Number(arr?.info[0]?.ticket_price * arr?.resp?.quantity))
-                                                            )
-                                                        }, 0).toFixed(2)
-                                                    } */}
                                                 </h6>
                                             </div>
                                             <div className="price_item mb-5">
                                                 <h4 className="price_text">Total Discount :</h4>
-                                                <h6 className="price_value text-success"><span>€</span>-
-                                                    {/* {
-                                                        cart_data?.length && cart_data?.reduce((subTotal, arr) => {
-                                                            return (
-                                                                subTotal += (Number(((arr?.info[0]?.ticket_price) * (arr?.info[0]?.discount_percentage) / 100) * arr?.resp?.quantity))
-                                                            )
-                                                        }, 0).toFixed(2)
-                                                    } */}
+                                                <h6 className="price_value text-success">
+                                                    {cart_data ? <span>{cart_data[0]?.info[0]?.currency}-</span> : 0}
                                                     {(amount.discount).toFixed(2)}
                                                 </h6>
                                             </div>
                                             <div className="price_item mt-5">
                                                 <h4 className="price_text">Total Payables:</h4>
-                                                <h6 className="price_value"><span>€</span>
-                                                    {/* {
-                                                        cart_data?.length && cart_data?.reduce((subTotal, arr) => {
-                                                            return (
-                                                                subTotal += (Number(arr?.info[0]?.ticket_price - ((arr?.info[0]?.ticket_price * arr?.info[0]?.discount_percentage) / 100)) * arr?.resp?.quantity)
-                                                            )
-                                                        }, 0).toFixed(2)
-                                                    } */}
+                                                <h6 className="price_value">
+                                                    {cart_data ? <span>{cart_data[0]?.info[0]?.currency}</span> : 0}
+
                                                     {(amount.subtotal).toFixed(2)}
                                                 </h6>
                                             </div>
