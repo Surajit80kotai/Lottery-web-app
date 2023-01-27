@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { getCart } from '../services/slice/CartSlice';
 import { fetchCountry, fetchStates } from '../services/slice/CountryStateSlice';
+import { getBalance } from '../services/slice/UserSlice';
 
 const initialState = {
     address: "",
@@ -10,9 +11,7 @@ const initialState = {
     pincode: "",
     country: "",
     state: "",
-    cardNumber: "",
-    exdate: "",
-    cvv: ""
+    wallet: ""
 }
 
 const PlaceOrder = () => {
@@ -21,14 +20,31 @@ const PlaceOrder = () => {
     const { countryData } = useSelector((state) => state.countrystateslice)
     const { stateData } = useSelector((state) => state.countrystateslice)
     const { cart_data } = useSelector((state) => state.cartslice)
+    const { balance } = useSelector((state) => state.userslice)
     const dispatch = useDispatch()
     const len = cart_data?.length
     const image = process.env.REACT_APP_NODE_HOST
+
+    const subtotal = cart_data.map(({ resp, info }) => {
+        if (info[0].discount_percentage) {
+            st += (Number((info[0].ticket_price * resp.quantity)))
+            dc += (Number(((info[0].ticket_price) * (info[0].discount_percentage) / 100) * resp.quantity))
+            return Number(st)
+        } else {
+            st += Number(info[0].ticket_price * resp.quantity)
+            return st
+        }
+
+    })
+
+
+    // console.log(balance?.balance);
 
     //For onChange function
     const handleChange = (e) => {
         setFormValues({ ...formValues, [e.target.name]: e.target.value })
         const countryId = e.target.value
+        console.table(formValues);
 
         if (countryId) {
             getCountryId(countryId)
@@ -80,6 +96,10 @@ const PlaceOrder = () => {
         if (!values.state) {
             error.state = "State is required*"
         }
+        // wallet
+        // if (values.wallet < balance?.balance) {
+        //     error.wallet = "Insuficient balance*"
+        // }
 
         return error
     }
@@ -114,6 +134,8 @@ const PlaceOrder = () => {
     useEffect(() => {
         dispatch(getCart())
         dispatch(fetchCountry())
+        dispatch(getBalance())
+        // calculateSum()
     }, [dispatch, len])
 
 
@@ -254,7 +276,13 @@ const PlaceOrder = () => {
                                             {/* State */}
                                             <div className="col-md mb-5">
                                                 <label htmlFor="state" className="form-label label_style">State</label>
-                                                <select className="form-select form_input form_select" aria-label="Default select example" id="selects">
+                                                <select
+                                                    className="form-select form_input form_select"
+                                                    aria-label="Default select example"
+                                                    id="selects"
+                                                    name='state'
+                                                    value={formValues.state}
+                                                    onChange={handleChange}>
                                                     <option value="">Select...</option>
                                                     {
                                                         stateData?.map((state) => {
@@ -287,18 +315,28 @@ const PlaceOrder = () => {
                                                 <div className="col-md-12">
                                                     <div className="upi_one">
                                                         <div className="form-check form-check-inline">
-                                                            <input
+                                                            {/* <input
                                                                 className="form-check-input"
                                                                 type="radio"
-                                                                name="inlineRadioOptions"
                                                                 id="inlineRadio1"
-                                                                value="option1"
-                                                            />
+                                                                name='wallet'
+                                                                checked
+                                                                value={formValues.wallet}
+                                                                onChange={handleChange}
+                                                            /> */}
                                                             <label className="form-check-label" htmlFor="inlineRadio1">
-                                                                Wallet <span className="upi_icon"><img src="/assets/img/pay (2).png" alt="" /></span>
+                                                                Wallet Balance <span className="upi_icon fw-bolder">{balance?.balance}</span>
                                                             </label>
                                                         </div>
                                                     </div>
+                                                    {/* Wallet Validation */}
+                                                    {
+                                                        formErrors.wallet ?
+                                                            <div className="alert alert-danger mt-3 fs-4  " role="alert">
+                                                                {formErrors.wallet}
+                                                            </div>
+                                                            : null
+                                                    }
                                                 </div>
                                             </div>
                                         </div>

@@ -19,7 +19,7 @@ root.render(
           <App />
         } />
         <Route path='/signup' element={<SignUp />} />
-        <Route path='/login' element={<Login />} />
+        <Route path='/login' element={<Login text="/"/>} />
         <Route path='/f_password' element={<ForgetPassword />} />
       </Routes>
     </Router>

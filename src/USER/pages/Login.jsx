@@ -5,7 +5,7 @@ import { fetchLogin } from '../services/slice/AuthSlice'
 import "slick-carousel/slick/slick.css";
 import { useGoogleOneTapLogin } from 'react-google-one-tap-login'
 
-const Login = () => {
+const Login = ({ text }) => {
     const { login } = useSelector((state) => state.authslice)
     const { error_user, error_password } = login
     const navigate = useNavigate()
@@ -23,7 +23,7 @@ const Login = () => {
     // handleSubmit Function for form submit
     const handleSubmit = (e) => {
         e.preventDefault()
-        dispatch(fetchLogin({ formValues, navigate, click }))
+        dispatch(fetchLogin({ formValues, navigate }))
 
         if (click) {
             setFormValues({ email: formValues.email, password: formValues.password })
@@ -52,7 +52,6 @@ const Login = () => {
         <>
             <main className="main">
                 <div className="wrapper_area margin-top">
-
                     <div className="log_area">
 
                         <div className="right_part">
