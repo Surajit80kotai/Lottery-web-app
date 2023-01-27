@@ -49,7 +49,7 @@ const LotteryInfo = () => {
 
     useEffect(() => {
         window.scrollTo(0, 0)
-    }, [dispatch, len])
+    }, [len])
     startTimer(ticketInfo[0]?.time_left)
 
 

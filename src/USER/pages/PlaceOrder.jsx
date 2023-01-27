@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { getCart } from '../services/slice/CartSlice';
 import { fetchCountry, fetchStates } from '../services/slice/CountryStateSlice';
 
 const initialState = {
@@ -18,7 +19,11 @@ const PlaceOrder = () => {
     const [formValues, setFormValues] = useState(initialState)
     const [formErrors, setFormErrors] = useState({})
     const { countryData } = useSelector((state) => state.countrystateslice)
+    const { stateData } = useSelector((state) => state.countrystateslice)
+    const { cart_data } = useSelector((state) => state.cartslice)
     const dispatch = useDispatch()
+    const len = cart_data?.length
+    const image = process.env.REACT_APP_NODE_HOST
 
     //For onChange function
     const handleChange = (e) => {
@@ -35,11 +40,12 @@ const PlaceOrder = () => {
         setFormErrors(validate(formValues))
     }
 
+
     // getCountryId
     const getCountryId = (name) => {
-        // console.log(name);
+        console.log(name);
         const c_Id = countryData.filter((item) => {
-            if (item.name === name) {
+            if (item.name === name.split("||")[0]) {
                 return item?.countries_id
             }
             return null
@@ -105,10 +111,11 @@ const PlaceOrder = () => {
     // }
 
 
-
     useEffect(() => {
+        dispatch(getCart())
         dispatch(fetchCountry())
-    }, [dispatch])
+    }, [dispatch, len])
+
 
     return (
         <>
@@ -133,6 +140,7 @@ const PlaceOrder = () => {
                     <div className="container">
                         <div className="row">
 
+                            {/* Left Side Of PlaceOrder */}
                             <div className="col-md-8">
                                 <form action="" onSubmit={handleSubmit}>
                                     <div className="payment_form_area">
@@ -227,7 +235,8 @@ const PlaceOrder = () => {
                                                         countryData?.map((country) => {
                                                             return (
                                                                 <option key={country.countries_id
-                                                                } value={country.name + "||" + country.countries_id}>{country.name}</option>
+                                                                } value={country.name + "||" + country.countries_id}
+                                                                >{country.name}</option>
                                                             )
                                                         })
                                                     }
@@ -246,10 +255,14 @@ const PlaceOrder = () => {
                                             <div className="col-md mb-5">
                                                 <label htmlFor="state" className="form-label label_style">State</label>
                                                 <select className="form-select form_input form_select" aria-label="Default select example" id="selects">
-
-                                                    <option value="1">One</option>
-                                                    <option value="2">Two</option>
-                                                    <option value="3">Three</option>
+                                                    <option value="">Select...</option>
+                                                    {
+                                                        stateData?.map((state) => {
+                                                            return (
+                                                                <option key={state.state_id} value={state.name + "||" + state.state_id}>{state.name}</option>
+                                                            )
+                                                        })
+                                                    }
                                                 </select>
                                                 {/* State Validation */}
                                                 {
@@ -269,9 +282,9 @@ const PlaceOrder = () => {
                                         </div>
                                         <div className="payment_form">
 
+                                            {/* Wallet */}
                                             <div className="row">
-                                                {/* Wallet money */}
-                                                <div className="col-md-6">
+                                                <div className="col-md-12">
                                                     <div className="upi_one">
                                                         <div className="form-check form-check-inline">
                                                             <input
@@ -282,7 +295,7 @@ const PlaceOrder = () => {
                                                                 value="option1"
                                                             />
                                                             <label className="form-check-label" htmlFor="inlineRadio1">
-                                                                Wallet Money <span className="upi_icon"><img src="/assets/img/pay (2).png" alt="" /></span>
+                                                                Wallet <span className="upi_icon"><img src="/assets/img/pay (2).png" alt="" /></span>
                                                             </label>
                                                         </div>
                                                     </div>
@@ -297,42 +310,96 @@ const PlaceOrder = () => {
 
                             </div>
 
-
+                            {/* Right Side Of PlaceOrder */}
                             <div className="col-md-4 ">
                                 <div className="purches_sum fixed_right">
                                     <div className="price_area_wrapper ">
                                         <h3 className="price_title">Purchase Summary</h3>
                                         <div className="price_inner">
                                             <div className="price_item borderbottom">
-                                                <h4 className="price_text">Price <span> (1 Item):</span></h4>
-                                                <h6 className="price_value"><span>€</span> 1,789</h6>
+                                                <h4 className="price_text">Price <span> ({cart_data?.length} Item):</span></h4>
+                                                <h6 className="price_value"><span>€</span>
+                                                    {
+                                                        cart_data?.length && cart_data?.reduce((subTotal, arr) => {
+                                                            return (
+                                                                subTotal += (Number(arr?.info[0]?.ticket_price * arr?.resp?.quantity))
+                                                            )
+                                                        }, 0).toFixed(2)
+                                                    }
+                                                </h6>
                                             </div>
                                             <div className="price_item mb-5">
-                                                <h4 className="price_text">Delivery Charges:</h4>
-                                                <h6 className="delivery">Free</h6>
+                                                <h4 className="price_text">Total Discount :</h4>
+                                                <h6 className="price_value text-success"><span>€</span>-
+                                                    {
+                                                        cart_data?.length && cart_data?.reduce((subTotal, arr) => {
+                                                            return (
+                                                                subTotal += (Number(((arr?.info[0]?.ticket_price) * (arr?.info[0]?.discount_percentage) / 100) * arr?.resp?.quantity))
+                                                            )
+                                                        }, 0).toFixed(2)
+                                                    }
+                                                </h6>
                                             </div>
                                             <div className="price_item mt-5">
                                                 <h4 className="price_text">Total Payables:</h4>
-                                                <h6 className="price_value"><span>€</span> 1,789</h6>
+                                                <h6 className="price_value"><span>€</span>
+                                                    {
+                                                        cart_data?.length && cart_data?.reduce((subTotal, arr) => {
+                                                            return (
+                                                                subTotal += (Number(arr?.info[0]?.ticket_price - ((arr?.info[0]?.ticket_price * arr?.info[0]?.discount_percentage) / 100)) * arr?.resp?.quantity)
+                                                            )
+                                                        }, 0).toFixed(2)
+                                                    }
+                                                </h6>
                                             </div>
                                         </div>
                                     </div>
+
+                                    {/* Item List */}
                                     <div className="order_history_summary">
-                                        <div className="order_itrm_one">
-                                            <div className="product_order_img">
-                                                <img src="/assets/img/product1.jpg" alt="" />
-                                            </div>
-                                            <div className="order_information">
-                                                <div className="product_order_title">
-                                                    <h6>Dual Action Exfoliator</h6>
+                                        {
+                                            cart_data?.length ?
+                                                cart_data?.map((item) => {
+                                                    // cart_data?.map((item) => {
+                                                    return (
+                                                        <div className="cart_list_item" key={item.resp._id}>
+                                                            <div className="cart_item_img">
+                                                                <img src={image + item?.info[0]?.main_image} alt="" className="img-fluid" />
+                                                            </div>
+                                                            <div className="cart_item_content">
+                                                                <div className="cart_title">
+                                                                    <h3>{item?.info[0]?.ticket_name}</h3>
+                                                                </div>
+                                                                <div className="other_info">
+                                                                    <p className="amount fw-bold text-dark">Item Quantity : {item?.resp?.quantity}</p>
+                                                                    {/* Calculation of discounted price */}
+                                                                    <p className="tic_price fw-bold text-dark">Price Of Ticket :
+                                                                        {
+                                                                            (Number(item?.info[0]?.ticket_price - ((item?.info[0]?.ticket_price * item?.info[0]?.discount_percentage) / 100)) * item?.resp?.quantity).toFixed(2)
+                                                                        }
+                                                                    </p>
+                                                                </div>
+                                                                <div className="date_result">
+                                                                    {/* Calculating the data */}
+                                                                    <h5><span><img src="/assets/img/3135783 1.png" alt="" /></span>Result on <span className="fw-bold">
+                                                                        {new Date(item?.info[0]?.time_left).toLocaleString('en-US', {
+                                                                            month: 'short',
+                                                                            day: '2-digit',
+                                                                            year: 'numeric'
+                                                                        })}
+                                                                    </span></h5>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    )
+                                                })
+                                                :
+                                                <div className='text-center' >
+                                                    <img src="/assets/img/emptycart.png" alt="" />
+                                                    <h2>Your Cart Is Empty</h2>
                                                 </div>
-                                                <div className="other_info">
-                                                    <p className="amount">Number Of Ticket : 2</p>
-                                                    <p className="tic_price">Price Of Ticket : 1235</p>
-                                                    <h6> <span className="text-danger fs-4">€5,000</span>&nbsp;&nbsp;<span>€</span><span className="text-decoration-line-through">10,000</span>&nbsp;&nbsp;<span className="discount_percent">50%</span></h6>
-                                                </div>
-                                            </div>
-                                        </div>
+
+                                        }
 
 
                                     </div>

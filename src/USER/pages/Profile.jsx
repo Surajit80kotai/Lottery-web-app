@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import DashBoard from '../components/core/userDashboard/DashBoard'
-import OrderHistory from '../components/core/userDashboard/OrderHistory'
+import DashBoard from '../components/core/profile/DashBoard'
+import OrderHistory from '../components/core/profile/OrderHistory'
 
-const UserDashBoard = () => {
+const Profile = () => {
     const [pageName, setPageName] = useState("dashboard")
 
     return (
@@ -80,4 +80,4 @@ const UserDashBoard = () => {
     )
 }
 
-export default UserDashBoard
+export default Profile

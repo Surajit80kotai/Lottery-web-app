@@ -123,7 +123,7 @@ const Cart = () => {
 
                     {/* Discount Calculation */}
                     <div className="price_item borderbottom">
-                      <h4 className="price_text">Discount :</h4>
+                      <h4 className="price_text">Total Discount :</h4>
                       <h6 className="price_value text-success"><span>€</span>-
                         {
                           cart_data?.length && cart_data?.reduce((subTotal, arr) => {

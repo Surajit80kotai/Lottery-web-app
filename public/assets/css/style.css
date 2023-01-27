@@ -94,7 +94,7 @@ input:-webkit-autofill:active {
 	-webkit-box-shadow: 0 0 0 30px #FFEACA inset !important;
 }
 
-main{
+main {
 	padding-top: 5rem;
 }
 
@@ -2064,9 +2064,7 @@ margin: 0.5rem;
 
 
 /* Courency */
-.courency {
-	
-}
+.courency {}
 
 
 /* Payment form */
@@ -2136,7 +2134,14 @@ margin: 0.5rem;
 	-moz-box-shadow: -3px 5px 45px -1px rgba(0,0,0,0.38);
 	box-shadow: -3px 5px 45px -1px rgba(0,0,0,0.38); */
 	margin: 2rem 0;
+	height: 388px;
+	overflow: scroll;
+	
 }
+
+.order_history_summary::-webkit-scrollbar {
+	display: none;
+  }
 
 
 .order_itrm_one {

@@ -27,7 +27,7 @@ const NavBar = () => {
   }
 
   useEffect(() => {
-  }, [len,token])
+  }, [len, token])
 
   // useEffect(() => {
   //   dispatch(getCart())
@@ -137,18 +137,15 @@ const NavBar = () => {
                 {
                   token ?
                     <ul className="dropdown-menu">
-                      <div className="user_name">
-                        <h3>{user?.full_name}</h3>
-                      </div>
                       <li className="user-menu__item">
-                        <Link className="user-menu-link dropdown-item" to="/dashboard">
-                          <div>Dashboard</div>
+                        <Link className="user-menu-link dropdown-item" to="/profile">
+                          <div><i className="fas fa-user mx-1"></i><span className='fw-bolder'>My Profile</span></div>
                         </Link>
                       </li>
                       <li className="user-menu__item">
                         <Link className="user-menu-link dropdown-item" to="/">
                           <div>
-                            <button className='text-danger' onClick={logOut}>Logout</button>
+                            <button className='text-danger' onClick={logOut}><i class="fa-solid fa-power-off mx-1"></i><span className='fw-bolder'>Logout</span></button>
                           </div>
                         </Link>
                       </li>
