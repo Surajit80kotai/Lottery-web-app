@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { getCart } from '../services/slice/CartSlice';
 import { fetchCountry, fetchStates } from '../services/slice/CountryStateSlice';
 import { getBalance } from '../services/slice/UserSlice';
 
@@ -15,30 +14,24 @@ const initialState = {
 }
 
 const PlaceOrder = () => {
+    // Staes Input filds and validation
     const [formValues, setFormValues] = useState(initialState)
     const [formErrors, setFormErrors] = useState({})
+
+    // State for price calculation
+    const [amount, setAmount] = useState({ subtotal: 0, discount: 0, total: 0 })
+
+    // State for country & state data
     const { countryData } = useSelector((state) => state.countrystateslice)
     const { stateData } = useSelector((state) => state.countrystateslice)
+
+    // State for cart_data & user balance
     const { cart_data } = useSelector((state) => state.cartslice)
     const { balance } = useSelector((state) => state.userslice)
     const dispatch = useDispatch()
-    const len = cart_data?.length
+    // const len = cart_data?.length
+
     const image = process.env.REACT_APP_NODE_HOST
-
-    const subtotal = cart_data.map(({ resp, info }) => {
-        if (info[0].discount_percentage) {
-            st += (Number((info[0].ticket_price * resp.quantity)))
-            dc += (Number(((info[0].ticket_price) * (info[0].discount_percentage) / 100) * resp.quantity))
-            return Number(st)
-        } else {
-            st += Number(info[0].ticket_price * resp.quantity)
-            return st
-        }
-
-    })
-
-
-    // console.log(balance?.balance);
 
     //For onChange function
     const handleChange = (e) => {
@@ -132,12 +125,34 @@ const PlaceOrder = () => {
 
 
     useEffect(() => {
-        dispatch(getCart())
+        window.scrollTo(0, 0)
         dispatch(fetchCountry())
         dispatch(getBalance())
-        // calculateSum()
-    }, [dispatch, len])
+        calculateSum()
+    }, [cart_data, dispatch])
 
+    // Calculate Sum
+    const calculateSum = () => {
+        let st = 0
+        let dc = 0
+
+        cart_data?.map(({ resp, info }) => {
+            if (info[0].discount_percentage) {
+                st += (Number((info[0].ticket_price * resp.quantity)))
+                dc += (Number(((info[0].ticket_price) * (info[0].discount_percentage) / 100) * resp.quantity))
+                return Number(st)
+            } else {
+                st += Number(info[0].ticket_price * resp.quantity)
+                return st
+            }
+        })
+        return setAmount({
+            ...amount,
+            subtotal: st,
+            discount: dc,
+            total: st - dc
+        })
+    }
 
     return (
         <>
@@ -331,9 +346,9 @@ const PlaceOrder = () => {
                                                     </div>
                                                     {/* Wallet Validation */}
                                                     {
-                                                        formErrors.wallet ?
-                                                            <div className="alert alert-danger mt-3 fs-4  " role="alert">
-                                                                {formErrors.wallet}
+                                                        ((amount.subtotal).toFixed(2) > balance?.balance) ?
+                                                            <div className="alert alert-danger mt-3 fs-4 " role="alert">
+                                                                Insuficient balance*
                                                             </div>
                                                             : null
                                                     }
@@ -341,7 +356,11 @@ const PlaceOrder = () => {
                                             </div>
                                         </div>
                                         <div className="text-center mt-5">
-                                            <button className="btn2">Procced</button>
+                                            {
+                                                !((amount.subtotal).toFixed(2) > balance?.balance) ?
+                                                    <button className="btn2">Procced</button>
+                                                    : null
+                                            }
                                         </div>
                                     </div>
                                 </form>
@@ -357,37 +376,40 @@ const PlaceOrder = () => {
                                             <div className="price_item borderbottom">
                                                 <h4 className="price_text">Price <span> ({cart_data?.length} Item):</span></h4>
                                                 <h6 className="price_value"><span>€</span>
-                                                    {
+                                                    {(amount.total).toFixed(2)}
+                                                    {/* {
                                                         cart_data?.length && cart_data?.reduce((subTotal, arr) => {
                                                             return (
                                                                 subTotal += (Number(arr?.info[0]?.ticket_price * arr?.resp?.quantity))
                                                             )
                                                         }, 0).toFixed(2)
-                                                    }
+                                                    } */}
                                                 </h6>
                                             </div>
                                             <div className="price_item mb-5">
                                                 <h4 className="price_text">Total Discount :</h4>
                                                 <h6 className="price_value text-success"><span>€</span>-
-                                                    {
+                                                    {/* {
                                                         cart_data?.length && cart_data?.reduce((subTotal, arr) => {
                                                             return (
                                                                 subTotal += (Number(((arr?.info[0]?.ticket_price) * (arr?.info[0]?.discount_percentage) / 100) * arr?.resp?.quantity))
                                                             )
                                                         }, 0).toFixed(2)
-                                                    }
+                                                    } */}
+                                                    {(amount.discount).toFixed(2)}
                                                 </h6>
                                             </div>
                                             <div className="price_item mt-5">
                                                 <h4 className="price_text">Total Payables:</h4>
                                                 <h6 className="price_value"><span>€</span>
-                                                    {
+                                                    {/* {
                                                         cart_data?.length && cart_data?.reduce((subTotal, arr) => {
                                                             return (
                                                                 subTotal += (Number(arr?.info[0]?.ticket_price - ((arr?.info[0]?.ticket_price * arr?.info[0]?.discount_percentage) / 100)) * arr?.resp?.quantity)
                                                             )
                                                         }, 0).toFixed(2)
-                                                    }
+                                                    } */}
+                                                    {(amount.subtotal).toFixed(2)}
                                                 </h6>
                                             </div>
                                         </div>

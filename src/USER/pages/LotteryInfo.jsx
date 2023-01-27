@@ -44,12 +44,13 @@ const LotteryInfo = () => {
     const addToCart = () => {
         const cartData = { product_id: ticketInfo[0]._id, user_id: userID, qty: qty }
         dispatch(addCart(cartData))
-        dispatch(getCart())
+        // dispatch(getCart())
     }
 
     useEffect(() => {
         window.scrollTo(0, 0)
-    }, [len])
+        dispatch(getCart(userID))
+    }, [dispatch,userID, len])
     startTimer(ticketInfo[0]?.time_left)
 
 

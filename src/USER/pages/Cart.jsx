@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { delCartItem, getCart } from '../services/slice/CartSlice'
+import { delCartItem } from '../services/slice/CartSlice'
 import { useEffect } from 'react'
 
 const image = process.env.REACT_APP_NODE_HOST
@@ -10,10 +10,36 @@ const Cart = () => {
   const { cart_data } = useSelector((state) => state.cartslice)
   const dispatch = useDispatch()
   const len = cart_data?.length
+  const [amount, setAmount] = useState({ subtotal: 0, discount: 0, total: 0 })
+
+  // Calculate Function
+  // Calculate Sum
+  const calculateSum = () => {
+    let st = 0
+    let dc = 0
+
+    cart_data?.map(({ resp, info }) => {
+        if (info[0].discount_percentage) {
+            st += (Number((info[0].ticket_price * resp.quantity)))
+            dc += (Number(((info[0].ticket_price) * (info[0].discount_percentage) / 100) * resp.quantity))
+            return Number(st)
+        } else {
+            st += Number(info[0].ticket_price * resp.quantity)
+            return st
+        }
+    })
+    return setAmount({
+        ...amount,
+        subtotal: st,
+        discount: dc,
+        total: st - dc
+    })
+}
 
   useEffect(() => {
-    dispatch(getCart())
-  }, [dispatch, len])
+    window.scrollTo(0, 0)
+    calculateSum()
+  }, [cart_data, len])
 
 
 
@@ -111,13 +137,14 @@ const Cart = () => {
                     <div className="price_item borderbottom">
                       <h4 className="price_text">Price <span> ({cart_data?.length} Item):</span></h4>
                       <h6 className="price_value"><span>€</span>
-                        {
+                        {/* {
                           cart_data?.length && cart_data?.reduce((subTotal, arr) => {
                             return (
                               subTotal += (Number(arr?.info[0]?.ticket_price * arr?.resp?.quantity))
                             )
                           }, 0).toFixed(2)
-                        }
+                        } */}
+                        {(amount.total).toFixed(2)}
                       </h6>
                     </div>
 
@@ -125,13 +152,14 @@ const Cart = () => {
                     <div className="price_item borderbottom">
                       <h4 className="price_text">Total Discount :</h4>
                       <h6 className="price_value text-success"><span>€</span>-
-                        {
+                        {/* {
                           cart_data?.length && cart_data?.reduce((subTotal, arr) => {
                             return (
                               subTotal += (Number(((arr?.info[0]?.ticket_price) * (arr?.info[0]?.discount_percentage) / 100) * arr?.resp?.quantity))
                             )
                           }, 0).toFixed(2)
-                        }
+                        } */}
+                        {(amount.discount).toFixed(2)}
                       </h6>
                     </div>
 
@@ -139,13 +167,14 @@ const Cart = () => {
                     <div className="price_item mt-5">
                       <h4 className="price_text">Total Payables:</h4>
                       <h6 className="price_value"><span>€</span>
-                        {
+                        {/* {
                           cart_data?.length && cart_data?.reduce((subTotal, arr) => {
                             return (
                               subTotal += (Number(arr?.info[0]?.ticket_price - ((arr?.info[0]?.ticket_price * arr?.info[0]?.discount_percentage) / 100)) * arr?.resp?.quantity)
                             )
                           }, 0).toFixed(2)
-                        }
+                        } */}
+                        {(amount.subtotal).toFixed(2)}
                       </h6>
                     </div>
                   </div>

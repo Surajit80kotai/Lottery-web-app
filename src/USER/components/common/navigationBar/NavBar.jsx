@@ -27,11 +27,7 @@ const NavBar = () => {
   }
 
   useEffect(() => {
-  }, [len, token])
-
-  // useEffect(() => {
-  //   dispatch(getCart())
-  // }, [dispatch])
+  }, [cart_data, len, token])
 
   return (
     <>

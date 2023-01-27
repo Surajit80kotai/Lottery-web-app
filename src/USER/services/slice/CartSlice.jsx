@@ -38,11 +38,9 @@ export const delCartItem = createAsyncThunk("/auth/cart/delete", async (c_id) =>
 
 // GetCart get request handle
 const GET_CART = "auth/cart"
-//Getting The ID
-const id = (JSON.parse(window.localStorage.getItem("user")))?.user_id
-export const getCart = createAsyncThunk("/auth/cart", async () => {
+export const getCart = createAsyncThunk("/auth/cart", async (_id) => {
     try {
-        const res = await API.get(`${GET_CART}/${id}`, header)
+        const res = await API.get(`${GET_CART}/${_id}`, header)
         return res?.data
     } catch (err) {
         console.log(err)

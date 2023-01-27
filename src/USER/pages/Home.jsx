@@ -14,6 +14,7 @@ import { getCart } from '../services/slice/CartSlice'
 const Home = () => {
     const { fetch_lott_data, category_data } = useSelector((state) => state.lotteryslice)
     const dispatch = useDispatch()
+    const userID = (JSON.parse(window.localStorage.getItem("user")))?.user_id
 
     // Getting category_name & category_id
     const categoryObj = category_data?.reduce((acc, cur) => {
@@ -34,8 +35,8 @@ const Home = () => {
         window.scrollTo(0, 0)
         dispatch(fetchLottery())
         dispatch(fetchCategory())
-        dispatch(getCart())
-    }, [dispatch])
+        dispatch(getCart(userID))
+    }, [dispatch, userID])
 
 
     return (
