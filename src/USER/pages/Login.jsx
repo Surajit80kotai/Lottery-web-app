@@ -5,7 +5,6 @@ import { fetchLogin } from '../services/slice/AuthSlice'
 import "slick-carousel/slick/slick.css";
 import { useGoogleOneTapLogin } from 'react-google-one-tap-login'
 import { toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css';
 
 
 const Login = () => {

@@ -10,11 +10,13 @@ import Profile from './USER/pages/Profile';
 import Cart from './USER/pages/Cart';
 import PlaceOrder from './USER/pages/PlaceOrder';
 import Contact from './USER/pages/Contact';
-import { ToastContainer } from 'react-toastify';
+import { Flip, ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
+
+
 function App() {
   return (
     <div>
-      <ToastContainer />
       <NavBar />
       <Routes>
         <Route path='/' element={<Home />} exact />
@@ -29,6 +31,7 @@ function App() {
         </Route>
       </Routes>
       <FooterMain />
+      <ToastContainer style={{ "fontSize": "16px" }} transition={Flip} />
     </div>
   );
 }

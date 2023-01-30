@@ -8,7 +8,6 @@ const NavBar = () => {
   const navigate = useNavigate()
   const token = JSON.parse(window.localStorage.getItem("token"))
   const user = JSON.parse(window.localStorage.getItem("user"))
-  // const cart_data = JSON.parse(window.localStorage.getItem("cart_data"))
   const { cart_data } = useSelector((state) => state.cartslice)
   const len = cart_data?.length
 

@@ -26,8 +26,18 @@ export const fetchLogin = createAsyncThunk(
             const result = await LOGIN(formValues)
             window.localStorage.setItem("token", JSON.stringify(result?.data?.token))
             window.localStorage.setItem("user", JSON.stringify(result?.data?.user_details))
-            toast.success("Succesfully Loged In")
             navigate('/')
+            // react toast message
+            toast.success('Loged In Successfully', {
+                position: "top-center",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored"
+            })
             return result?.data
         } catch (err) {
             // console.log(rejectWithValue(err.response.data));
@@ -73,6 +83,7 @@ export const AuthSlice = createSlice({
         doLogOut: (state) => {
             window.localStorage.removeItem("token")
             window.localStorage.removeItem("user")
+
             state.user = null
         }
     },

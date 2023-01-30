@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { fetchCountry, fetchStates } from '../services/slice/CountryStateSlice';
 import { getBalance } from '../services/slice/UserSlice';
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 
 const initialState = {
     address: "",
@@ -123,6 +125,22 @@ const PlaceOrder = () => {
     //     );
     // }
 
+    const onProcced = () => {
+        const errorLen = Object.keys(formErrors).length;
+        if (errorLen) {
+            // react toast message
+            toast.success('Purched In Successfully', {
+                position: "top-center",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored"
+            })
+        }
+    }
 
     useEffect(() => {
         window.scrollTo(0, 0)
@@ -358,7 +376,7 @@ const PlaceOrder = () => {
                                         <div className="text-center mt-5">
                                             {
                                                 !((amount.subtotal).toFixed(2) > balance?.balance) ?
-                                                    <button className="btn2">Procced</button>
+                                                    <button onClick={onProcced} className="btn2">Procced</button>
                                                     : null
                                             }
                                         </div>
