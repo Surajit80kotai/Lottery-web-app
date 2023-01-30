@@ -1,11 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import { API } from "../api/Api";
+import { COUNTRY, STATE } from "../api/Api";
 
 // fetchCountry data
-const COUNTRIES = "/countries"
 export const fetchCountry = createAsyncThunk("/countries", async () => {
     try {
-        const result = await API.get(COUNTRIES)
+        const result = await COUNTRY()
         // console.log(result?.data);
         return result?.data
     } catch (err) {
@@ -16,7 +15,7 @@ export const fetchCountry = createAsyncThunk("/countries", async () => {
 // fetchStates data
 export const fetchStates = createAsyncThunk("/state", async (id) => {
     try {
-        const result = await API.get(`/state/${id}`)
+        const result = await STATE(id)
         // console.log(result?.data);
         return result?.data
     } catch (err) {

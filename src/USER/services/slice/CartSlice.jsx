@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { API } from "../api/Api";
+import { ADDTOCART, DELCART, FETCHCART } from "../api/Api";
 
 
 // Defining header
@@ -11,11 +11,10 @@ const header = {
 
 
 // AddCart post request handle
-const ADD_CART = "/auth/add-cart"
 export const addCart = createAsyncThunk("/auth/add-cart", async (cartData) => {
     // console.log(cartData);
     try {
-        const res = await API.post(ADD_CART, cartData, header)
+        const res = await ADDTOCART(cartData, header)
         return res?.data
     } catch (err) {
         console.log(err)
@@ -24,11 +23,9 @@ export const addCart = createAsyncThunk("/auth/add-cart", async (cartData) => {
 
 
 // DeleteCart post request handle
-const DEL_CART = "/auth/cart/delete"
 export const delCartItem = createAsyncThunk("/auth/cart/delete", async (c_id) => {
     try {
-        const res = await API.get(`${DEL_CART}/${c_id}`, header)
-        // console.log("cart_slice after", res.data)
+        const res = await DELCART(c_id, header)
         return res?.data
     } catch (err) {
         console.log(err)
@@ -37,10 +34,9 @@ export const delCartItem = createAsyncThunk("/auth/cart/delete", async (c_id) =>
 
 
 // GetCart get request handle
-const GET_CART = "auth/cart"
 export const getCart = createAsyncThunk("/auth/cart", async (_id) => {
     try {
-        const res = await API.get(`${GET_CART}/${_id}`, header)
+        const res = await FETCHCART(_id, header)
         return res?.data
     } catch (err) {
         console.log(err)

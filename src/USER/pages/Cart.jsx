@@ -9,7 +9,7 @@ const image = process.env.REACT_APP_NODE_HOST
 const Cart = () => {
   const { cart_data } = useSelector((state) => state.cartslice)
   const dispatch = useDispatch()
-  const len = cart_data?.length
+  // const len = cart_data?.length
   const [amount, setAmount] = useState({ subtotal: 0, discount: 0, total: 0 })
 
   // Calculate Function
@@ -39,7 +39,7 @@ const Cart = () => {
   useEffect(() => {
     window.scrollTo(0, 0)
     calculateSum()
-  }, [cart_data, len])
+  }, [cart_data])
 
 
 

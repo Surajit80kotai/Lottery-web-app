@@ -10,9 +10,11 @@ import Profile from './USER/pages/Profile';
 import Cart from './USER/pages/Cart';
 import PlaceOrder from './USER/pages/PlaceOrder';
 import Contact from './USER/pages/Contact';
+import { ToastContainer } from 'react-toastify';
 function App() {
   return (
     <div>
+      <ToastContainer />
       <NavBar />
       <Routes>
         <Route path='/' element={<Home />} exact />

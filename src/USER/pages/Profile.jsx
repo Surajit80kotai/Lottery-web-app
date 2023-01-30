@@ -5,6 +5,7 @@ import OrderHistory from '../components/core/profile/OrderHistory'
 
 const Profile = () => {
     const [pageName, setPageName] = useState("dashboard")
+    window.scrollTo(0, 0)
 
     return (
         <>

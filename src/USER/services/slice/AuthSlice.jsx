@@ -1,15 +1,14 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { API } from "../api/Api";
+import { FORGETPASSWORD, LOGIN, SIGNUP } from "../api/Api";
 
 
 //AsyncThunk For SignUp 
-const SIGN_UP = "/auth/signup"
 export const fetchSignUp = createAsyncThunk(
     "signup",
     async ({ formValues, navigate }, { rejectWithValue }) => {
 
         try {
-            const res = await API.post(SIGN_UP, formValues)
+            const res = await SIGNUP(formValues)
             navigate('/login')
             return res?.data
         } catch (err) {
@@ -21,13 +20,13 @@ export const fetchSignUp = createAsyncThunk(
 
 
 //AsyncThunk For Login 
-const LOG_IN = "/auth/login"
 export const fetchLogin = createAsyncThunk(
-    "login", async ({ formValues, navigate }, { rejectWithValue }) => {
+    "login", async ({ formValues, navigate, toast }, { rejectWithValue }) => {
         try {
-            const result = await API.post(LOG_IN, formValues)
+            const result = await LOGIN(formValues)
             window.localStorage.setItem("token", JSON.stringify(result?.data?.token))
             window.localStorage.setItem("user", JSON.stringify(result?.data?.user_details))
+            toast.success("Succesfully Loged In")
             navigate('/')
             return result?.data
         } catch (err) {
@@ -39,11 +38,10 @@ export const fetchLogin = createAsyncThunk(
 
 
 //AsyncThunk For ForgetPassword 
-const FORGET_PASS = "/auth/forget"
 export const fetchForgetPass = createAsyncThunk(
     "forget", async ({ formValues }, { rejectWithValue }) => {
         try {
-            const res = await API.post(FORGET_PASS, formValues)
+            const res = await FORGETPASSWORD(formValues)
             return res?.data
         } catch (err) {
             // console.log(rejectWithValue(err.response.data));

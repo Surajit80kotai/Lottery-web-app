@@ -1,11 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import { API } from "../api/Api"
+import { CATEGORY, TICKET } from "../api/Api"
 
 // fetching all category data
-const GET_CATEGORY = "/admin/get-category"
 export const fetchCategory = createAsyncThunk("/admin/get-category", async () => {
     try {
-        const response = await API.get(GET_CATEGORY)
+        const response = await CATEGORY()
         // console.log(response?.data)
         return response?.data
     } catch (err) {
@@ -14,10 +13,9 @@ export const fetchCategory = createAsyncThunk("/admin/get-category", async () =>
 })
 
 // fetching all lottery data
-const GET_TICKETS = "/ticket/get-tickets"
 export const fetchLottery = createAsyncThunk("ticket/get-tickets", async () => {
     try {
-        const response = await API.get(GET_TICKETS)
+        const response = await TICKET()
         // console.log(response?.data)
         return response?.data
     } catch (err) {
