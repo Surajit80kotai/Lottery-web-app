@@ -3,6 +3,7 @@ import AuthSlice from "../slice/AuthSlice";
 import CartSlice from "../slice/CartSlice";
 import CountryStateSlice from "../slice/CountryStateSlice";
 import LotterySlice from "../slice/LotterySlice";
+import PaymentSlice from "../slice/PaymentSlice";
 import UserSlice from "../slice/UserSlice";
 
 export const Store = configureStore({
@@ -11,6 +12,7 @@ export const Store = configureStore({
         lotteryslice: LotterySlice,
         countrystateslice: CountryStateSlice,
         cartslice: CartSlice,
-        userslice: UserSlice
+        userslice: UserSlice,
+        paymentslice: PaymentSlice
     }
 })

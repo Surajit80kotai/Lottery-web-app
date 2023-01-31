@@ -1,10 +1,8 @@
-import axios from 'axios';
-import React from 'react'
+import axios from "axios";
 
-const TestFive = () => {
-    const token = JSON.parse(window.localStorage.getItem("token"))
-    // console.log(typeof token);
-
+const token = JSON.parse(window.localStorage.getItem("token"))
+// console.log(typeof token);
+export const CinetPay = () => {
     var data = JSON.stringify({
         "apikey": "102219127563b7f7c53a41e9.62135970",
         "site_id": "126127",
@@ -46,19 +44,11 @@ const TestFive = () => {
 
     axios(config)
         .then(function (response) {
-            console.log(JSON.stringify(response.data));
+            console.log(JSON.stringify(response.data))
+            return (JSON.stringify(response.data))
         })
         .catch(function (error) {
-            console.log(error);
-        });
-
-    return (
-        <>
-            <main>
-                <h1>Test Page</h1>
-            </main>
-        </>
-    )
+            console.log(error)
+            return (JSON.stringify(error))
+        })
 }
-
-export default TestFive

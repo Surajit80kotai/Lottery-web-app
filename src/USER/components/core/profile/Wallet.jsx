@@ -1,24 +1,63 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
+import { cinetPay } from '../../../services/slice/PaymentSlice';
 import { getBalance } from '../../../services/slice/UserSlice';
+// import { Watch } from 'react-loader-spinner'
 
 const Wallet = () => {
-    const [amount, setAmount] = useState()
-    // const [checked, setChecked] = useState("option1")
+    const [formValue, setFormValue] = useState({ amount: "" })
     const dispatch = useDispatch()
     const { balance } = useSelector((state) => state.userslice)
+    const { paymentData } = useSelector((state) => state.paymentslice)
+    // const [loading, setLoading] = useState(false)
+    console.log(paymentData);
 
-    // const user = JSON.parse(window.localStorage.getItem("user"))
-    // console.log(user)
+    const handleChange = (e) => {
+        setFormValue({ ...formValue, [e.target.name]: e.target.value })
+    }
+
+    const payOption = (value) => {
+        if (value === "Cinet") {
+            dispatch(cinetPay(formValue))
+        } else if (value === "Master") {
+            console.log(value)
+        } else if (value === "Paypal") {
+            console.log(value)
+        }
+    }
+
+    const redirectPage = () => {
+        console.log(typeof paymentData.code)
+        if (paymentData.code === "201") {
+            window.open(paymentData.data.payment_url, "_blank")
+        }
+    }
 
 
     useEffect(() => {
         dispatch(getBalance())
-    }, [dispatch])
+        setTimeout(() => {
+            redirectPage()
+            // setLoading(true)
+        }, 5000)
+    }, [dispatch, paymentData])
 
     return (
         <>
+            {/* {loading ?
+                <Watch
+                    height="80"
+                    width="80"
+                    radius="48"
+                    color="#4fa94d"
+                    ariaLabel="watch-loading"
+                    wrapperStyle={{}}
+                    wrapperClassName=""
+                    visible={true}
+                />
+                : null} */}
+
             <div className="content_wrapper">
                 <div className="paymentwallet_bg">
                     <h1>Check Your Current Balance</h1>
@@ -56,16 +95,19 @@ const Wallet = () => {
                                                         className="payinput"
                                                         id="amount"
                                                         name="amount"
-                                                        value={amount}
-                                                        onChange={(e) => setAmount(e.target.value)}
+                                                        value={formValue.amount}
+                                                        onChange={handleChange}
                                                         aria-describedby="emailHelp"
                                                         placeholder="Enter amount"
                                                     />
                                                 </div>
                                             </div>
                                             <div className="col-md-4">
-                                                <button type="button" className="addmoney" data-bs-toggle="modal" data-bs-target="#exampleModal">Add
-                                                    Money</button>
+                                                {
+                                                    formValue?.amount ?
+                                                        <button type="button" className="addmoney" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Money</button>
+                                                        : <button type="button" className="addmoney" data-bs-toggle="modal" data-bs-target="#exampleModal" disabled>Add Money</button>
+                                                }
                                             </div>
                                         </div>
 
@@ -132,11 +174,11 @@ const Wallet = () => {
 
                 {/*  Modal payment */}
                 <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div className="modal-dialog modal-lg">
+                    <div className="modal-dialog modal-dialog-centered modal-lg">
                         <div className="modal-content">
                             <div className="modal-header">
                                 <h3>Add Money to Wallet</h3>
-                                <h4>${amount}</h4>
+                                <h4>${formValue.amount}</h4>
                             </div>
 
                             <div className="modal-body">
@@ -149,8 +191,8 @@ const Wallet = () => {
                                             type="radio"
                                             id="control_01"
                                             name="select"
-                                            value="option1"
-
+                                            value="Cinet"
+                                            onChange={(e) => payOption(e.target.value)}
                                         />
                                         <label htmlFor="control_01">
                                             <div className="pay_icon">
@@ -167,7 +209,8 @@ const Wallet = () => {
                                             type="radio"
                                             id="control_02"
                                             name="select"
-                                            value="option2"
+                                            value="Master"
+                                            onChange={(e) => payOption(e.target.value)}
                                         />
                                         <label htmlFor="control_02">
                                             <div className="pay_icon">
@@ -183,7 +226,8 @@ const Wallet = () => {
                                             type="radio"
                                             id="control_03"
                                             name="select"
-                                            value="option3"
+                                            value="Paypal"
+                                            onChange={(e) => payOption(e.target.value)}
                                         />
                                         <label htmlFor="control_03">
                                             <div className="pay_icon">
@@ -198,6 +242,7 @@ const Wallet = () => {
                         </div>
                     </div>
                 </div>
+
             </div>
         </>
     )

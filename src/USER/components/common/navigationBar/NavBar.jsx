@@ -9,7 +9,7 @@ const NavBar = () => {
   const token = JSON.parse(window.localStorage.getItem("token"))
   const user = JSON.parse(window.localStorage.getItem("user"))
   const { cart_data } = useSelector((state) => state.cartslice)
-  const len = cart_data?.length
+  const cartLength = cart_data?.length
 
   const logOut = () => {
     dispatch(doLogOut())
@@ -26,7 +26,7 @@ const NavBar = () => {
   }
 
   useEffect(() => {
-  }, [cart_data, len, token])
+  }, [cart_data, cartLength, token])
 
   return (
     <>
@@ -156,7 +156,7 @@ const NavBar = () => {
               token ?
                 <div className="cart">
                   <Link to="/cart" className="cartbtn"><i className="fas fa-shopping-cart"></i>
-                    {cart_data?.length > 0 ? <span className="label">{cart_data?.length}</span> : null}</Link>
+                    {cartLength > 0 ? <span className="label">{cartLength}</span> : null}</Link>
                 </div>
                 : null
             }

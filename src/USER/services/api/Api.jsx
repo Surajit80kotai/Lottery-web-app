@@ -35,3 +35,6 @@ export const UPDATECART = (id, qty, header) => API.get("/auth/cart/qt_update" + 
 
 // user balance
 export const USERBALANCE = (header) => API.get("/auth/account/wallet/balance", header)
+
+// init transaction
+export const PAYINIT = (payment_token, payment_url, header) => API.post("/auth/pay/init", header)

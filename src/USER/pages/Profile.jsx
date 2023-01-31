@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import DashBoard from '../components/core/profile/DashBoard'
 import OrderHistory from '../components/core/profile/OrderHistory'
@@ -6,7 +6,10 @@ import Wallet from '../components/core/profile/Wallet'
 
 const Profile = () => {
     const [pageName, setPageName] = useState("dashboard")
-    window.scrollTo(0, 0)
+
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    })
 
     return (
         <>
