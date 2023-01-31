@@ -25,15 +25,15 @@ const LotteryInfo = () => {
     const is_image = ticketInfo[0]?.is_image
 
 
-    // IncAmount function
-    const IncAmount = () => {
+    // IncQty function
+    const IncQty = () => {
         if (qty < 5) {
             setQty(qty + 1)
         }
         return qty
     }
-    // DecAmount function
-    const DecAmount = () => {
+    // DecQty function
+    const DecQty = () => {
         if (qty > 1) {
             setQty(qty - 1)
         }
@@ -138,12 +138,12 @@ const LotteryInfo = () => {
                                         <h3>Quantity</h3>
                                         <div className="col-md-4">
                                             <div className="qty-container">
-                                                <button className="qty-btn-minus btn-light" type="button" onClick={DecAmount}><i className="fa fa-minus"></i></button>
+                                                <button className="qty-btn-minus btn-light" type="button" onClick={DecQty}><i className="fa fa-minus"></i></button>
                                                 <div className="quantity_place">
                                                     {/* <input className='quantity_title' value={amount} /> */}
                                                     <h1 className='quantity_title'>{qty}</h1>
                                                 </div>
-                                                <button className="qty-btn-plus btn-light" type="button" onClick={IncAmount}><i className="fa fa-plus"></i></button>
+                                                <button className="qty-btn-plus btn-light" type="button" onClick={IncQty}><i className="fa fa-plus"></i></button>
                                             </div>
                                         </div>
                                     </div>

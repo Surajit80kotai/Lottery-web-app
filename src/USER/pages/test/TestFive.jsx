@@ -1,33 +1,61 @@
-import axios from "axios";
+import axios from 'axios';
+import React from 'react'
 
+const TestFive = () => {
+    var data = JSON.stringify({
+        "apikey": "102219127563b7f7c53a41e9.62135970",
+        "site_id": "126127",
+        "transaction_id": Math.floor(Math.random() * 100000000).toString(), //
+        "amount": 100,
+        "currency": "XAF",
+        "alternative_currency": "",
+        "description": " TEST INTEGRATION ",
+        "customer_id": "172",
+        "customer_name": "KOUADIO",
+        "customer_surname": "Francisse",
+        "customer_email": "harrissylver@gmail.com",
+        "customer_phone_number": "698118056",
+        "customer_address": "Antananarivo",
+        "customer_city": "Antananarivo",
+        "customer_country": "CM",
+        "customer_state": "CM",
+        "customer_zip_code": "06510",
+        "notify_url": "http://192.168.1.19:3303/api/test/pay/notify",
+        "return_url": "http://192.168.1.19:3303/api/test/pay/callback",
+        "channels": "ALL",
+        "metadata": "user1",
+        "lang": "FR",
+        "invoice_data": {
+            "Donnee1": "",
+            "Donnee2": "",
+            "Donnee3": ""
+        }
+    });
 
-// base url
-const Api = axios.create({baseURL: "http://192.168.1.39:3303/api"})
+    var config = {
+        method: 'post',
+        url: 'https://api-checkout.cinetpay.com/v2/payment',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        data: data
+    };
 
-// raw url
-export const BaseUrl = "http://192.168.1.39:3303/"
+    axios(config)
+        .then(function (response) {
+            console.log(JSON.stringify(response.data));
+        })
+        .catch(function (error) {
+            console.log("Test page error",error);
+        });
 
-// login api function
-export const LOGIN = (loginData)=> Api.post('/auth/login', loginData)
+    return (
+        <>
+            <main>
+                <h1>Test Page</h1>
+            </main>
+        </>
+    )
+}
 
-// signup api function
-export const SIGNUP = (signupData)=> Api.post('/auth/signup', signupData)
-
-// country & state api function
-export const COUNTRY = ()=> Api.get('/countries')
-export const STATE =(id)=> Api.get("/state/"+id)
-
-// get ticket api Function
-export const TICKET = ()=> Api.get('/ticket/get-tickets')
-
-// get Category api function
-export const CATEGORY = ()=> Api.get('/admin/get-category')
-
-// post Add to Cart
-export const ADDTOCART = (cartData, header)=> Api.post('/auth/add-cart', cartData, header)
-
-// fetch cart item of user
-export const FETCHCART = (id, header)=> Api.get("/auth/cart/"+id, header)
-
-// delete cart item
-export const DELCART = (id, header)=> Api.get("/auth/cart/delete/"+id, header)
+export default TestFive

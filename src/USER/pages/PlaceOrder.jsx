@@ -99,32 +99,6 @@ const PlaceOrder = () => {
         return error
     }
 
-    // Expiry Date format function
-    // const formatString = (e) => {
-    //     // var inputChar = String.fromCharCode(e.keyCode);
-    //     var code = e.keyCode;
-    //     var allowedKeys = [8];
-    //     if (allowedKeys.indexOf(code) !== -1) {
-    //         return;
-    //     }
-
-    //     e.target.value = e.target.value.replace(
-    //         /^([1-9]\/|[2-9])$/g, '0$1/' // 3 > 03/
-    //     ).replace(
-    //         /^(0[1-9]|1[0-2])$/g, '$1/' // 11 > 11/
-    //     ).replace(
-    //         /^([0-1])([3-9])$/g, '0$1/$2' // 13 > 01/3
-    //     ).replace(
-    //         /^(0?[1-9]|1[0-2])([0-9]{2})$/g, '$1/$2' // 141 > 01/41
-    //     ).replace(
-    //         /^([0]+)\/|[0]+$/g, '0' // 0/ > 0 and 00 > 0
-    //     ).replace(
-    //         /[^\d\/]|^[\/]*$/g, '' // To allow only digits and `/`
-    //     ).replace(
-    //         /\/\//g, '/' // Prevent entering more than 1 `/`
-    //     );
-    // }
-
     const onProcced = () => {
         const errorLen = Object.keys(formErrors).length;
         if (errorLen) {
@@ -175,7 +149,6 @@ const PlaceOrder = () => {
     return (
         <>
             <main>
-
                 <div className="cart_list_wrapper pb-5">
                     <div className="container pt-5">
                         <div className="bred">
@@ -365,8 +338,8 @@ const PlaceOrder = () => {
                                                     {/* Wallet Validation */}
                                                     {
                                                         ((amount.subtotal).toFixed(2) > balance?.balance) ?
-                                                            <div className="alert alert-danger mt-3 fs-4 " role="alert">
-                                                                Insuficient balance*
+                                                            <div class="alert alert-danger mt-2  fs-4" role="alert">
+                                                                <span><i class="fas fa-balance-scale-right"></i></span> Insaficinent Wallet Balance
                                                             </div>
                                                             : null
                                                     }
@@ -470,10 +443,7 @@ const PlaceOrder = () => {
                             </div>
                         </div>
                     </div>
-
-
                 </div>
-
             </main>
         </>
     )

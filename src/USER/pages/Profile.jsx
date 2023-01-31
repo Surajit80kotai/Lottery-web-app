@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import DashBoard from '../components/core/profile/DashBoard'
 import OrderHistory from '../components/core/profile/OrderHistory'
+import Wallet from '../components/core/profile/Wallet'
 
 const Profile = () => {
     const [pageName, setPageName] = useState("dashboard")
@@ -26,19 +27,11 @@ const Profile = () => {
                                 </Link>
                             </li>
 
-                            {/* Bonus */}
+                            {/* Wallet */}
                             <li className="menu-item ">
-                                <Link onClick={() => setPageName("bonus")} to="#!" className="menu-link">
-                                    <i className="menu-icon fas fa-gift"></i>
-                                    <div data-i18n="Analytics">Bonus</div>
-                                </Link>
-                            </li>
-
-                            {/* Games */}
-                            <li className="menu-item ">
-                                <Link onClick={() => setPageName("games")} to="#!" className="menu-link">
-                                    <i className="menu-icon fas fa-puzzle-piece"></i>
-                                    <div data-i18n="Analytics">Games</div>
+                                <Link onClick={() => setPageName("wallet")} to="#!" className="menu-link">
+                                    <i className="menu-icon fas fa-wallet"></i>
+                                    <div data-i18n="Analytics">Wallet</div>
                                 </Link>
                             </li>
 
@@ -50,28 +43,14 @@ const Profile = () => {
                                 </Link>
                             </li>
                         </ul>
-                        <hr />
-
-                        {/* Accout balance dropdown menu */}
-                        <div className="acount_balns_wraper">
-                            <input type="checkbox" id="drop-5" hidden />
-                            <label className="dropHeader dropHeader-4 dropacount" htmlFor="drop-5"><span><img src="/assets/img/2355715 1.png" alt="" /></span> Acount Balance <span className="iocn"><i className="fas fa-sort-down"></i></span> </label>
-                            <div className="acountcheck list-5">
-                                <div className="acount_bls_check_box">
-                                    <img src="/assets/img/114910 1.png" alt="" className="img-fluid" />
-                                    <h3 className="amonut_blans">
-                                        <span>€</span>
-                                        52365
-                                    </h3>
-                                    <p>Total Banlance</p>
-                                </div>
-                            </div>
-                        </div>
                     </aside>
 
                     {/* Right Side */}
                     {/* Dashboard */}
                     {pageName === "dashboard" ? <DashBoard /> : null}
+
+                    {/* Wallet */}
+                    {pageName === "wallet" ? <Wallet /> : null}
 
                     {/* Order History */}
                     {pageName === "orderhistory" ? <OrderHistory /> : null}

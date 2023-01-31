@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { ADDTOCART, DELCART, FETCHCART } from "../api/Api";
+import { ADDTOCART, DELCART, FETCHCART, UPDATECART } from "../api/Api";
 
 
 // Defining header
@@ -39,9 +39,23 @@ export const getCart = createAsyncThunk("/auth/cart", async (_id) => {
         const res = await FETCHCART(_id, header)
         return res?.data
     } catch (err) {
-        console.log(err)
+        console.log("Cart data is not fetched", err)
     }
 })
+
+
+// updateCart get request handle
+export const updateCart = createAsyncThunk("/auth/cart/qt_update", async (id, qty) => {
+    try {
+        const res = await UPDATECART(id, qty, header)
+        console.log(res)
+        return res?.data
+    } catch (err) {
+        console.log("Quantity not updated", err)
+    }
+})
+
+
 
 export const CartSlice = createSlice({
     name: "cartslice",
@@ -87,9 +101,21 @@ export const CartSlice = createSlice({
         builder.addCase(getCart.fulfilled, (state, { payload }) => {
             state.status = "Success"
             state.cart_data = payload
-            // window.localStorage.setItem("cart_data", JSON.stringify(payload))
         })
         builder.addCase(getCart.rejected, (state) => {
+            state.status = "Failed"
+        })
+
+
+        // Get request states for Updatecart system
+        builder.addCase(updateCart.pending, (state) => {
+            state.status = "Loading"
+        })
+        builder.addCase(updateCart.fulfilled, (state, { payload }) => {
+            state.status = "Success"
+            state.cart_data = payload
+        })
+        builder.addCase(updateCart.rejected, (state) => {
             state.status = "Failed"
         })
     }

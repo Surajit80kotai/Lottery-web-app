@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { delCartItem } from '../services/slice/CartSlice'
+import { delCartItem, getCart } from '../services/slice/CartSlice'
 import { useEffect } from 'react'
 
 const image = process.env.REACT_APP_NODE_HOST
@@ -9,8 +9,10 @@ const image = process.env.REACT_APP_NODE_HOST
 const Cart = () => {
   const { cart_data } = useSelector((state) => state.cartslice)
   const dispatch = useDispatch()
-  // const len = cart_data?.length
+  const [qty, setQty] = useState(1)
+  const cartLength = cart_data?.length
   const [amount, setAmount] = useState({ subtotal: 0, discount: 0, total: 0 })
+  const userID = (JSON.parse(window.localStorage.getItem("user"))).user_id
 
   // Calculate Function
   // Calculate Sum
@@ -36,10 +38,37 @@ const Cart = () => {
     })
   }
 
+
+  // IncQty function
+  const IncQty = () => {
+    if (qty < 5) {
+      setQty(qty + 1)
+    }
+    return qty
+  }
+  // DecQty function
+  const DecQty = () => {
+    if (qty > 1) {
+      setQty(qty - 1)
+    }
+    return qty
+  }
+
+  // removeItem function
+  const removeItem = (id) => {
+    dispatch(delCartItem(id))
+  }
+
+  // update cycle
+  useEffect(() => {
+    dispatch(getCart(userID))
+  }, [dispatch, userID, cartLength])
+
+  // mount cycle
   useEffect(() => {
     window.scrollTo(0, 0)
     calculateSum()
-  }, [cart_data])
+  }, [])
 
 
 
@@ -72,9 +101,13 @@ const Cart = () => {
                         // cart_data?.map((item) => {
                         return (
                           <div className="cart_list_item" key={item.resp._id}>
+
+                            {/* Image */}
                             <div className="cart_item_img">
                               <img src={image + item?.info[0]?.main_image} alt="" className="img-fluid" />
                             </div>
+
+                            {/* Item Info */}
                             <div className="cart_item_content">
                               <div className="cart_title">
                                 <h3>{item?.info[0]?.ticket_name}</h3>
@@ -97,10 +130,19 @@ const Cart = () => {
                                     year: 'numeric'
                                   })}
                                 </span></h5>
+                                {/* Quantity */}
+                                <div className="qty-container">
+                                  <button onClick={DecQty} className="qty-btn-minus btn-light" type="button"><i className="fa fa-minus"></i></button>
+                                  {/* <input type="text" name="qty" value="0" className="input-qty" /> */}
+                                  <h1 className='quantity_title'>{qty}</h1>
+                                  <button onClick={IncQty} className="qty-btn-plus btn-light" type="button"><i className="fa fa-plus"></i></button>
+                                </div>
                               </div>
                             </div>
+
+                            {/* Remove button */}
                             <div className="remove_btn">
-                              <button onClick={() => dispatch(delCartItem(item?.resp?._id))}><i className="bi bi-trash3"></i></button>
+                              <button onClick={() => removeItem(item?.resp?._id)}><i className="bi bi-trash3"></i></button>
                             </div>
                           </div>
                         )
