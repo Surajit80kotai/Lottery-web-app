@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { fetchForgetPass } from '../services/slice/AuthSlice'
+import { Flip, toast, ToastContainer } from 'react-toastify'
 
 const ForgetPassword = () => {
     const [formValues, setFormValues] = useState({ email: "" })
@@ -15,7 +16,8 @@ const ForgetPassword = () => {
     //  handleSubmit Function for form submit
     const handleSubmit = (e) => {
         e.preventDefault()
-        dispatch(fetchForgetPass({formValues}))
+        dispatch(fetchForgetPass({ formValues }))
+        toast.info(`Link sent to your email ${formValues.email}`)
         setFormValues({ email: "" })
     }
 
@@ -59,6 +61,7 @@ const ForgetPassword = () => {
 
                 </div>
             </main>
+            <ToastContainer style={{ "fontSize": "16px" }} transition={Flip} position="top-center"/>
         </>
     )
 }

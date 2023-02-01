@@ -4,6 +4,7 @@ import { fetchSignUp } from '../services/slice/AuthSlice'
 import "slick-carousel/slick/slick.css";
 import { Link, useNavigate } from 'react-router-dom'
 import { fetchCountry, fetchStates } from '../services/slice/CountryStateSlice';
+import { toast } from 'react-toastify'
 
 
 const initialState = {
@@ -31,6 +32,8 @@ const SignUp = () => {
         setFormValues({ ...formValues, [e.target.name]: e.target.value })
         const countryId = e.target.value
 
+        // console.log(formValues);
+
         if (countryId) {
             getCountryId(countryId)
         }
@@ -44,7 +47,7 @@ const SignUp = () => {
         if (password !== confirmPassword) {
             return setError("Pasword did not matched")
         } else {
-            dispatch(fetchSignUp({ formValues, navigate }))
+            dispatch(fetchSignUp({ formValues, navigate, toast }))
             setError("")
         }
     }

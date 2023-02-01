@@ -13,6 +13,8 @@ import { getCart } from '../services/slice/CartSlice'
 
 const Home = () => {
     const { fetch_lott_data, category_data } = useSelector((state) => state.lotteryslice)
+    const { cart_data } = useSelector((state) => state.cartslice)
+    const cartLength = cart_data?.length
     const dispatch = useDispatch()
     const userID = (JSON.parse(window.localStorage.getItem("user")))?.user_id
 
@@ -36,7 +38,7 @@ const Home = () => {
         dispatch(fetchLottery())
         dispatch(fetchCategory())
         dispatch(getCart(userID))
-    }, [dispatch, userID])
+    }, [dispatch, userID, cartLength])
 
 
     return (

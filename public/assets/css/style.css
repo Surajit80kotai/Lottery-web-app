@@ -2490,7 +2490,52 @@ margin: 0.5rem;
 }
 
 
+/*  user profile  */
 
+
+.profile_img {
+	width: 100px;
+	height: 100px;
+	text-align: center;
+	margin: 0 auto;
+}
+
+.profile_img img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	border-radius: 5rem;
+}
+
+.user_name h2 {
+	font-size: 2.3rem;
+	color: var(--black);
+	font-weight: 600;
+}
+
+.hidden {
+	display: none;
+}
+
+.user_information_area{
+	background: #fffefe;
+
+	border-radius: 1rem;
+	margin-bottom: 5rem;
+	padding: 2rem;
+}
+
+.editbtn{
+	text-align: center;
+	padding: 1rem 3rem;
+	background: rgb(149, 86, 252);
+	font-size: 2rem;
+	color: var(--white);
+	border-radius: 1rem;
+	margin-right: 1rem;
+	border: 1px solid transparent;
+	transition: 0.5s linear;
+}
 
 /* =======================media quries================== */
 

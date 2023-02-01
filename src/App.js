@@ -33,7 +33,7 @@ function App() {
         </Route>
       </Routes>
       <FooterMain />
-      <ToastContainer style={{ "fontSize": "16px" }} transition={Flip} />
+      <ToastContainer style={{ "fontSize": "16px" }} transition={Flip} position="top-center"/>
     </div>
   );
 }

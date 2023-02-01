@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
-import { cinetPay, initPay } from '../../../services/slice/PaymentSlice';
+import { cinetPay, getTransactions, initPay, updateTransactions } from '../../../services/slice/PaymentSlice';
 import { getBalance } from '../../../services/slice/UserSlice';
 
 const Wallet = () => {
@@ -9,34 +9,15 @@ const Wallet = () => {
     const dispatch = useDispatch()
     const { balance } = useSelector((state) => state.userslice)
     const { paymentData } = useSelector((state) => state.paymentslice)
-
-    // const [newPaymentData, setNewPaymentData] = useState([...paymentData]);
-    // setNewPaymentData([...newPaymentData, { amount: 100 }]);
-    // console.log(newPaymentData)
+    const { transaction_data } = useSelector((state) => state.paymentslice)
 
     const payment_data = paymentData?.data
-
-    // const payment_data = paymentData?.data?.reduce((acc, cur)=>{
-    //     return{
-    //         ...acc,
-    //         amount : formValue.amount
-    //     }
-    // }, {})
-
-    // console.log(payment_data);
-
 
     // handleChange function for onChange
     const handleChange = (e) => {
         setFormValue({ ...formValue, [e.target.name]: e.target.value })
     }
 
-    // amountCheck function
-    // const amountCheck = () => {
-    //     if (formValue < 100){
-    //         toast.warning('hgfjsdfg')
-    //     }
-    // }
 
     // function for selecting pay option
     const selectPayOption = (value) => {
@@ -53,7 +34,6 @@ const Wallet = () => {
     const redirectPage = () => {
         if (paymentData.code === "201") {
             window.open(paymentData.data.payment_url, "_blank")
-            // dispatch(initPay(newPaymentData))
             dispatch(initPay(payment_data))
         }
     }
@@ -61,8 +41,9 @@ const Wallet = () => {
 
     useEffect(() => {
         dispatch(getBalance())
-        // setLoading(true)
         redirectPage()
+        dispatch(getTransactions())
+        dispatch(updateTransactions())
     }, [dispatch, paymentData])
 
     return (
@@ -85,7 +66,10 @@ const Wallet = () => {
                                     </div>
                                     <div className="total_balns">
                                         <span>Total Balance</span>
-                                        <h5 className="total_amount">XAF {balance?.balance}</h5>
+                                        {
+                                            balance?.balance > 0 ? <h5 className="total_amount">XAF {balance?.balance}</h5> : <h5 className="total_amount">XAF 0</h5>
+                                        }
+
                                     </div>
                                 </div>
 
@@ -127,33 +111,34 @@ const Wallet = () => {
                                 {/* transaction histrory */}
                                 <h3 className="tranhis">Transaction History</h3>
                                 <div className="transaction_area">
-
-                                    <table className="table mt-4">
-                                        <thead className="table_head sticky-top ">
-                                            <tr>
-                                                <th scope="col">Date</th>
-                                                <th scope="col">Sample</th>
-                                                <th scope="col">Amount</th>
-                                                <th scope="col">Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-
-                                                <td>2 Jan 2023, 11.30AM</td>
-                                                <td>Sample</td>
-                                                <td>€ 230</td>
-                                                <td className="status"><i className="fas fa-check-circle"></i> Success</td>
-                                            </tr>
-                                            <tr>
-
-                                                <td>10 Feb 2023, 12.00PM</td>
-                                                <td>Sample</td>
-                                                <td>€ 8230</td>
-                                                <td className="failed"><i className="fas fa-exclamation-triangle"></i> Failed</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                    {
+                                        transaction_data ?
+                                            <table className="table mt-4">
+                                                <thead className="table_head sticky-top ">
+                                                    <tr>
+                                                        <th scope="col">Date</th>
+                                                        <th scope="col">Merchant</th>
+                                                        <th scope="col">Amount</th>
+                                                        <th scope="col">Status</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {
+                                                        transaction_data?.map((item) => {
+                                                            return (
+                                                                <tr key={item._id}>
+                                                                    <td>{item.updatedAt}</td>
+                                                                    <td>{item.merchant}</td>
+                                                                    <td>{item.currency} {item.amount}</td>
+                                                                    <td>{item.status}</td>
+                                                                </tr>
+                                                            )
+                                                        })
+                                                    }
+                                                </tbody>
+                                            </table>
+                                            : <h3>No transaction history present</h3>
+                                    }
                                 </div>
                             </div>
 

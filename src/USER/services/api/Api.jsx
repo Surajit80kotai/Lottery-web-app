@@ -41,3 +41,6 @@ export const PAYINIT = (paymentData, header) => API.post("/auth/pay/init", payme
 
 // get all transaction
 export const GETALLTRANSACTION = (header) => API.get("/auth/get/transaction", header)
+
+// update transaction
+export const UPDATETRANSACTION = (header) => API.get("/auth/update/transaction", header)

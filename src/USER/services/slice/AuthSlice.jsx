@@ -5,10 +5,11 @@ import { FORGETPASSWORD, LOGIN, SIGNUP } from "../api/Api";
 //AsyncThunk For SignUp 
 export const fetchSignUp = createAsyncThunk(
     "signup",
-    async ({ formValues, navigate }, { rejectWithValue }) => {
+    async ({ formValues, navigate, toast }, { rejectWithValue }) => {
 
         try {
             const res = await SIGNUP(formValues)
+            toast.success('Registered Successfully. Please login to continue')
             navigate('/login')
             return res?.data
         } catch (err) {
@@ -28,16 +29,7 @@ export const fetchLogin = createAsyncThunk(
             window.localStorage.setItem("user", JSON.stringify(result?.data?.user_details))
             navigate('/')
             // react toast message
-            toast.success('Loged In Successfully', {
-                position: "top-center",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored"
-            })
+            toast.success('Loged In Successfully')
             return result?.data
         } catch (err) {
             // console.log(rejectWithValue(err.response.data));
@@ -80,10 +72,10 @@ export const AuthSlice = createSlice({
     name: "authslice",
     initialState,
     reducers: {
+        // Logout reducer
         doLogOut: (state) => {
             window.localStorage.removeItem("token")
             window.localStorage.removeItem("user")
-
             state.user = null
         }
     },
@@ -99,8 +91,6 @@ export const AuthSlice = createSlice({
         builder.addCase(fetchSignUp.rejected, (state, { payload }) => {
             state.msg = "Failed"
             state.signupErr = payload
-            // console.log("from slice",payload);
-            // console.log(  (payload?.first_name)? "First name required!" : null);
         })
 
 

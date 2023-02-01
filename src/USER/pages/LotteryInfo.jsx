@@ -50,7 +50,7 @@ const LotteryInfo = () => {
     useEffect(() => {
         window.scrollTo(0, 0)
         dispatch(getCart(userID))
-    }, [dispatch,userID, len])
+    }, [dispatch, userID, len])
     startTimer(ticketInfo[0]?.time_left)
 
 
@@ -152,7 +152,7 @@ const LotteryInfo = () => {
                                     <div className="btn_area mt-5">
                                         {
                                             token ?
-                                                <Link onClick={addToCart} className="btn2">Add To Cart</Link>
+                                                <Link to="#!" onClick={addToCart} className="btn2">Add To Cart</Link>
                                                 : <Link to="/login" className="btn2">Add To Cart</Link>
                                         }
 

@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { PAYINIT } from "../api/Api";
+import { GETALLTRANSACTION, PAYINIT, UPDATETRANSACTION } from "../api/Api";
 
 const token = JSON.parse(window.localStorage.getItem("token"))
 // Defining header
@@ -31,8 +31,8 @@ export const cinetPay = createAsyncThunk("/v2/payment", async (formValue) => {
         "customer_country": "CM",
         "customer_state": "CM",
         "customer_zip_code": "06510",
-        "notify_url": "http://192.168.1.19:3303/api/test/pay/notify",
-        "return_url": "http://192.168.1.19:3303/api/test/pay/callback",
+        "notify_url": "http://192.168.1.19:3303/api/auth/pay/callback",
+        "return_url": "http://192.168.1.19:3303/api/auth/pay/callback",
         "channels": "ALL",
         "metadata": token,
         "lang": "FR",
@@ -74,8 +74,7 @@ export const initPay = createAsyncThunk("/auth/pay/init", async (paymentData) =>
 // get all transaction
 export const getTransactions = createAsyncThunk("/auth/get/transaction", async () => {
     try {
-        const res = await PAYINIT(header)
-        console.log(res?.data)
+        const res = await GETALLTRANSACTION(header)
         return res?.data
     } catch (err) {
         console.log(err)
@@ -84,8 +83,21 @@ export const getTransactions = createAsyncThunk("/auth/get/transaction", async (
 
 
 
+//update transaction 
+export const updateTransactions = createAsyncThunk("/auth/update/transaction", async () => {
+    try {
+        const res = await UPDATETRANSACTION(header)
+        return res?.data
+    } catch (err) {
+        console.log(err)
+    }
+})
+
+
 const initialState = {
     paymentData: [],
+    transaction_data:[],
+    updated_transac_data:[],
     status: ""
 }
 
@@ -126,10 +138,23 @@ export const PaymentSlice = createSlice({
             state.status = "pending"
         })
         builder.addCase(getTransactions.fulfilled, (state, { payload }) => {
-            state.paymentData = payload
+            state.transaction_data = payload
             state.status = "success"
         })
         builder.addCase(getTransactions.rejected, (state) => {
+            state.status = "failed"
+        })
+
+
+        // States for update transaction
+        builder.addCase(updateTransactions.pending, (state) => {
+            state.status = "pending"
+        })
+        builder.addCase(updateTransactions.fulfilled, (state, { payload }) => {
+            state.updated_transac_data = payload
+            state.status = "success"
+        })
+        builder.addCase(updateTransactions.rejected, (state) => {
             state.status = "failed"
         })
     }

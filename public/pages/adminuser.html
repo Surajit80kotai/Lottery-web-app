@@ -21,7 +21,7 @@
 
 <body>
 
-  <header>
+  <!-- <header>
     <div class="topheader">
       <div class="searchbar">
         <div class="ser_bar_inn">
@@ -149,7 +149,7 @@
         </div>
       </nav>
     </div>
-  </header>
+  </header> -->
   <main>
     <div class="sidebar_wrapper">
 
@@ -161,7 +161,7 @@
           <!-- Dashboard -->
           <li class="menu-item active">
             <a href="adminuser.html" class="menu-link">
-            
+
               <i class="menu-icon tf-icons fas fa-tachometer-alt"></i>
               <div data-i18n="Analytics">Dashboard</div>
             </a>
@@ -185,97 +185,140 @@
               <div data-i18n="Analytics">Order History</div>
             </a>
           </li>
-         
-          
-  
+
+
+
         </ul>
         <hr>
-        <div class="acount_balns_wraper">
-          <input type="checkbox" id="drop-5" hidden>
-          <label class="dropHeader dropHeader-4 dropacount" for="drop-5"><span><img src="assets/img/2355715 1.png" alt=""></span> Acount Balance <span class="iocn"><i class="fas fa-sort-down"></i></span> </label>
-          <div class="acountcheck list-5">
-            <div class="acount_bls_check_box">
-              <img src="assets/img/114910 1.png" alt="" class="img-fluid">
-              <h3 class="amonut_blans">
-                <span>€</span>
-                52365
-              </h3>
-              <p>Total Banlance</p>
-            </div>
-          </div>
-        </div>
+
       </aside>
       <div class="content_wrapper">
         <div class="container">
-          <div class="dashboard_banner">
-            <!-- <img src="assets/img/dash.jpg" alt=""> -->
-           </div>
-        </div>
-      
-       <div class="container">
-        <div class="row">
-          <div class="col-md-4">
-            <div class="one_total_box">
-              <div class="content_total">
-                <div class="one_total_title">
-                  <h3>Congratulation John !</h3>
+          <div class="user_information_area">
+            <h3 class="user_title">Personal Information</h3>
+            <div class="row mt-5">
+              <div class="col-md-3">
+                <div class="profile_img ">
+                  <img src="assets/img/avatar.png" alt="" class="img-fluid">
                 </div>
-                <p>Best Play of the month</p>
-                <div class="total_amount">
-                  <h4> $42.8k</h4>
-                </div>
-                <div class="mt-5">
-                  <a href="" class="btn2">View all</a>
+                <div class="user_name">
+                  <h2 class=" text-center mt-3">Saiyaka Mondal</h2>
                 </div>
               </div>
-              <div class="total_icon">
-                <img src="assets/img/9206435 1.png" alt="">
+              <div class="col-md-9">
+                <div class="profile_edit_form">
+                  <form action="" method="post">
+                    <div class="mb-3">
+                      <label for="" class="form-label label_style">Your Full Name</label>
+                      <input type="text" class="form-control form_input in_disa" id="" name=""
+                        placeholder="Saiyaka Mondal" disabled>
+                      <!-- <div class="alert alert-danger mt-2" role="alert">
+                     Please Enter Email Or Phone Number
+                   </div> -->
+                    </div>
+                    <div class="mb-3">
+                      <label for="email" class="form-label label_style">Email</label>
+                      <input type="email" class="form-control form_input in_disa" id="email" name="email"
+                        aria-describedby="emailHelp" placeholder="Saiyakamondal@gmail.com" disabled>
+                      <!-- <div class="alert alert-danger mt-2" role="alert">
+                     Please Enter Email Or Phone Number
+                   </div> -->
+                    </div>
+                    <div class="mb-3">
+                      <label for="" class="form-label label_style">Phone Number</label>
+                      <input type="text" class="form-control form_input in_disa" id="" name=""
+                        aria-describedby="emailHelp" placeholder="5687459823" disabled>
+                      <!-- <div class="alert alert-danger mt-2" role="alert">
+                     Please Enter Email Or Phone Number
+                   </div> -->
+                    </div>
+                    <div class="mb-3">
+                      <label for="" class="form-label label_style">Address</label>
+                      <input type="text" class="form-control form_input in_disa" id="" name=""
+                        aria-describedby="emailHelp" placeholder="abc kolkata" disabled>
+                      <!-- <div class="alert alert-danger mt-2" role="alert">
+                     Please Enter Email Or Phone Number
+                   </div> -->
+                    </div>
+                    <div class="mt-5">
+                      <!-- <button class="cancel">Cancel</button> -->
+                      <button type="button" class="editbtn edit" id="remEdit" onclick="enabledEdit();"><i class="fas fa-edit"></i> Edit</button>
+                      <button class="btn2 hidden" id="saveChanges" >Save Changes</button>
+                      
+                    </div>
+                  </form>
+                 
+               
+                </div>
               </div>
-              
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="one_total_box">
-              <div class="content_total">
-                <div class="one_total_title">
-                  <h3>Total Winning</h3>
-                </div>
-                <p>Best Play of the month</p>
-                <div class="total_amount">
-                  <h4>42</h4>
-                </div>
-                <div class="mt-5">
-                  <a href="" class="btn2">View all</a>
-                </div>
-              </div>
-              <div class="total_icon">
-                <img src="assets/img/winning.png" alt="">
-              </div>
-              
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="one_total_box">
-              <div class="content_total">
-                <div class="one_total_title">
-                  <h3>Total Profit</h3>
-                </div>
-                <p>Best Play of the month</p>
-                <div class="total_amount">
-                  <h4> $42.8k</h4>
-                </div>
-                <div class="mt-5">
-                  <a href="" class="btn2">View all</a>
-                </div>
-              </div>
-              <div class="total_icon">
-                <img src="assets/img/9206435 1.png" alt="">
-              </div>
-              
             </div>
           </div>
         </div>
-       </div>
+
+        <div class="container mb-4">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="one_total_box">
+                <div class="content_total">
+                  <div class="one_total_title">
+                    <h3>Congratulation John !</h3>
+                  </div>
+                  <p>Best Play of the month</p>
+                  <div class="total_amount">
+                    <h4> $42.8k</h4>
+                  </div>
+                  <div class="mt-5">
+                    <a href="" class="btn2">View all</a>
+                  </div>
+                </div>
+                <div class="total_icon">
+                  <img src="assets/img/9206435 1.png" alt="">
+                </div>
+
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="one_total_box">
+                <div class="content_total">
+                  <div class="one_total_title">
+                    <h3>Total Winning</h3>
+                  </div>
+                  <p>Best Play of the month</p>
+                  <div class="total_amount">
+                    <h4>42</h4>
+                  </div>
+                  <div class="mt-5">
+                    <a href="" class="btn2">View all</a>
+                  </div>
+                </div>
+                <div class="total_icon">
+                  <img src="assets/img/winning.png" alt="">
+                </div>
+
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="one_total_box">
+                <div class="content_total">
+                  <div class="one_total_title">
+                    <h3>Total Profit</h3>
+                  </div>
+                  <p>Best Play of the month</p>
+                  <div class="total_amount">
+                    <h4> $42.8k</h4>
+                  </div>
+                  <div class="mt-5">
+                    <a href="" class="btn2">View all</a>
+                  </div>
+                </div>
+                <div class="total_icon">
+                  <img src="assets/img/9206435 1.png" alt="">
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </main>
@@ -366,7 +409,18 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
   <script src="assets/js/main.js"></script>
   <script src="assets/js/custom.js"></script>
+  <script>
+    function enabledEdit() {
+      let inputs = document.getElementsByClassName("in_disa");
+      for (let i = 0; i < inputs.length; i++) {
+        inputs[i].disabled = false;
+      }
+      // document.getElementById("saveChanges").style.display = "block";
+      document.getElementById("saveChanges").classList.remove("hidden");
+      document.getElementById("remEdit").classList.add("hidden");
+    }
 
+  </script>
 </body>
 
 </html>
