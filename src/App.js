@@ -12,7 +12,7 @@ import PlaceOrder from './USER/pages/PlaceOrder';
 import Contact from './USER/pages/Contact';
 import { Flip, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
-import TestFive from './USER/pages/test/TestFive';
+// import TestFive from './USER/pages/test/TestFive';
 
 
 function App() {
@@ -25,7 +25,8 @@ function App() {
         <Route path='/info/:lid' element={<LotteryInfo />} />
         <Route path='/viewallhome' element={<ViewAllHome />} />
         <Route path='/viewallcars' element={<ViewAllCars />} />
-        <Route path='/test' element={<TestFive />} />
+        {/* <Route path='/test' element={<TestFive />} /> */}
+        {/* Private Route Part */}
         <Route element={<PrivateRoute />}>
           <Route path='/profile' element={<Profile />} />
           <Route path='/cart' element={<Cart />} />
