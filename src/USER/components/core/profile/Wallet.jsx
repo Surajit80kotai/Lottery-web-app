@@ -1,24 +1,46 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
-import { cinetPay } from '../../../services/slice/PaymentSlice';
+import { cinetPay, initPay } from '../../../services/slice/PaymentSlice';
 import { getBalance } from '../../../services/slice/UserSlice';
-// import { Watch } from 'react-loader-spinner'
 
 const Wallet = () => {
     const [formValue, setFormValue] = useState({ amount: "" })
     const dispatch = useDispatch()
     const { balance } = useSelector((state) => state.userslice)
     const { paymentData } = useSelector((state) => state.paymentslice)
-    // const [loading, setLoading] = useState(false)
-    console.log(paymentData);
 
+    // const [newPaymentData, setNewPaymentData] = useState([...paymentData]);
+    // setNewPaymentData([...newPaymentData, { amount: 100 }]);
+    // console.log(newPaymentData)
+
+    const payment_data = paymentData?.data
+
+    // const payment_data = paymentData?.data?.reduce((acc, cur)=>{
+    //     return{
+    //         ...acc,
+    //         amount : formValue.amount
+    //     }
+    // }, {})
+
+    // console.log(payment_data);
+
+
+    // handleChange function for onChange
     const handleChange = (e) => {
         setFormValue({ ...formValue, [e.target.name]: e.target.value })
     }
 
-    const payOption = (value) => {
-        if (value === "Cinet") {
+    // amountCheck function
+    // const amountCheck = () => {
+    //     if (formValue < 100){
+    //         toast.warning('hgfjsdfg')
+    //     }
+    // }
+
+    // function for selecting pay option
+    const selectPayOption = (value) => {
+        if (value === "CinetPay") {
             dispatch(cinetPay(formValue))
         } else if (value === "Master") {
             console.log(value)
@@ -27,37 +49,24 @@ const Wallet = () => {
         }
     }
 
+    // Redirect page function
     const redirectPage = () => {
-        console.log(typeof paymentData.code)
         if (paymentData.code === "201") {
             window.open(paymentData.data.payment_url, "_blank")
+            // dispatch(initPay(newPaymentData))
+            dispatch(initPay(payment_data))
         }
     }
 
 
     useEffect(() => {
         dispatch(getBalance())
-        setTimeout(() => {
-            redirectPage()
-            // setLoading(true)
-        }, 5000)
+        // setLoading(true)
+        redirectPage()
     }, [dispatch, paymentData])
 
     return (
         <>
-            {/* {loading ?
-                <Watch
-                    height="80"
-                    width="80"
-                    radius="48"
-                    color="#4fa94d"
-                    ariaLabel="watch-loading"
-                    wrapperStyle={{}}
-                    wrapperClassName=""
-                    visible={true}
-                />
-                : null} */}
-
             <div className="content_wrapper">
                 <div className="paymentwallet_bg">
                     <h1>Check Your Current Balance</h1>
@@ -76,19 +85,20 @@ const Wallet = () => {
                                     </div>
                                     <div className="total_balns">
                                         <span>Total Balance</span>
-                                        <h5 className="total_amount">$ {balance?.balance}</h5>
+                                        <h5 className="total_amount">XAF {balance?.balance}</h5>
                                     </div>
                                 </div>
 
                                 {/* Add money input */}
                                 <div className="payment_area_body">
                                     <h4>ADD MONEY TO WALLET</h4>
+                                    <p className='fs-5' style={{ "color": "#f9772b" }}>Minimum Amount Should Be 100 or Higher*</p>
                                     <form action="">
                                         <div className="row">
                                             <div className="col-md-6">
                                                 <div className="payment_input">
                                                     <div className="currency_icon">
-                                                        <p>$</p>
+                                                        <p>XAF</p>
                                                     </div>
                                                     <input
                                                         type="text"
@@ -104,9 +114,9 @@ const Wallet = () => {
                                             </div>
                                             <div className="col-md-4">
                                                 {
-                                                    formValue?.amount ?
+                                                    formValue?.amount >= 100 ?
                                                         <button type="button" className="addmoney" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Money</button>
-                                                        : <button type="button" className="addmoney" data-bs-toggle="modal" data-bs-target="#exampleModal" disabled>Add Money</button>
+                                                        : <button type="button" className="addmoney" data-bs-toggle="modal" data-bs-target="#exampleModal" disabled style={{ "backgroundColor": "#e7e7e7" }}>Add Money</button>
                                                 }
                                             </div>
                                         </div>
@@ -122,6 +132,7 @@ const Wallet = () => {
                                         <thead className="table_head sticky-top ">
                                             <tr>
                                                 <th scope="col">Date</th>
+                                                <th scope="col">Sample</th>
                                                 <th scope="col">Amount</th>
                                                 <th scope="col">Status</th>
                                             </tr>
@@ -130,36 +141,14 @@ const Wallet = () => {
                                             <tr>
 
                                                 <td>2 Jan 2023, 11.30AM</td>
-                                                <td>€ 230</td>
-                                                <td className="status"><i className="fas fa-check-circle"></i> Success</td>
-                                            </tr>
-                                            <tr>
-
-                                                <td>8 Jan 2023, 1.30PM</td>
+                                                <td>Sample</td>
                                                 <td>€ 230</td>
                                                 <td className="status"><i className="fas fa-check-circle"></i> Success</td>
                                             </tr>
                                             <tr>
 
                                                 <td>10 Feb 2023, 12.00PM</td>
-                                                <td>€ 8230</td>
-                                                <td className="failed"><i className="fas fa-exclamation-triangle"></i> Failed</td>
-                                            </tr>
-                                            <tr>
-
-                                                <td>25 Feb 2023, 11.30AM</td>
-                                                <td>€ 3030</td>
-                                                <td className="status"><i className="fas fa-check-circle"></i> Success</td>
-                                            </tr>
-                                            <tr>
-
-                                                <td>28 Feb 2023, 8.00PM</td>
-                                                <td>€ 8230</td>
-                                                <td className="failed"><i className="fas fa-exclamation-triangle"></i> Failed</td>
-                                            </tr>
-                                            <tr>
-
-                                                <td>28 Feb 2023, 8.00PM</td>
+                                                <td>Sample</td>
                                                 <td>€ 8230</td>
                                                 <td className="failed"><i className="fas fa-exclamation-triangle"></i> Failed</td>
                                             </tr>
@@ -178,7 +167,7 @@ const Wallet = () => {
                         <div className="modal-content">
                             <div className="modal-header">
                                 <h3>Add Money to Wallet</h3>
-                                <h4>${formValue.amount}</h4>
+                                <h4>XAF{formValue.amount}</h4>
                             </div>
 
                             <div className="modal-body">
@@ -191,8 +180,8 @@ const Wallet = () => {
                                             type="radio"
                                             id="control_01"
                                             name="select"
-                                            value="Cinet"
-                                            onChange={(e) => payOption(e.target.value)}
+                                            value="CinetPay"
+                                            onChange={(e) => selectPayOption(e.target.value)}
                                         />
                                         <label htmlFor="control_01">
                                             <div className="pay_icon">
@@ -210,7 +199,7 @@ const Wallet = () => {
                                             id="control_02"
                                             name="select"
                                             value="Master"
-                                            onChange={(e) => payOption(e.target.value)}
+                                            onChange={(e) => selectPayOption(e.target.value)}
                                         />
                                         <label htmlFor="control_02">
                                             <div className="pay_icon">
@@ -227,7 +216,7 @@ const Wallet = () => {
                                             id="control_03"
                                             name="select"
                                             value="Paypal"
-                                            onChange={(e) => payOption(e.target.value)}
+                                            onChange={(e) => selectPayOption(e.target.value)}
                                         />
                                         <label htmlFor="control_03">
                                             <div className="pay_icon">

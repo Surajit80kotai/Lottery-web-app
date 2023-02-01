@@ -13,7 +13,6 @@ const header = {
 
 // cinetPay
 export const cinetPay = createAsyncThunk("/v2/payment", async (formValue) => {
-    // console.log(formValue)
     var data = JSON.stringify({
         "apikey": "102219127563b7f7c53a41e9.62135970",
         "site_id": "126127",
@@ -54,36 +53,51 @@ export const cinetPay = createAsyncThunk("/v2/payment", async (formValue) => {
     }
     try {
         const res = await axios(config)
-        return res.data
+        return res?.data
     } catch (err) {
         console.log(err)
     }
 })
 
 
-// init payment
-export const initPay = createAsyncThunk("/auth/pay/init", async (payment_token, payment_url) => {
+//payment initialization
+export const initPay = createAsyncThunk("/auth/pay/init", async (paymentData) => {
     try {
-        const res = await PAYINIT(payment_token, payment_url, header)
-        console.log(res.data)
-        return res.data
+        const res = await PAYINIT(paymentData, header)
+        return res?.data
     } catch (err) {
         console.log(err)
     }
 })
+
+
+// get all transaction
+export const getTransactions = createAsyncThunk("/auth/get/transaction", async () => {
+    try {
+        const res = await PAYINIT(header)
+        console.log(res?.data)
+        return res?.data
+    } catch (err) {
+        console.log(err)
+    }
+})
+
+
 
 const initialState = {
     paymentData: [],
     status: ""
 }
 
+
 export const PaymentSlice = createSlice({
     name: "paymentslice",
     initialState,
     reducers: {},
     extraReducers: (builder) => {
+        // States for cinetPay
         builder.addCase(cinetPay.pending, (state) => {
-            state.status = "loading"
+            state.status = "pending"
         })
         builder.addCase(cinetPay.fulfilled, (state, { payload }) => {
             state.paymentData = payload
@@ -94,14 +108,28 @@ export const PaymentSlice = createSlice({
         })
 
 
+        // States for payment initialization
         builder.addCase(initPay.pending, (state) => {
-            state.status = "loading"
+            state.status = "pending"
         })
         builder.addCase(initPay.fulfilled, (state, { payload }) => {
             state.paymentData = payload
             state.status = "success"
         })
         builder.addCase(initPay.rejected, (state) => {
+            state.status = "failed"
+        })
+
+
+        // States for get all transaction
+        builder.addCase(getTransactions.pending, (state) => {
+            state.status = "pending"
+        })
+        builder.addCase(getTransactions.fulfilled, (state, { payload }) => {
+            state.paymentData = payload
+            state.status = "success"
+        })
+        builder.addCase(getTransactions.rejected, (state) => {
             state.status = "failed"
         })
     }

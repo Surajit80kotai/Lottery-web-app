@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { USERBALANCE } from "../api/Api";
+import { WALLETBALANCE } from "../api/Api";
 
 // Defining header
 const header = {
@@ -11,7 +11,7 @@ const header = {
 //get user balance
 export const getBalance = createAsyncThunk("/auth/account/wallet/balance", async () => {
     try {
-        const response = await USERBALANCE(header)
+        const response = await WALLETBALANCE(header)
         // console.log(response?.data)
         return response?.data
     } catch (err) {

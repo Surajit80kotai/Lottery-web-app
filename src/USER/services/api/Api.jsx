@@ -31,10 +31,13 @@ export const FETCHCART = (id, header) => API.get("/auth/cart/" + id, header)
 export const DELCART = (id, header) => API.get("/auth/cart/delete/" + id, header)
 
 // update Cart item quantity
-export const UPDATECART = (id, qty, header) => API.get("/auth/cart/qt_update" + id + "/" + qty, header)
+export const UPDATECART = (id, qty, header) => API.get("/auth/cart/qt_update/" + id + "/" + qty, header)
 
 // user balance
-export const USERBALANCE = (header) => API.get("/auth/account/wallet/balance", header)
+export const WALLETBALANCE = (header) => API.get("/auth/account/wallet/balance", header)
 
 // init transaction
-export const PAYINIT = (payment_token, payment_url, header) => API.post("/auth/pay/init", header)
+export const PAYINIT = (paymentData, header) => API.post("/auth/pay/init", paymentData, header)
+
+// get all transaction
+export const GETALLTRANSACTION = (header) => API.get("/auth/get/transaction", header)

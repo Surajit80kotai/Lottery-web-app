@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { fetchLogin } from '../services/slice/AuthSlice'
 import "slick-carousel/slick/slick.css";
-import { useGoogleOneTapLogin } from 'react-google-one-tap-login'
+// import { useGoogleOneTapLogin } from 'react-google-one-tap-login'
 import { toast } from 'react-toastify'
 
 
@@ -36,17 +36,17 @@ const Login = () => {
     }
 
     // Social Login
-    const googleLogIn = useGoogleOneTapLogin({
-        onSuccess: (res) => {
-            console.log(res)
-        },
-        onError: (err) => {
-            console.log(err)
-        },
-        googleAccountConfigs: {
-            client_id: "500684738770-76qgk032h22dar4b6pgosa1u07uhmhkg.apps.googleusercontent.com"
-        }
-    })
+    // const googleLogIn = useGoogleOneTapLogin({
+    //     onSuccess: (res) => {
+    //         console.log(res)
+    //     },
+    //     onError: (err) => {
+    //         console.log(err)
+    //     },
+    //     googleAccountConfigs: {
+    //         client_id: "500684738770-76qgk032h22dar4b6pgosa1u07uhmhkg.apps.googleusercontent.com"
+    //     }
+    // })
 
 
 
@@ -61,8 +61,8 @@ const Login = () => {
                             <div className="right_top">
                                 <h2 className="heading_form">Login</h2>
                                 <div className="social_sign">
-                                    <Link to="" className="social_signup"><i className="fab fa-facebook-f"></i></Link>
-                                    <Link onClick={() => googleLogIn()} className="social_signup"><i className="fab fa-google"></i></Link>
+                                    <Link to="#!" className="social_signup"><i className="fab fa-facebook-f"></i></Link>
+                                    <Link to="#!" className="social_signup"><i className="fab fa-google"></i></Link>
                                 </div>
                             </div>
 
