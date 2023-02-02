@@ -11,8 +11,10 @@ const Cart = () => {
   const dispatch = useDispatch()
   const [qty, setQty] = useState(1)
   const cartLength = cart_data?.length
+  // const cartValue = cart_data?.valueOf()
   const [amount, setAmount] = useState({ subtotal: 0, discount: 0, total: 0 })
   const userID = (JSON.parse(window.localStorage.getItem("user"))).user_id
+  const token = JSON.parse(window.localStorage.getItem("token"))
 
   // Calculate Function
   // Calculate Sum
@@ -61,16 +63,16 @@ const Cart = () => {
 
   // update cycle
   useEffect(() => {
-    dispatch(getCart(userID))
-  }, [dispatch, userID, cartLength])
+    if (token) {
+      dispatch(getCart(userID))
+    }
+  }, [dispatch, userID, cartLength, token])
 
   // mount cycle
   useEffect(() => {
     window.scrollTo(0, 0)
     calculateSum()
   }, [])
-
-
 
 
   return (
@@ -100,12 +102,14 @@ const Cart = () => {
                       cart_data?.map((item) => {
                         // cart_data?.map((item) => {
                         return (
-                          <div className="cart_list_item" key={item.resp._id}>
 
+                          <div className="cart_list_item" key={item.resp._id}>
                             {/* Image */}
-                            <div className="cart_item_img">
-                              <img src={image + item?.info[0]?.main_image} alt="" className="img-fluid" />
-                            </div>
+                            <Link to={`/info/${item?.info[0]?._id}`}>
+                              <div className="cart_item_img">
+                                <img src={image + item?.info[0]?.main_image} alt="" className="img-fluid" />
+                              </div>
+                            </Link>
 
                             {/* Item Info */}
                             <div className="cart_item_content">
@@ -134,7 +138,7 @@ const Cart = () => {
                                 <div className="qty-container">
                                   <button onClick={DecQty} className="qty-btn-minus btn-light" type="button"><i className="fa fa-minus"></i></button>
                                   {/* <input type="text" name="qty" value="0" className="input-qty" /> */}
-                                  <h1 className='quantity_title'>{qty}</h1>
+                                  <h1 className='quantity_title'>{item?.resp?.quantity}</h1>
                                   <button onClick={IncQty} className="qty-btn-plus btn-light" type="button"><i className="fa fa-plus"></i></button>
                                 </div>
                               </div>
@@ -144,6 +148,7 @@ const Cart = () => {
                             <div className="remove_btn">
                               <button onClick={() => removeItem(item?.resp?._id)}><i className="bi bi-trash3"></i></button>
                             </div>
+
                           </div>
                         )
                       })
@@ -180,7 +185,7 @@ const Cart = () => {
                       <h4 className="price_text">Price <span> ({cart_data?.length} Item):</span></h4>
                       <h6 className="price_value">
                         {cart_data ? <span>{cart_data[0]?.info[0]?.currency}</span> : 0}
-                        {(amount.total).toFixed(2)}
+                        {(amount.subtotal).toFixed(2)}
                       </h6>
                     </div>
 
@@ -198,7 +203,7 @@ const Cart = () => {
                       <h4 className="price_text">Total Payables:</h4>
                       <h6 className="price_value">
                         {cart_data ? <span>{cart_data[0]?.info[0]?.currency}</span> : 0}
-                        {(amount.subtotal).toFixed(2)}
+                        {(amount.total).toFixed(2)}
                       </h6>
                     </div>
                   </div>

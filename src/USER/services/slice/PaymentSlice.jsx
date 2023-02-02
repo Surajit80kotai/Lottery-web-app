@@ -82,7 +82,6 @@ export const getTransactions = createAsyncThunk("/auth/get/transaction", async (
 })
 
 
-
 //update transaction 
 export const updateTransactions = createAsyncThunk("/auth/update/transaction", async () => {
     try {
@@ -96,9 +95,10 @@ export const updateTransactions = createAsyncThunk("/auth/update/transaction", a
 
 const initialState = {
     paymentData: [],
-    transaction_data:[],
-    updated_transac_data:[],
-    status: ""
+    transaction_data: [],
+    updated_transac_data: [],
+    status: "",
+    loading: false
 }
 
 
@@ -110,13 +110,16 @@ export const PaymentSlice = createSlice({
         // States for cinetPay
         builder.addCase(cinetPay.pending, (state) => {
             state.status = "pending"
+            state.loading = true
         })
         builder.addCase(cinetPay.fulfilled, (state, { payload }) => {
             state.paymentData = payload
             state.status = "success"
+            state.loading = false
         })
         builder.addCase(cinetPay.rejected, (state) => {
             state.status = "failed"
+            state.loading = false
         })
 
 

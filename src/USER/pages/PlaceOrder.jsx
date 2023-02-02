@@ -179,7 +179,7 @@ const PlaceOrder = () => {
 
                                         {/* Address */}
                                         <div className="mb-3">
-                                            <label htmlFor="address" className="form-label label_style">Delivey Address</label>
+                                            <label htmlFor="address" className="form-label label_style">Billing Address</label>
                                             <input
                                                 type="text"
                                                 className="form-control form_input"
@@ -369,7 +369,7 @@ const PlaceOrder = () => {
                                                 <h6 className="price_value">
                                                     {cart_data ? <span>{cart_data[0]?.info[0]?.currency}</span> : 0}
 
-                                                    {(amount.total).toFixed(2)}
+                                                    {(amount.subtotal).toFixed(2)}
                                                 </h6>
                                             </div>
                                             <div className="price_item mb-5">
@@ -384,7 +384,7 @@ const PlaceOrder = () => {
                                                 <h6 className="price_value">
                                                     {cart_data ? <span>{cart_data[0]?.info[0]?.currency}</span> : 0}
 
-                                                    {(amount.subtotal).toFixed(2)}
+                                                    {(amount.total).toFixed(2)}
                                                 </h6>
                                             </div>
                                         </div>

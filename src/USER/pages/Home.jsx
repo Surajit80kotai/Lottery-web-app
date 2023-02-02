@@ -17,6 +17,7 @@ const Home = () => {
     const cartLength = cart_data?.length
     const dispatch = useDispatch()
     const userID = (JSON.parse(window.localStorage.getItem("user")))?.user_id
+    const token = JSON.parse(window.localStorage.getItem("token"))
 
     // Getting category_name & category_id
     const categoryObj = category_data?.reduce((acc, cur) => {
@@ -37,8 +38,10 @@ const Home = () => {
         window.scrollTo(0, 0)
         dispatch(fetchLottery())
         dispatch(fetchCategory())
-        dispatch(getCart(userID))
-    }, [dispatch, userID, cartLength])
+        if (token) {
+            dispatch(getCart(userID))
+        }
+    }, [dispatch, userID, cartLength, token])
 
 
     return (

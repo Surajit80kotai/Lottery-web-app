@@ -5,11 +5,11 @@ import { FORGETPASSWORD, LOGIN, SIGNUP } from "../api/Api";
 //AsyncThunk For SignUp 
 export const fetchSignUp = createAsyncThunk(
     "signup",
-    async ({ formValues, navigate, toast }, { rejectWithValue }) => {
+    async ({ formValues, navigate }, { rejectWithValue }) => {
 
         try {
             const res = await SIGNUP(formValues)
-            toast.success('Registered Successfully. Please login to continue')
+            // toast.success('Registered Successfully. Please login to continue')
             navigate('/login')
             return res?.data
         } catch (err) {

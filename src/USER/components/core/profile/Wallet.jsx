@@ -33,7 +33,7 @@ const Wallet = () => {
     // Redirect page function
     const redirectPage = () => {
         if (paymentData.code === "201") {
-            window.open(paymentData.data.payment_url, "_blank")
+            window.open(paymentData.data.payment_url, "_self")
             dispatch(initPay(payment_data))
         }
     }
@@ -93,6 +93,7 @@ const Wallet = () => {
                                                         onChange={handleChange}
                                                         aria-describedby="emailHelp"
                                                         placeholder="Enter amount"
+                                                        autoComplete='off'
                                                     />
                                                 </div>
                                             </div>
