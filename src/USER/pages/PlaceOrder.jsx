@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { fetchCountry, fetchStates } from '../services/slice/CountryStateSlice';
 import { getBalance } from '../services/slice/UserSlice';
 import { toast } from 'react-toastify'
@@ -12,12 +12,10 @@ const initialState = {
     roadName: "",
     pincode: "",
     country: "",
-    state: "",
-    wallet: ""
+    state: ""
 }
 
 const PlaceOrder = () => {
-    const { lid } = useParams()
     // Staes Input filds and validation
     const [formValues, setFormValues] = useState(initialState)
     const [formErrors, setFormErrors] = useState({})
@@ -33,11 +31,6 @@ const PlaceOrder = () => {
     const { cart_data } = useSelector((state) => state.cartslice)
     const { balance } = useSelector((state) => state.userslice)
     const dispatch = useDispatch()
-    // const len = cart_data?.length
-
-    const lottData = JSON.parse(window.localStorage.getItem("data"))
-    const userID = (JSON.parse(window.localStorage.getItem("user")))?.user_id
-    const ticketInfo = lottData?.filter((item) => item._id === lid)
 
     const image = process.env.REACT_APP_NODE_HOST
 
@@ -45,7 +38,6 @@ const PlaceOrder = () => {
     const handleChange = (e) => {
         setFormValues({ ...formValues, [e.target.name]: e.target.value })
         const countryId = e.target.value
-        console.table(formValues);
 
         if (countryId) {
             getCountryId(countryId)
@@ -60,7 +52,6 @@ const PlaceOrder = () => {
 
     // getCountryId
     const getCountryId = (name) => {
-        console.log(name);
         const c_Id = countryData.filter((item) => {
             if (item.name === name.split("||")[0]) {
                 return item?.countries_id
@@ -105,18 +96,22 @@ const PlaceOrder = () => {
         return error
     }
 
-    const onProcced = () => {
+    // On orderPlace function
+    const orderPlace = () => {
         const errorLen = Object.keys(formErrors).length;
         if (errorLen) {
             // react toast message
             toast.success('Order Placed')
         }
-        const cartData = {
-            product_id: ticketInfo[0]._id, user_id: userID,
-            // qty: qty 
-        }
-        dispatch(placeOrder({ formValues, cartData }))
+        const cartData = cart_data.reduce((acc, cur) => {
+            acc.push(cur.resp)
+            return acc
+        }, [])
+
+        const orderData = { address: formValues, total_price: amount.total, product_info: cartData }
+        dispatch(placeOrder(orderData))
     }
+
 
     useEffect(() => {
         window.scrollTo(0, 0)
@@ -125,7 +120,8 @@ const PlaceOrder = () => {
         calculateSum()
     }, [cart_data, dispatch])
 
-    // Calculate Sum
+
+    // Calculate Sum function
     const calculateSum = () => {
         let st = 0
         let dc = 0
@@ -351,7 +347,7 @@ const PlaceOrder = () => {
                                         <div className="text-center mt-5">
                                             {
                                                 ((amount.total).toFixed(2) < balance?.balance) ?
-                                                    <button onClick={onProcced} className="btn2">Procced</button>
+                                                    <button onClick={orderPlace} className="btn2">Procced</button>
                                                     : null
                                             }
                                         </div>

@@ -46,4 +46,4 @@ export const GETALLTRANSACTION = (header) => API.get("/auth/get/transaction", he
 export const UPDATETRANSACTION = (header) => API.get("/auth/update/transaction", header)
 
 // place order
-export const PLACEORDER = (formValue, cartData, header) => API.post("/auth/order", formValue, cartData, header)
+export const PLACEORDER = (orderData, header) => API.post("/auth/order", orderData, header)

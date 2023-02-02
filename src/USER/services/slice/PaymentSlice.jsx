@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { GETALLTRANSACTION, PAYINIT, UPDATETRANSACTION } from "../api/Api";
+import { GETALLTRANSACTION, PAYINIT, PLACEORDER, UPDATETRANSACTION } from "../api/Api";
 
 const token = JSON.parse(window.localStorage.getItem("token"))
 // Defining header
@@ -94,9 +94,9 @@ export const updateTransactions = createAsyncThunk("/auth/update/transaction", a
 
 
 // place order
-export const placeOrder = createAsyncThunk("/auth/order", async (formValue, cartData) => {
+export const placeOrder = createAsyncThunk("/auth/order", async (orderData) => {
     try {
-        const res = await PAYINIT(formValue, cartData, header)
+        const res = await PLACEORDER(orderData, header)
         return res?.data
     } catch (err) {
         console.log(err)
