@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { fetchCountry, fetchStates } from '../services/slice/CountryStateSlice';
 import { getBalance } from '../services/slice/UserSlice';
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
+import { placeOrder } from '../services/slice/PaymentSlice';
 
 const initialState = {
     address: "",
@@ -16,6 +17,7 @@ const initialState = {
 }
 
 const PlaceOrder = () => {
+    const { lid } = useParams()
     // Staes Input filds and validation
     const [formValues, setFormValues] = useState(initialState)
     const [formErrors, setFormErrors] = useState({})
@@ -32,6 +34,10 @@ const PlaceOrder = () => {
     const { balance } = useSelector((state) => state.userslice)
     const dispatch = useDispatch()
     // const len = cart_data?.length
+
+    const lottData = JSON.parse(window.localStorage.getItem("data"))
+    const userID = (JSON.parse(window.localStorage.getItem("user")))?.user_id
+    const ticketInfo = lottData?.filter((item) => item._id === lid)
 
     const image = process.env.REACT_APP_NODE_HOST
 
@@ -103,17 +109,13 @@ const PlaceOrder = () => {
         const errorLen = Object.keys(formErrors).length;
         if (errorLen) {
             // react toast message
-            toast.success('Purched In Successfully', {
-                position: "top-center",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored"
-            })
+            toast.success('Order Placed')
         }
+        const cartData = {
+            product_id: ticketInfo[0]._id, user_id: userID,
+            // qty: qty 
+        }
+        dispatch(placeOrder({ formValues, cartData }))
     }
 
     useEffect(() => {
@@ -337,7 +339,7 @@ const PlaceOrder = () => {
                                                     </div>
                                                     {/* Wallet Validation */}
                                                     {
-                                                        ((amount.subtotal).toFixed(2) > balance?.balance) ?
+                                                        ((amount.total).toFixed(2) > balance?.balance) ?
                                                             <div className="alert alert-danger mt-2  fs-4" role="alert">
                                                                 <span><i className="fas fa-balance-scale-right"></i></span> Insaficinent Wallet Balance
                                                             </div>
@@ -348,7 +350,7 @@ const PlaceOrder = () => {
                                         </div>
                                         <div className="text-center mt-5">
                                             {
-                                                !((amount.subtotal).toFixed(2) > balance?.balance) ?
+                                                ((amount.total).toFixed(2) < balance?.balance) ?
                                                     <button onClick={onProcced} className="btn2">Procced</button>
                                                     : null
                                             }

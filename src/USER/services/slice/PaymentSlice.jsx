@@ -93,6 +93,17 @@ export const updateTransactions = createAsyncThunk("/auth/update/transaction", a
 })
 
 
+// place order
+export const placeOrder = createAsyncThunk("/auth/order", async (formValue, cartData) => {
+    try {
+        const res = await PAYINIT(formValue, cartData, header)
+        return res?.data
+    } catch (err) {
+        console.log(err)
+    }
+})
+
+
 const initialState = {
     paymentData: [],
     transaction_data: [],
@@ -158,6 +169,18 @@ export const PaymentSlice = createSlice({
             state.status = "success"
         })
         builder.addCase(updateTransactions.rejected, (state) => {
+            state.status = "failed"
+        })
+
+        // States for place order
+        builder.addCase(placeOrder.pending, (state) => {
+            state.status = "pending"
+        })
+        builder.addCase(placeOrder.fulfilled, (state, { payload }) => {
+            state.updated_transac_data = payload
+            state.status = "success"
+        })
+        builder.addCase(placeOrder.rejected, (state) => {
             state.status = "failed"
         })
     }
