@@ -6,6 +6,7 @@ import { getBalance } from '../services/slice/UserSlice';
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import { placeOrder } from '../services/slice/PaymentSlice';
+import { emptyCart } from '../services/slice/CartSlice';
 
 const initialState = {
     address: "",
@@ -43,12 +44,12 @@ const PlaceOrder = () => {
             getCountryId(countryId)
         }
     }
+
     // For onSubmit function
     const handleSubmit = (e) => {
         e.preventDefault()
         setFormErrors(validate(formValues))
     }
-
 
     // getCountryId
     const getCountryId = (name) => {
@@ -103,15 +104,24 @@ const PlaceOrder = () => {
             // react toast message
             toast.success('Order Placed')
         }
-        const cartData = cart_data.reduce((acc, cur) => {
-            acc.push(cur.resp)
+        const cartData = cart_data.reduce((acc, { resp, info }) => {
+            // const { resp, info } = cur
+            console.log(info);
+            acc.push({
+                id: resp._id,
+                user_id: resp.user_id,
+                product_id: resp.product_id,
+                quantity: resp.quantity,
+                ticket_price: info[0].ticket_price,
+                discount_percentage: info[0].discount_percentage
+            })
             return acc
         }, [])
 
-        const orderData = { address: formValues, total_price: amount.total, product_info: cartData }
+        const orderData = { address: formValues, price: amount, product_info: cartData }
         dispatch(placeOrder(orderData))
+        dispatch(emptyCart())
     }
-
 
     useEffect(() => {
         window.scrollTo(0, 0)
@@ -119,7 +129,6 @@ const PlaceOrder = () => {
         dispatch(getBalance())
         calculateSum()
     }, [cart_data, dispatch])
-
 
     // Calculate Sum function
     const calculateSum = () => {

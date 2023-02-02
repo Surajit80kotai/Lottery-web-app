@@ -65,7 +65,11 @@ export const CartSlice = createSlice({
         sub_total: 0,
         total: 0
     },
-    reducers: {},
+    reducers: {
+        emptyCart(state) {
+            state.cart_data = []
+        }
+    },
     extraReducers: (builder) => {
         // Post request states for Addcart system
         builder.addCase(addCart.pending, (state) => {
@@ -121,5 +125,5 @@ export const CartSlice = createSlice({
     }
 })
 
-
+export const { emptyCart } = CartSlice.actions
 export default CartSlice.reducer
