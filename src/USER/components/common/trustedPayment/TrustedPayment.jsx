@@ -11,27 +11,17 @@ const TrustedPayment = () => {
                     <div className="row justify-content-center">
                         <div className="col-lg-2 col-md-2">
                             <div className="payment_item">
-                                <img src="/assets/img/pay (3).png" alt="" />
+                                <img src="/assets/img/pay(1).jpg" alt="" />
                             </div>
                         </div>
                         <div className="col-lg-2 col-md-2">
                             <div className="payment_item">
-                                <img src="/assets/img/pay (4).png" alt="" />
+                                <img src="/assets/img/pay(2).png" alt="" />
                             </div>
                         </div>
                         <div className="col-lg-2 col-md-2">
                             <div className="payment_item">
-                                <img src="/assets/img/pay (5).png" alt="" />
-                            </div>
-                        </div>
-                        <div className="col-lg-2 col-md-2">
-                            <div className="payment_item">
-                                <img src="/assets/img/pay (2).png" alt="" />
-                            </div>
-                        </div>
-                        <div className="col-lg-2 col-md-2">
-                            <div className="payment_item">
-                                <img src="/assets/img/pay (1).png" alt="" />
+                                <img src="/assets/img/pay(3).png" alt="" />
                             </div>
                         </div>
                     </div>

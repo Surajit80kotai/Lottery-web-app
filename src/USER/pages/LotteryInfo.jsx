@@ -136,7 +136,7 @@ const LotteryInfo = () => {
                                     {/* Quantity area */}
                                     <div className="quantity">
                                         <h3>Quantity</h3>
-                                        <p className='fs-5' style={{ "color": "#f9772b" }}>Minimum Quantity Should Be 5*</p>
+                                        <p className='fs-5' style={{ "color": "#f9772b" }}>You Can Buy Minimum 5 Tickets*</p>
                                         <div className="col-md-4">
                                             <div className="qty-container">
                                                 <button className="qty-btn-minus btn-light" type="button" onClick={DecQty}><i className="fa fa-minus"></i></button>

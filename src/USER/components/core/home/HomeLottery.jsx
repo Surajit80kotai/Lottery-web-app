@@ -50,7 +50,7 @@ const HomeLottery = ({ item, index }) => {
                                     <div className="product_title">
                                         <h2 className="card_title">{ticket_name}</h2>
                                     </div>
-                                    <h3 className="total_ticket">Ticket Available : {ticket_quantity}</h3>
+                                    <h3 className="total_ticket">Ticket Quantity : {ticket_quantity}</h3>
 
                                     {/* Condition for timer run-out */}
                                     {
