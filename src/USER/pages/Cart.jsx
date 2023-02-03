@@ -61,18 +61,20 @@ const Cart = () => {
     dispatch(delCartItem(id))
   }
 
+
+  // mount cycle
+  useEffect(() => {
+    window.scrollTo(0, 0)
+    calculateSum()
+  }, [cartLength])
+
+
   // update cycle
   useEffect(() => {
     if (token) {
       dispatch(getCart(userID))
     }
   }, [dispatch, userID, cartLength, token])
-
-  // mount cycle
-  useEffect(() => {
-    window.scrollTo(0, 0)
-    calculateSum()
-  }, [])
 
 
   return (

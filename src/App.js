@@ -12,6 +12,9 @@ import PlaceOrder from './USER/pages/PlaceOrder';
 import Contact from './USER/pages/Contact';
 import { Flip, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
+import ViewAllStudyTravel from './USER/components/core/viewAllLottery/ViewAllStudyTravel';
+import ViewAllCompPhn from './USER/components/core/viewAllLottery/ViewAllCompPhn';
+import ViewAllCosmetics from './USER/components/core/viewAllLottery/ViewAllCosmetics';
 // import TestFive from './USER/pages/test/TestFive';
 
 
@@ -25,6 +28,9 @@ function App() {
         <Route path='/info/:lid' element={<LotteryInfo />} />
         <Route path='/viewallhome' element={<ViewAllHome />} />
         <Route path='/viewallcars' element={<ViewAllCars />} />
+        <Route path='/viewallstud_trv' element={<ViewAllStudyTravel />} />
+        <Route path='/viewallcomp_phn' element={<ViewAllCompPhn />} />
+        <Route path='/viewallcosmetics' element={<ViewAllCosmetics />} />
         {/* <Route path='/test' element={<TestFive />} /> */}
         {/* Private Route Part */}
         <Route element={<PrivateRoute />}>

@@ -118,6 +118,7 @@ const Wallet = () => {
                                                 <thead className="table_head sticky-top ">
                                                     <tr>
                                                         <th scope="col">Date</th>
+                                                        <th scope="col">Remark</th>
                                                         <th scope="col">Merchant</th>
                                                         <th scope="col">Amount</th>
                                                         <th scope="col">Status</th>
@@ -129,6 +130,7 @@ const Wallet = () => {
                                                             return (
                                                                 <tr key={item._id}>
                                                                     <td>{item.updatedAt}</td>
+                                                                    <td>{item.type}</td>
                                                                     <td>{item.merchant}</td>
                                                                     <td>{item.currency} {item.amount}</td>
                                                                     <td>{item.status}</td>

@@ -93,7 +93,7 @@ const Cosmetics = ({ item, index }) => {
                                 <img src="/assets/img/viewmorecard.png" alt="" className="img-fluid" />
                                 <div className="viewall_btn">
                                     <h6>Looking More? Click Here</h6>
-                                    <button className="btn2 mt-2" onClick={() => navigate('/viewallcosm')}>View All</button>
+                                    <button className="btn2 mt-2" onClick={() => navigate('/viewallcosmetics')}>View All</button>
                                 </div>
                             </div>
                         </div>

@@ -405,9 +405,11 @@ const PlaceOrder = () => {
                                                     // cart_data?.map((item) => {
                                                     return (
                                                         <div className="cart_list_item" key={item.resp._id}>
-                                                            <div className="cart_item_img">
-                                                                <img src={image + item?.info[0]?.main_image} alt="" className="img-fluid" />
-                                                            </div>
+                                                            <Link to={`/info/${item?.info[0]?._id}`}>
+                                                                <div className="cart_item_img">
+                                                                    <img src={image + item?.info[0]?.main_image} alt="" className="img-fluid" />
+                                                                </div>
+                                                            </Link>
                                                             <div className="cart_item_content">
                                                                 <div className="cart_title">
                                                                     <h3>{item?.info[0]?.ticket_name}</h3>
