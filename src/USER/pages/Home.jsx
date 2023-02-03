@@ -38,9 +38,7 @@ const Home = () => {
         window.scrollTo(0, 0)
         dispatch(fetchLottery())
         dispatch(fetchCategory())
-        if (token) {
-            dispatch(getCart(userID))
-        }
+        dispatch(getCart(userID))
     }, [dispatch, userID, cartLength, token])
 
 

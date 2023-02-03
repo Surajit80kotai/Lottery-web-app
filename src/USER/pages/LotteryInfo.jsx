@@ -30,6 +30,7 @@ const LotteryInfo = () => {
         if (qty < 5) {
             setQty(qty + 1)
         }
+        // setQty(qty + 1)
         return qty
     }
     // DecQty function
@@ -117,7 +118,7 @@ const LotteryInfo = () => {
                                         }
                                     </div>
                                     {/* Promo area */}
-                                    {
+                                    {/* {
                                         ticketInfo[0]?.is_promo ?
                                             <div className="promo_area">
                                                 <h3>Add a Promo</h3>
@@ -131,7 +132,7 @@ const LotteryInfo = () => {
                                                 </div>
                                             </div>
                                             : null
-                                    }
+                                    } */}
 
                                     {/* Quantity area */}
                                     <div className="quantity">

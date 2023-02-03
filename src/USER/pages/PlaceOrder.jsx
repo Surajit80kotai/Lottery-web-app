@@ -6,7 +6,6 @@ import { getBalance } from '../services/slice/UserSlice';
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import { placeOrder } from '../services/slice/PaymentSlice';
-import { emptyCart } from '../services/slice/CartSlice';
 
 const initialState = {
     address: "",
@@ -28,9 +27,10 @@ const PlaceOrder = () => {
     const { countryData } = useSelector((state) => state.countrystateslice)
     const { stateData } = useSelector((state) => state.countrystateslice)
 
-    // State for cart_data & user balance
+    // States from slices
     const { cart_data } = useSelector((state) => state.cartslice)
     const { balance } = useSelector((state) => state.userslice)
+    const { ordered_data } = useSelector((state) => state.paymentslice)
     const dispatch = useDispatch()
 
     const image = process.env.REACT_APP_NODE_HOST
@@ -93,6 +93,20 @@ const PlaceOrder = () => {
         return error
     }
 
+
+    // checkOrderData function
+    const checkOrderData = () => {
+        if (ordered_data.error === "true") {
+            const cartIds = ordered_data?.meta?.map((item) => item.cart_id)
+            cartIds.map((item) => {
+                var element = document.getElementById(item);
+                element.style.backgroundColor = "#ff616170";
+            })
+            toast.error("Quantity Is Unavilabe !!")
+        }
+    }
+
+
     // On orderPlace function
     const orderPlace = () => {
         const cartData = cart_data.reduce((acc, { resp, info }) => {
@@ -109,9 +123,11 @@ const PlaceOrder = () => {
         }, [])
 
         const orderData = { address: formValues, price: amount, product_info: cartData }
-        dispatch(placeOrder({ orderData, toast }))
-        dispatch(emptyCart())
+        dispatch(placeOrder(orderData))
+        checkOrderData()
     }
+
+
 
     useEffect(() => {
         window.scrollTo(0, 0)
@@ -142,6 +158,7 @@ const PlaceOrder = () => {
             total: st - dc
         })
     }
+
 
     return (
         <>
@@ -394,7 +411,7 @@ const PlaceOrder = () => {
                                                 cart_data?.map((item) => {
                                                     // cart_data?.map((item) => {
                                                     return (
-                                                        <div className="cart_list_item" key={item.resp._id}>
+                                                        <div className="cart_list_item" key={item.resp._id} id={item.resp._id}>
                                                             <Link to={`/info/${item?.info[0]?._id}`}>
                                                                 <div className="cart_item_img">
                                                                     <img src={image + item?.info[0]?.main_image} alt="" className="img-fluid" />

@@ -94,11 +94,11 @@ export const updateTransactions = createAsyncThunk("/auth/update/transaction", a
 
 
 // place order
-export const placeOrder = createAsyncThunk("/auth/order", async ({ orderData, toast }) => {
+export const placeOrder = createAsyncThunk("/auth/order", async (orderData) => {
     // console.log(orderData)
     try {
         const res = await PLACEORDER(orderData, header)
-        toast.success('Order Placed')
+        console.log(res?.data)
         return res?.data
     } catch (err) {
         console.log(err)
@@ -110,6 +110,7 @@ const initialState = {
     paymentData: [],
     transaction_data: [],
     updated_transac_data: [],
+    ordered_data: [],
     status: "",
     loading: false
 }
@@ -179,7 +180,7 @@ export const PaymentSlice = createSlice({
             state.status = "pending"
         })
         builder.addCase(placeOrder.fulfilled, (state, { payload }) => {
-            state.updated_transac_data = payload
+            state.ordered_data = payload
             state.status = "success"
         })
         builder.addCase(placeOrder.rejected, (state) => {

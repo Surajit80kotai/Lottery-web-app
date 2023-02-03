@@ -71,9 +71,7 @@ const Cart = () => {
 
   // update cycle
   useEffect(() => {
-    if (token) {
-      dispatch(getCart(userID))
-    }
+    dispatch(getCart(userID))
   }, [dispatch, userID, cartLength, token])
 
 
