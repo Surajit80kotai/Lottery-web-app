@@ -61,6 +61,11 @@ button {
 	background: transparent;
 }
 
+nav .nav-item .nav-link.active {
+	color: #1c8a66 !important;
+}
+
+
 .m_gap {
 	margin: 1rem 0;
 }

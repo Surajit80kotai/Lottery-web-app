@@ -94,10 +94,11 @@ export const updateTransactions = createAsyncThunk("/auth/update/transaction", a
 
 
 // place order
-export const placeOrder = createAsyncThunk("/auth/order", async (orderData) => {
-    console.log(orderData);
+export const placeOrder = createAsyncThunk("/auth/order", async ({ orderData, toast }) => {
+    // console.log(orderData)
     try {
         const res = await PLACEORDER(orderData, header)
+        toast.success('Order Placed')
         return res?.data
     } catch (err) {
         console.log(err)

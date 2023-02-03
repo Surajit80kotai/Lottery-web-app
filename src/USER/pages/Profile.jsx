@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import DashBoard from '../components/core/profile/DashBoard'
+import MyProfile from '../components/core/profile/MyProfile'
 import OrderHistory from '../components/core/profile/OrderHistory'
 import Wallet from '../components/core/profile/Wallet'
 
@@ -25,8 +25,8 @@ const Profile = () => {
                             {/*  Dashboard  */}
                             <li className="menu-item active">
                                 <Link onClick={() => setPageName("dashboard")} to="#!" className="menu-link">
-                                    <i className="menu-icon tf-icons fas fa-tachometer-alt"></i>
-                                    <div data-i18n="Analytics">Dashboard</div>
+                                    <i className="menu-icon fas fa-user"></i>
+                                    <div data-i18n="Analytics">My Profile</div>
                                 </Link>
                             </li>
 
@@ -50,7 +50,7 @@ const Profile = () => {
 
                     {/* Right Side */}
                     {/* Dashboard */}
-                    {pageName === "dashboard" ? <DashBoard /> : null}
+                    {pageName === "dashboard" ? <MyProfile /> : null}
 
                     {/* Wallet */}
                     {pageName === "wallet" ? <Wallet /> : null}

@@ -49,21 +49,34 @@ const NavBar = () => {
             {/* Navigation Links */}
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
               <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                {/* Home */}
                 <li className="nav-item">
                   <Link className="nav-link" to="/">Home</Link>
                 </li>
+                {/* About Us */}
                 <li className="nav-item">
                   <Link className="nav-link" to="/aboutus">About Us</Link>
                 </li>
-                {/* <li className="nav-item">
-                  <Link className="nav-link" to="/product">Product</Link>
-                </li> */}
+                {/* Product Dropdown */}
+                <li className="nav-item dropdown">
+                  <Link className="nav-link dropdown-toggle" to="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Products <i className="bi bi-chevron-down" style={{"fontSize":"12px"}}></i></Link>
+                  <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li><Link className="dropdown-item text-dark" to="/viewallhome">House & Apartments</Link></li>
+                    <li><Link className="dropdown-item text-dark" to="/viewallcars">Cars & Bikes</Link></li>
+                    <li><Link className="dropdown-item text-dark" to="/viewallstud_trv">Study & Travle</Link></li>
+                    <li><Link className="dropdown-item text-dark" to="/viewallcomp_phn">Computer & Phones</Link></li>
+                    <li><Link className="dropdown-item text-dark" to="/viewallcosmetics">Cosmetics</Link></li>
+                  </ul>
+                </li>
+                {/* How to play */}
                 <li className="nav-item">
                   <Link className="nav-link" to="/howtoplay">How To play</Link>
                 </li>
+                {/* Charities */}
                 <li className="nav-item">
                   <Link className="nav-link" to="/charities">Charities</Link>
                 </li>
+                {/* Contact */}
                 <li className="nav-item">
                   <Link className="nav-link" to="/contact">Contact</Link>
                 </li>

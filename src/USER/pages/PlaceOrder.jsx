@@ -86,12 +86,8 @@ const PlaceOrder = () => {
             error.country = "Country is required*"
         }
         // state
-        if (!values.state) {
-            error.state = "State is required*"
-        }
-        // wallet
-        // if (values.wallet < balance?.balance) {
-        //     error.wallet = "Insuficient balance*"
+        // if (!values.state) {
+        //     error.state = "State is required*"
         // }
 
         return error
@@ -99,14 +95,8 @@ const PlaceOrder = () => {
 
     // On orderPlace function
     const orderPlace = () => {
-        const errorLen = Object.keys(formErrors).length;
-        if (errorLen) {
-            // react toast message
-            toast.success('Order Placed')
-        }
         const cartData = cart_data.reduce((acc, { resp, info }) => {
             // const { resp, info } = cur
-            console.log(info);
             acc.push({
                 id: resp._id,
                 user_id: resp.user_id,
@@ -119,7 +109,7 @@ const PlaceOrder = () => {
         }, [])
 
         const orderData = { address: formValues, price: amount, product_info: cartData }
-        dispatch(placeOrder(orderData))
+        dispatch(placeOrder({ orderData, toast }))
         dispatch(emptyCart())
     }
 
@@ -306,13 +296,13 @@ const PlaceOrder = () => {
                                                     }
                                                 </select>
                                                 {/* State Validation */}
-                                                {
+                                                {/* {
                                                     formErrors.state ?
                                                         <div className="alert alert-danger mt-3 fs-4  " role="alert">
                                                             {formErrors.state}
                                                         </div>
                                                         : null
-                                                }
+                                                } */}
 
                                             </div>
                                         </div>

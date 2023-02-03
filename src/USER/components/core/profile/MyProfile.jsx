@@ -1,8 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { fetchCountry } from '../../../services/slice/CountryStateSlice'
 
 
-const DashBoard = () => {
+const MyProfile = () => {
+    const { countryData } = useSelector((state) => state.countrystateslice)
     const user = JSON.parse(window.localStorage.getItem("user"))
     const date_of_birth = new Date(user?.dob)
     const newDOB = `${date_of_birth.getUTCDay()}-${date_of_birth.getUTCMonth()}-${date_of_birth.getUTCFullYear()}`
@@ -13,6 +16,7 @@ const DashBoard = () => {
         dob: newDOB,
         country: user.country
     })
+    const dispatch = useDispatch()
 
     // handleChange for onChange
     const handleChange = (e) => {
@@ -30,6 +34,11 @@ const DashBoard = () => {
         document.getElementById("saveChanges").classList.remove("hidden");
         document.getElementById("remEdit").classList.add("hidden");
     }
+
+
+    useEffect(() => {
+        dispatch(fetchCountry())
+    }, [dispatch])
 
     return (
         <>
@@ -124,16 +133,23 @@ const DashBoard = () => {
                                         {/* Country */}
                                         <div className="mb-3">
                                             <label htmlFor="country" className="form-label label_style">Address</label>
-                                            <input
-                                                type="text"
-                                                className="form-control form_input in_disa"
-                                                id="country"
-                                                name="country"
-                                                aria-describedby="emailHelp"
-                                                placeholder={user?.country} disabled
+                                            {/* <i className="bi bi-chevron-down"></i> */}
+                                            <select
+                                                className="form-select form_input form_select"
+                                                aria-label="Default select example"
+                                                id="selects"
+                                                name='country'
                                                 value={formValues.country}
-                                                onChange={handleChange}
-                                            />
+                                                onChange={handleChange}>
+                                                {
+                                                    countryData?.map((country) => {
+                                                        return (
+                                                            <option key={country.countries_id
+                                                            } value={country.name + "||" + country.countries_id}>{country.name}</option>
+                                                        )
+                                                    })
+                                                }
+                                            </select>
                                             {/* <!-- <div className="alert alert-danger mt-2" role="alert">
                                                             Please Enter Email Or Phone Number
                                                         </div> --> */}
@@ -226,4 +242,4 @@ const DashBoard = () => {
     )
 }
 
-export default DashBoard
+export default MyProfile

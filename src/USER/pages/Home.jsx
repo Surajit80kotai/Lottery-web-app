@@ -62,7 +62,7 @@ const Home = () => {
 
                                 {/* Home Lottery */}
                                 <div className="first_row_title">
-                                    <h2>Home Lottery</h2>
+                                    <h2>House & Apartments</h2>
                                 </div>
                                 {
                                     house.map((item, index) => {
