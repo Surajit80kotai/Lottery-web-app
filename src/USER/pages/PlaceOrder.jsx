@@ -103,6 +103,8 @@ const PlaceOrder = () => {
                 element.style.backgroundColor = "#ff616170";
             })
             toast.error("Quantity Is Unavilabe !!")
+        }else{
+            toast.success("Order Placed")
         }
     }
 
