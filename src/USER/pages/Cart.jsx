@@ -11,17 +11,13 @@ const Cart = () => {
   const dispatch = useDispatch()
   const [qty, setQty] = useState(1)
   const cartLength = cart_data?.length
-  // const cartValue = cart_data?.valueOf()
   const [amount, setAmount] = useState({ subtotal: 0, discount: 0, total: 0 })
-  const userID = (JSON.parse(window.localStorage.getItem("user"))).user_id
-  const token = JSON.parse(window.localStorage.getItem("token"))
 
   // Calculate Function
   // Calculate Sum
   const calculateSum = () => {
     let st = 0
     let dc = 0
-
     cart_data?.map(({ resp, info }) => {
       if (info[0].discount_percentage) {
         st += (Number((info[0].ticket_price * resp.quantity)))
@@ -59,6 +55,7 @@ const Cart = () => {
   // removeItem function
   const removeItem = (id) => {
     dispatch(delCartItem(id))
+    dispatch(getCart())
   }
 
 
@@ -66,13 +63,14 @@ const Cart = () => {
   useEffect(() => {
     window.scrollTo(0, 0)
     calculateSum()
-  }, [cartLength])
+    dispatch(getCart())
+  }, [dispatch, cartLength])
 
 
   // update cycle
-  useEffect(() => {
-    dispatch(getCart(userID))
-  }, [dispatch, userID, cartLength, token])
+  // useEffect(() => {
+  //   dispatch(getCart())
+  // }, [dispatch, cartLength])
 
 
   return (

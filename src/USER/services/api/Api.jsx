@@ -28,7 +28,7 @@ export const ADDTOCART = (cartData, header) => API.post('/auth/add-cart', cartDa
 export const FETCHCART = (id, header) => API.get("/auth/cart/" + id, header)
 
 // delete cart item
-export const DELCART = (id, header) => API.get("/auth/cart/delete/" + id, header)
+export const DELCART = (id, header) => API.delete("/auth/cart/delete/" + id, header)
 
 // update Cart item quantity
 export const UPDATECART = (id, qty, header) => API.get("/auth/cart/qt_update/" + id + "/" + qty, header)
@@ -50,3 +50,6 @@ export const PLACEORDER = (orderData, header) => API.post("/auth/order", orderDa
 
 // update profile
 export const UPDATEPROFILE = (formData, header) => API.post("/auth/update/profile", formData, header)
+
+// update profile
+export const ORDERHISTORY = (header) => API.get("/auth/order/history", header)

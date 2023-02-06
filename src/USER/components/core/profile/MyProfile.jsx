@@ -95,6 +95,7 @@ const MyProfile = () => {
                                                 placeholder={user?.email} disabled
                                                 value={formValues.email}
                                                 onChange={handleChange}
+                                                readOnly
                                             />
                                             {/* <!-- <div className="alert alert-danger mt-2" role="alert">
                                                             Please Enter Email Or Phone Number

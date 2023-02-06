@@ -168,7 +168,18 @@ main {
 
 }
 
+.carousel-control-next-icon, .carousel-control-prev-icon {
+    display: inline-block;
+    width: 20rem;
+    height: 4rem;
 
+}
+
+
+
+/* .slick-dots li button {
+	text-indent: -9999px;
+ } */
 
 /* =========================login style-==========================*/
 
@@ -858,7 +869,7 @@ z-index: 999; */
 .banner_content {
 	position: absolute;
 	top: 30%;
-	left: 10%;
+	left: 14%;
 	transform: translate(-10, -30%);
 
 }

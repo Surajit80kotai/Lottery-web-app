@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { UPDATEPROFILE, WALLETBALANCE } from "../api/Api";
+import { ORDERHISTORY, UPDATEPROFILE, WALLETBALANCE } from "../api/Api";
 
 // Defining header
 const header = {
@@ -25,7 +25,7 @@ export const updateProfile = createAsyncThunk("/auth/update/profile", async ({ f
     try {
         const response = await UPDATEPROFILE(formValues, header)
         toast.success("Profile Updated Successfully")
-        window.localStorage.setItem("user" , JSON.stringify(response?.data))
+        window.localStorage.setItem("user", JSON.stringify(response?.data))
         return response?.data
     } catch (err) {
         console.log(err);
@@ -36,7 +36,8 @@ export const updateProfile = createAsyncThunk("/auth/update/profile", async ({ f
 // order history
 export const userOrderHistory = createAsyncThunk("", async () => {
     try {
-
+        const res = await ORDERHISTORY(header)
+        return res?.data
     } catch (err) {
         console.log(err)
     }
@@ -77,6 +78,18 @@ export const UserSlice = createSlice({
             state.profile_data = payload
         })
         builder.addCase(updateProfile.rejected, (state) => {
+            state.balance_status = "Failed"
+        })
+
+        // states for orderHistory
+        builder.addCase(userOrderHistory.pending, (state) => {
+            state.balance_status = "Loading"
+        })
+        builder.addCase(userOrderHistory.fulfilled, (state, { payload }) => {
+            state.balance_status = "Success"
+            state.order_history_data = payload
+        })
+        builder.addCase(userOrderHistory.rejected, (state) => {
             state.balance_status = "Failed"
         })
     }

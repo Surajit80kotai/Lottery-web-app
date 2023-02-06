@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { doLogOut } from '../../../services/slice/AuthSlice'
+import { getCart } from '../../../services/slice/CartSlice'
 
 const NavBar = () => {
   const dispatch = useDispatch()
@@ -15,18 +16,11 @@ const NavBar = () => {
     dispatch(doLogOut())
     window.location.reload()
     navigate('/')
-
-    // window.localStorage.removeItem("accessToken")
-    // window.localStorage.removeItem("displayName")
-    // const socialLogOut = async () => {
-    //     const result = await signOut(auth)
-    //     return result
-    // }
-    // socialLogOut()
   }
 
   useEffect(() => {
-  }, [cart_data, cartLength, token])
+    dispatch(getCart())
+  }, [dispatch, cartLength])
 
   return (
     <>
@@ -59,7 +53,7 @@ const NavBar = () => {
                 </li>
                 {/* Product Dropdown */}
                 <li className="nav-item dropdown">
-                  <Link className="nav-link dropdown-toggle" to="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Products <i className="bi bi-chevron-down" style={{"fontSize":"12px"}}></i></Link>
+                  <Link className="nav-link dropdown-toggle" to="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Products <i className="bi bi-chevron-down" style={{ "fontSize": "12px" }}></i></Link>
                   <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                     <li><Link className="dropdown-item text-dark" to="/viewallhome">House & Apartments</Link></li>
                     <li><Link className="dropdown-item text-dark" to="/viewallcars">Cars & Bikes</Link></li>

@@ -130,14 +130,14 @@ const Wallet = () => {
                                                         transaction_data?.map((item) => {
                                                             return (
                                                                 <tr key={item._id}>
-                                                                    <td>{item.updatedAt}</td>
+                                                                    <td>{item.payment_date}</td>
                                                                     <td>{item.type}</td>
                                                                     <td>{item.merchant}</td>
                                                                     <td>{item.currency} {item.amount}</td>
                                                                     <td>{item.status}</td>
                                                                 </tr>
                                                             )
-                                                        })
+                                                        }).reverse()
                                                     }
                                                 </tbody>
                                             </table>

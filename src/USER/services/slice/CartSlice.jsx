@@ -8,6 +8,7 @@ const header = {
         Authorization: `Bearer ${JSON.parse(window.localStorage.getItem("token"))}`
     }
 };
+const userID = (JSON.parse(window.localStorage.getItem("user")).user_id)
 
 
 // AddCart post request handle
@@ -34,9 +35,9 @@ export const delCartItem = createAsyncThunk("/auth/cart/delete", async (c_id) =>
 
 
 // GetCart get request handle
-export const getCart = createAsyncThunk("/auth/cart", async (_id) => {
+export const getCart = createAsyncThunk("/auth/cart", async () => {
     try {
-        const res = await FETCHCART(_id, header)
+        const res = await FETCHCART(userID, header)
         return res?.data
     } catch (err) {
         console.log("Cart data is not fetched", err)
@@ -77,24 +78,22 @@ export const CartSlice = createSlice({
         })
         builder.addCase(addCart.fulfilled, (state, { payload }) => {
             state.status = "Success"
-            state.cart_data = payload
+            // state.cart_data.push(payload)
         })
         builder.addCase(addCart.rejected, (state) => {
             state.status = "Failed"
         })
 
 
-        // Get request states for Deletecart system
+        // states for Deletecart system
         builder.addCase(delCartItem.pending, (state) => {
             state.status = "Loading"
         })
         builder.addCase(delCartItem.fulfilled, (state, { payload }) => {
             state.status = "Success"
-            state.cart_data = payload
         })
         builder.addCase(delCartItem.rejected, (state) => {
             state.status = "Failed"
-            console.log(state.status)
         })
 
 
@@ -111,7 +110,7 @@ export const CartSlice = createSlice({
         })
 
 
-        // Get request states for Updatecart system
+        // states for Updatecart system
         builder.addCase(updateCart.pending, (state) => {
             state.status = "Loading"
         })

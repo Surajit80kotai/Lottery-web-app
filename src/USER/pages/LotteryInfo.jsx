@@ -15,8 +15,7 @@ const LotteryInfo = () => {
     const ticketInfo = lottData?.filter((item) => item._id === lid)
     const discountedPrice = Number((ticketInfo[0]?.ticket_price - ((ticketInfo[0]?.ticket_price * ticketInfo[0]?.discount_percentage) / 100)))
     const { cart_data } = useSelector((state) => state.cartslice)
-    const len = cart_data?.length
-
+    const cartLen = cart_data?.length
 
     // Accesing token
     const token = JSON.parse(window.localStorage.getItem("token"))
@@ -30,7 +29,6 @@ const LotteryInfo = () => {
         if (qty < 5) {
             setQty(qty + 1)
         }
-        // setQty(qty + 1)
         return qty
     }
     // DecQty function
@@ -48,16 +46,26 @@ const LotteryInfo = () => {
         // dispatch(getCart())
     }
 
+    // buyNow function
+    const buyNow = (ticket) => {
+        const subtotal = Number(ticket?.ticket_price * qty)
+        const total = (ticket?.discount_percentage ?
+            (ticket?.ticket_price - ((ticket?.ticket_price * ticket?.discount_percentage) / 100)) * qty
+            : ticket?.ticket_price * qty)
+        const discount = ((ticket?.ticket_price * ticket?.discount_percentage) / 100) * qty
+        const amount = { subtotal: subtotal, total: total, discount: discount }
+        console.log({ product_info: ticket, price: amount });
+    }
+
     useEffect(() => {
         window.scrollTo(0, 0)
-        dispatch(getCart(userID))
-    }, [dispatch, userID, len])
-    startTimer(ticketInfo[0]?.time_left)
+        dispatch(getCart())
+    }, [dispatch, cartLen])
 
+    useEffect(() => {
+        startTimer(ticketInfo[0]?.time_left)
+    })
 
-    // const flickityOptions = {
-    //     initialIndex: 2
-    // }
 
     return (
         <>
@@ -105,9 +113,9 @@ const LotteryInfo = () => {
                                         {
                                             ticketInfo[0]?.discount_percentage ?
                                                 <h3>Ticket Price :&nbsp;&nbsp;
-                                                    <span className="discountprice">{ticketInfo[0]?.currency}{discountedPrice}</span>&nbsp;&nbsp;
+                                                    <span className="discountprice">{ticketInfo[0]?.currency}{discountedPrice * qty}</span>&nbsp;&nbsp;
                                                     <span className="text-decoration-line-through fs-4 fw-light">
-                                                        {ticketInfo[0]?.currency}{ticketInfo[0]?.ticket_price}
+                                                        {ticketInfo[0]?.currency}{ticketInfo[0]?.ticket_price * qty}
                                                     </span>&nbsp;&nbsp;
                                                     <span className="discount_percent fs-4 ">{ticketInfo[0]?.discount_percentage}% off</span>
                                                 </h3>
@@ -159,7 +167,7 @@ const LotteryInfo = () => {
                                         }
 
                                         {
-                                            token ? <Link to="/placeorder" className="btn2">Buy Ticket</Link>
+                                            token ? <Link to="/placeorder" onClick={() => buyNow(ticketInfo[0])} className="btn2">Buy Ticket</Link>
                                                 : <Link to="/login" className="btn2">Buy Ticket</Link>
                                         }
                                     </div>

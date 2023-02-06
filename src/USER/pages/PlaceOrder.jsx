@@ -16,6 +16,7 @@ const initialState = {
 }
 
 const PlaceOrder = () => {
+    // const user = JSON.parse(window.localStorage.getItem("user"))
     // Staes Input filds and validation
     const [formValues, setFormValues] = useState(initialState)
     const [formErrors, setFormErrors] = useState({})
@@ -110,7 +111,6 @@ const PlaceOrder = () => {
         }, [])
 
         const orderData = { address: formValues, price: amount, product_info: cartData }
-        // console.log("Place Order", orderData)
         dispatch(placeOrder(orderData))
         checkOrderData()
     }
@@ -126,10 +126,10 @@ const PlaceOrder = () => {
             })
             toast.error("Quantity Is Unavilabe !!")
         }
-        else {
-            console.log("else")
-            toast.success("Order Placed")
-        }
+        // else {
+        //     console.log("else")
+        //     toast.success("Order Placed")
+        // }
     }
 
 
@@ -376,7 +376,7 @@ const PlaceOrder = () => {
                                             {
                                                 ((amount.total).toFixed(2) < balance?.balance) ?
                                                     <button onClick={orderPlace} className="btn2">Procced</button>
-                                                    : null
+                                                    : <Link to='/profile' className="btn2">Recharge Wallet</Link>
                                             }
                                         </div>
                                     </div>
