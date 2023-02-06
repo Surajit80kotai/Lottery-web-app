@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { fetchCountry } from '../../../services/slice/CountryStateSlice'
+import { updateProfile } from '../../../services/slice/UserSlice'
+import { toast } from 'react-toastify'
 
 
 const MyProfile = () => {
@@ -13,8 +15,8 @@ const MyProfile = () => {
         full_name: user.full_name,
         email: user.email,
         phone: user.phone,
-        dob: newDOB,
-        country: user.country
+        // dob: newDOB,
+        // country: user.country
     })
     const dispatch = useDispatch()
 
@@ -23,6 +25,11 @@ const MyProfile = () => {
         setFormValues({ ...formValues, [e.target.name]: e.target.value })
     }
 
+    // handleSubmit for onSubmit
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        dispatch(updateProfile({ formValues, toast }))
+    }
 
     // Edit button function
     function enabledEdit() {
@@ -57,7 +64,7 @@ const MyProfile = () => {
                             </div>
                             <div className="col-md-9">
                                 <div className="profile_edit_form">
-                                    <form action="" method="post">
+                                    <form method="post" onSubmit={handleSubmit}>
 
                                         {/* Full Name */}
                                         <div className="mb-3">
@@ -106,6 +113,7 @@ const MyProfile = () => {
                                                 placeholder={user?.phone} disabled
                                                 value={formValues.phone}
                                                 onChange={handleChange}
+                                                maxLength={10}
                                             />
                                             {/* <!-- <div className="alert alert-danger mt-2" role="alert">
                                                             Please Enter Email Or Phone Number
@@ -121,9 +129,10 @@ const MyProfile = () => {
                                                 id="dob"
                                                 name="dob"
                                                 aria-describedby="emailHelp"
-                                                placeholder={newDOB} disabled
-                                                value={formValues.dob}
+                                                placeholder={newDOB}
+                                                value={formValues.dob} disabled
                                                 onChange={handleChange}
+                                                readOnly
                                             />
                                             {/* <!-- <div className="alert alert-danger mt-2" role="alert">
                                                             Please Enter Email Or Phone Number
@@ -140,7 +149,8 @@ const MyProfile = () => {
                                                 id="selects"
                                                 name='country'
                                                 value={formValues.country}
-                                                onChange={handleChange}>
+                                                onChange={handleChange}
+                                                disabled >
                                                 {
                                                     countryData?.map((country) => {
                                                         return (

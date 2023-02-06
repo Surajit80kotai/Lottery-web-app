@@ -47,3 +47,6 @@ export const UPDATETRANSACTION = (header) => API.get("/auth/update/transaction",
 
 // place order
 export const PLACEORDER = (orderData, header) => API.post("/auth/order", orderData, header)
+
+// update profile
+export const UPDATEPROFILE = (formData, header) => API.post("/auth/update/profile", formData, header)

@@ -94,21 +94,6 @@ const PlaceOrder = () => {
     }
 
 
-    // checkOrderData function
-    const checkOrderData = () => {
-        if (ordered_data.error === "true") {
-            const cartIds = ordered_data?.meta?.map((item) => item.cart_id)
-            cartIds.map((item) => {
-                var element = document.getElementById(item);
-                element.style.backgroundColor = "#ff616170";
-            })
-            toast.error("Quantity Is Unavilabe !!")
-        }else{
-            toast.success("Order Placed")
-        }
-    }
-
-
     // On orderPlace function
     const orderPlace = () => {
         const cartData = cart_data.reduce((acc, { resp, info }) => {
@@ -125,10 +110,31 @@ const PlaceOrder = () => {
         }, [])
 
         const orderData = { address: formValues, price: amount, product_info: cartData }
+        // console.log("Place Order", orderData)
         dispatch(placeOrder(orderData))
         checkOrderData()
     }
 
+
+    // checkOrderData function
+    const checkOrderData = () => {
+        if (ordered_data.error === "true") {
+            const cartIds = ordered_data?.meta?.map((item) => item.cart_id)
+            cartIds.map((item) => {
+                var element = document.getElementById(item);
+                return element.style.backgroundColor = "#ff616170";
+            })
+            toast.error("Quantity Is Unavilabe !!")
+        }
+        else {
+            console.log("else")
+            toast.success("Order Placed")
+        }
+    }
+
+
+    useEffect(() => {
+    }, [ordered_data, balance])
 
 
     useEffect(() => {
@@ -137,6 +143,9 @@ const PlaceOrder = () => {
         dispatch(getBalance())
         calculateSum()
     }, [cart_data, dispatch])
+
+
+
 
     // Calculate Sum function
     const calculateSum = () => {
@@ -250,6 +259,7 @@ const PlaceOrder = () => {
                                                 name='pincode'
                                                 value={formValues.pincode}
                                                 onChange={handleChange}
+                                                maxLength={6}
                                             />
                                             {/* Pincode Validation */}
                                             {
@@ -347,7 +357,7 @@ const PlaceOrder = () => {
                                                                 onChange={handleChange}
                                                             /> */}
                                                             <label className="form-check-label" htmlFor="inlineRadio1">
-                                                                Wallet Balance <span className="upi_icon fw-bolder">{balance?.balance}</span>
+                                                                Wallet Balance <span className="upi_icon fw-bolder">{(balance?.balance)?.toFixed(2)}</span>
                                                             </label>
                                                         </div>
                                                     </div>

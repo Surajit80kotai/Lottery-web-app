@@ -12,6 +12,7 @@ const Wallet = () => {
     const { transaction_data } = useSelector((state) => state.paymentslice)
 
     const payment_data = paymentData?.data
+    
 
     // handleChange function for onChange
     const handleChange = (e) => {
@@ -67,7 +68,7 @@ const Wallet = () => {
                                     <div className="total_balns">
                                         <span>Total Balance</span>
                                         {
-                                            balance?.balance > 0 ? <h5 className="total_amount">XAF {balance?.balance}</h5> : <h5 className="total_amount">XAF 0</h5>
+                                            balance?.balance > 0 ? <h5 className="total_amount">XAF {(balance?.balance)?.toFixed(2)}</h5> : <h5 className="total_amount">XAF 0</h5>
                                         }
 
                                     </div>
@@ -173,7 +174,7 @@ const Wallet = () => {
                                         />
                                         <label htmlFor="control_01">
                                             <div className="pay_icon">
-                                                <img src="/assets/img/pay1.jpg" alt="" className="img-fluid" />
+                                                <img src="/assets/img/pay(1).jpg" alt="" className="img-fluid" />
                                             </div>
                                             <p>Pay with cinet Pay</p>
                                         </label>
@@ -191,7 +192,7 @@ const Wallet = () => {
                                         />
                                         <label htmlFor="control_02">
                                             <div className="pay_icon">
-                                                <img src="/assets/img/pay2.png" alt="" className="img-fluid" />
+                                                <img src="/assets/img/pay(2).png" alt="" className="img-fluid" />
                                             </div>
                                             <p>Pay with Master Card</p>
                                         </label>
@@ -208,7 +209,7 @@ const Wallet = () => {
                                         />
                                         <label htmlFor="control_03">
                                             <div className="pay_icon">
-                                                <img src="/assets/img/pay3.png" alt="" className="img-fluid" />
+                                                <img src="/assets/img/pay(3).png" alt="" className="img-fluid" />
                                             </div>
                                             <p>Pay with Paypal</p>
                                         </label>

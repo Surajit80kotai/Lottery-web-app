@@ -98,7 +98,7 @@ export const placeOrder = createAsyncThunk("/auth/order", async (orderData) => {
     // console.log(orderData)
     try {
         const res = await PLACEORDER(orderData, header)
-        console.log(res?.data)
+        // console.log(res?.data)
         return res?.data
     } catch (err) {
         console.log(err)
