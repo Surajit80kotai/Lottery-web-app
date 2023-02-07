@@ -4,7 +4,7 @@ import TrustedPayment from '../components/common/trustedPayment/TrustedPayment'
 import { useTimer } from '../customHooks/useTimer'
 import { useDispatch, useSelector } from 'react-redux'
 import { addCart, getCart } from '../services/slice/CartSlice'
-import { itemBuyNow } from '../services/slice/PaymentSlice'
+import { buyNowItem } from '../services/slice/PaymentSlice'
 
 const LotteryInfo = () => {
     const { lid } = useParams()
@@ -65,9 +65,8 @@ const LotteryInfo = () => {
             total_discount_price: total
         }
 
-        const orderData = { product_info: newTicket }
-        // console.log(orderData)
-        dispatch(itemBuyNow(orderData))
+        const orderData = { product_info: newTicket, amount: amount, ticket: ticket }
+        dispatch(buyNowItem(orderData))
     }
 
     useEffect(() => {
@@ -127,9 +126,9 @@ const LotteryInfo = () => {
                                         {
                                             ticketInfo[0]?.discount_percentage ?
                                                 <h3>Ticket Price :&nbsp;&nbsp;
-                                                    <span className="discountprice">{ticketInfo[0]?.currency}{(discountedPrice * qty).toFixed(2)}</span>&nbsp;&nbsp;
+                                                    <span className="discountprice">{ticketInfo[0]?.currency}{discountedPrice}</span>&nbsp;&nbsp;
                                                     <span className="text-decoration-line-through fs-4 fw-light">
-                                                        {ticketInfo[0]?.currency}{(ticketInfo[0]?.ticket_price * qty).toFixed(2)}
+                                                        {ticketInfo[0]?.currency}{ticketInfo[0]?.ticket_price}
                                                     </span>&nbsp;&nbsp;
                                                     <span className="discount_percent fs-4 ">{ticketInfo[0]?.discount_percentage}% off</span>
                                                 </h3>
@@ -166,13 +165,23 @@ const LotteryInfo = () => {
                                             <div className="qty-container">
                                                 <button className="qty-btn-minus btn-light" type="button" onClick={DecQty}><i className="fa fa-minus"></i></button>
                                                 <div className="quantity_place">
-                                                    {/* <input className='quantity_title' value={amount} /> */}
                                                     <h1 className='quantity_title'>{qty}</h1>
                                                 </div>
                                                 <button className="qty-btn-plus btn-light" type="button" onClick={IncQty}><i className="fa fa-plus"></i></button>
                                             </div>
                                         </div>
                                     </div>
+
+                                    {
+                                        ticketInfo[0]?.discount_percentage ?
+                                            <h3>Total Price :&nbsp;&nbsp;
+                                                <span className="discountprice">{ticketInfo[0]?.currency}{(discountedPrice * qty).toFixed(2)}</span>&nbsp;&nbsp;
+                                            </h3>
+                                            :
+                                            <h3>Ticket Price :&nbsp;&nbsp;
+                                                <span className="discountprice">{ticketInfo[0]?.currency}{(ticketInfo[0]?.ticket_price) * qty}</span>
+                                            </h3>
+                                    }
 
                                     {/* Add to cart buttton */}
                                     <div className="btn_area mt-5">
@@ -183,7 +192,8 @@ const LotteryInfo = () => {
                                         }
 
                                         {
-                                            token ? <Link to="/placeorder" onClick={() => buyNow(ticketInfo[0])} className="btn2">Buy Ticket</Link>
+                                            token ?
+                                                <Link to="/placeorder" onClick={() => buyNow(ticketInfo[0])} className="btn2">Buy Ticket</Link>
                                                 : <Link to="/login" className="btn2">Buy Ticket</Link>
                                         }
                                     </div>

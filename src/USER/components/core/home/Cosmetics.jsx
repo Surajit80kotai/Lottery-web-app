@@ -12,8 +12,8 @@ const Cosmetics = ({ item, index }) => {
 
     useEffect(() => {
         // console.log("render");
-    }, [])
-    startTimer(Number(time_left))
+        startTimer(Number(time_left))
+    })
 
     return (
         <>

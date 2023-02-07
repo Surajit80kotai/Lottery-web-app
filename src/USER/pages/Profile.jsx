@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import MyProfile from '../components/core/profile/MyProfile'
 import OrderHistory from '../components/core/profile/OrderHistory'
 import Wallet from '../components/core/profile/Wallet'
 
 const Profile = () => {
+    const { dueAmount } = useParams()
     const [pageName, setPageName] = useState("dashboard")
 
     useEffect(() => {
@@ -53,7 +54,7 @@ const Profile = () => {
                     {pageName === "dashboard" ? <MyProfile /> : null}
 
                     {/* Wallet */}
-                    {pageName === "wallet" ? <Wallet /> : null}
+                    {pageName === "wallet" ? <Wallet dueAmount={dueAmount} /> : null}
 
                     {/* Order History */}
                     {pageName === "orderhistory" ? <OrderHistory /> : null}

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { getBalance } from '../services/slice/UserSlice';
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
-import { placeOrder } from '../services/slice/PaymentSlice';
+import { itemBuyNow, placeOrder } from '../services/slice/PaymentSlice';
 
 
 const PlaceOrder = () => {
@@ -14,29 +14,33 @@ const PlaceOrder = () => {
     // States from slices
     const { cart_data } = useSelector((state) => state.cartslice)
     const { balance } = useSelector((state) => state.userslice)
-    const { ordered_data } = useSelector((state) => state.paymentslice)
+    const { ordered_data, buy_now_data } = useSelector((state) => state.paymentslice)
     const dispatch = useDispatch()
 
     const image = process.env.REACT_APP_NODE_HOST
-
+    const dueAmount = Number(amount?.total - balance?.balance)
 
     // On orderPlace function
     const procced = () => {
-        const cartData = cart_data.reduce((acc, { resp, info }) => {
-            // const { resp, info } = cur
-            acc.push({
-                id: resp._id,
-                user_id: resp.user_id,
-                product_id: resp.product_id,
-                quantity: resp.quantity,
-                ticket_price: info[0].ticket_price,
-                discount_percentage: info[0].discount_percentage
-            })
-            return acc
-        }, [])
-
-        const orderData = { price: amount, product_info: cartData }
-        dispatch(placeOrder(orderData))
+        if (cart_data) {
+            const cartData = cart_data.reduce((acc, { resp, info }) => {
+                // const { resp, info } = cur
+                acc.push({
+                    id: resp._id,
+                    user_id: resp.user_id,
+                    product_id: resp.product_id,
+                    quantity: resp.quantity,
+                    ticket_price: info[0].ticket_price,
+                    discount_percentage: info[0].discount_percentage
+                })
+                return acc
+            }, [])
+            const orderData = { price: amount, product_info: cartData }
+            dispatch(placeOrder(orderData))
+        }
+        if (buy_now_data) {
+            dispatch(itemBuyNow(buy_now_data))
+        }
     }
 
 
@@ -66,7 +70,6 @@ const PlaceOrder = () => {
         dispatch(getBalance())
         calculateSum()
     }, [cart_data, dispatch])
-
 
 
 
@@ -157,94 +160,166 @@ const PlaceOrder = () => {
                                         {
                                             ((amount.total).toFixed(2) < balance?.balance) ?
                                                 <button onClick={procced} className="btn2">Procced</button>
-                                                : <Link to='/profile' className="btn2">Recharge Wallet</Link>
+                                                : <Link to={`/profile/${dueAmount}`} className="btn2">Recharge Wallet</Link>
                                         }
                                     </div>
                                 </div>
                             </div>
 
                             {/* Right Side Of PlaceOrder */}
-                            <div className="col-md-4 ">
-                                <div className="purches_sum fixed_right">
-                                    <div className="price_area_wrapper ">
-                                        <h3 className="price_title">Purchase Summary</h3>
-                                        <div className="price_inner">
-                                            <div className="price_item borderbottom">
-                                                <h4 className="price_text">Price <span> ({cart_data?.length} Item):</span></h4>
-                                                <h6 className="price_value">
-                                                    {cart_data ? <span>{cart_data[0]?.info[0]?.currency}</span> : 0}
+                            {
+                                cart_data.length ?
+                                    <div className="col-md-4 ">
+                                        <div className="purches_sum fixed_right">
+                                            <div className="price_area_wrapper ">
+                                                <h3 className="price_title">Purchase Summary</h3>
+                                                <div className="price_inner">
+                                                    <div className="price_item borderbottom">
+                                                        <h4 className="price_text">Price <span> ({cart_data?.length} Item):</span></h4>
+                                                        <h6 className="price_value">
+                                                            {cart_data ? <span>{cart_data[0]?.info[0]?.currency}</span> : 0}
+                                                            {(amount.subtotal).toFixed(2)}
+                                                        </h6>
+                                                    </div>
+                                                    <div className="price_item mb-5">
+                                                        <h4 className="price_text">Total Discount :</h4>
+                                                        <h6 className="price_value text-success">
+                                                            {cart_data ? <span>{cart_data[0]?.info[0]?.currency}-</span> : 0}
+                                                            {(amount.discount).toFixed(2)}
+                                                        </h6>
+                                                    </div>
+                                                    <div className="price_item mt-5">
+                                                        <h4 className="price_text">Total Payables:</h4>
+                                                        <h6 className="price_value">
+                                                            {cart_data ? <span>{cart_data[0]?.info[0]?.currency}</span> : 0}
 
-                                                    {(amount.subtotal).toFixed(2)}
-                                                </h6>
-                                            </div>
-                                            <div className="price_item mb-5">
-                                                <h4 className="price_text">Total Discount :</h4>
-                                                <h6 className="price_value text-success">
-                                                    {cart_data ? <span>{cart_data[0]?.info[0]?.currency}-</span> : 0}
-                                                    {(amount.discount).toFixed(2)}
-                                                </h6>
-                                            </div>
-                                            <div className="price_item mt-5">
-                                                <h4 className="price_text">Total Payables:</h4>
-                                                <h6 className="price_value">
-                                                    {cart_data ? <span>{cart_data[0]?.info[0]?.currency}</span> : 0}
-
-                                                    {(amount.total).toFixed(2)}
-                                                </h6>
+                                                            {(amount.total).toFixed(2)}
+                                                        </h6>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
+                                    :
+                                    <div className="col-md-4 ">
+                                        <div className="purches_sum fixed_right">
+                                            <div className="price_area_wrapper ">
+                                                <h3 className="price_title">Purchase Summary</h3>
+                                                <div className="price_inner">
+                                                    <div className="price_item borderbottom">
+                                                        <h4 className="price_text">Price <span> ({buy_now_data?.length} Item):</span></h4>
+                                                        <h6 className="price_value">
+                                                            {buy_now_data ? <span>{buy_now_data[0]?.product_info?.currency}</span> : 0}
+                                                            {buy_now_data[0]?.amount ? (buy_now_data[0]?.amount?.subtotal) : 0}
+                                                        </h6>
+                                                    </div>
+                                                    <div className="price_item mb-5">
+                                                        <h4 className="price_text">Total Discount :</h4>
+                                                        <h6 className="price_value text-success">
+                                                            {cart_data ? <span>{cart_data[0]?.info[0]?.currency}-</span> : 0}
+                                                            {buy_now_data[0]?.amount ? (buy_now_data[0]?.amount?.discount) : 0}
+                                                        </h6>
+                                                    </div>
+                                                    <div className="price_item mt-5">
+                                                        <h4 className="price_text">Total Payables:</h4>
+                                                        <h6 className="price_value">
+                                                            {cart_data ? <span>{cart_data[0]?.info[0]?.currency}</span> : 0}
 
-                            {/* Item List */}
-                            <div className="order_history_summary col-md-8">
-                                {
-                                    cart_data?.length ?
-                                        cart_data?.map((item) => {
-                                            // cart_data?.map((item) => {
-                                            return (
-                                                <div className="cart_list_item" key={item.resp._id} id={item.resp._id}>
-                                                    <Link to={`/info/${item?.info[0]?._id}`}>
-                                                        <div className="cart_item_img">
-                                                            <img src={image + item?.info[0]?.main_image} alt="" className="img-fluid" />
-                                                        </div>
-                                                    </Link>
-                                                    <div className="cart_item_content">
-                                                        <div className="cart_title">
-                                                            <h3>{item?.info[0]?.ticket_name}</h3>
-                                                        </div>
-                                                        <div className="other_info">
-                                                            <p className="amount fw-bold text-dark">Item Quantity : {item?.resp?.quantity}</p>
-                                                            {/* Calculation of discounted price */}
-                                                            <p className="tic_price fw-bold text-dark">Price Of Ticket :
-                                                                {
-                                                                    (Number(item?.info[0]?.ticket_price - ((item?.info[0]?.ticket_price * item?.info[0]?.discount_percentage) / 100)) * item?.resp?.quantity).toFixed(2)
-                                                                }
-                                                            </p>
-                                                        </div>
-                                                        <div className="date_result">
-                                                            {/* Calculating the data */}
-                                                            <h5><span><img src="/assets/img/3135783 1.png" alt="" /></span>Result on <span className="fw-bold">
-                                                                {new Date(item?.info[0]?.time_left).toLocaleString('en-US', {
-                                                                    month: 'short',
-                                                                    day: '2-digit',
-                                                                    year: 'numeric'
-                                                                })}
-                                                            </span></h5>
-                                                        </div>
+                                                            {buy_now_data[0]?.amount ? (buy_now_data[0]?.amount?.total) : 0}
+                                                        </h6>
                                                     </div>
                                                 </div>
-                                            )
-                                        })
-                                        :
-                                        <div className='text-center' >
-                                            <img src="/assets/img/emptycart.png" alt="" />
-                                            <h2>Your Cart Is Empty</h2>
+                                            </div>
                                         </div>
+                                    </div>
+                            }
 
-                                }
-                            </div>
+
+                            {/* Item List */}
+                            {
+                                cart_data.length ?
+                                    <div className="order_history_summary col-md-8">
+                                        {
+                                            cart_data?.length ?
+                                                cart_data?.map((item) => {
+                                                    // cart_data?.map((item) => {
+                                                    return (
+                                                        <div className="cart_list_item" key={item.resp._id} id={item.resp._id}>
+                                                            <Link to={`/info/${item?.info[0]?._id}`}>
+                                                                <div className="cart_item_img">
+                                                                    <img src={image + item?.info[0]?.main_image} alt="" className="img-fluid" />
+                                                                </div>
+                                                            </Link>
+                                                            <div className="cart_item_content">
+                                                                <div className="cart_title">
+                                                                    <h3>{item?.info[0]?.ticket_name}</h3>
+                                                                </div>
+                                                                <div className="other_info">
+                                                                    <p className="amount fw-bold text-dark">Item Quantity : {item?.resp?.quantity}</p>
+                                                                    {/* Calculation of discounted price */}
+                                                                    <p className="tic_price fw-bold text-dark">Price Of Ticket :
+                                                                        {
+                                                                            (Number(item?.info[0]?.ticket_price - ((item?.info[0]?.ticket_price * item?.info[0]?.discount_percentage) / 100)) * item?.resp?.quantity).toFixed(2)
+                                                                        }
+                                                                    </p>
+                                                                </div>
+                                                                <div className="date_result">
+                                                                    {/* Calculating the data */}
+                                                                    <h5><span><img src="/assets/img/3135783 1.png" alt="" /></span>Result on <span className="fw-bold">
+                                                                        {new Date(item?.info[0]?.time_left).toLocaleString('en-US', {
+                                                                            month: 'short',
+                                                                            day: '2-digit',
+                                                                            year: 'numeric'
+                                                                        })}
+                                                                    </span></h5>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    )
+                                                })
+                                                :
+                                                <div className='text-center' >
+                                                    <img src="/assets/img/emptycart.png" alt="" />
+                                                    <h2>Your Cart Is Empty</h2>
+                                                </div>
+
+                                        }
+                                    </div>
+                                    :
+                                    <div className="order_history_summary col-md-8">
+
+                                        <div className="cart_list_item">
+                                            <Link to="#!">
+                                                <div className="cart_item_img">
+                                                    <img src={image + buy_now_data[0]?.ticket?.is_image} alt="" className="img-fluid" />
+                                                </div>
+                                            </Link>
+                                            <div className="cart_item_content">
+                                                <div className="cart_title">
+                                                    <h3>{buy_now_data[0]?.ticket?.ticket_name}</h3>
+                                                </div>
+                                                <div className="other_info">
+                                                    <p className="amount fw-bold text-dark">Item Quantity : {buy_now_data[0]?.product_info?.quantity}</p>
+                                                    {/* Calculation of discounted price */}
+                                                    <p className="tic_price fw-bold text-dark">Price Of Ticket :
+                                                        {buy_now_data[0]?.product_info?.total_discount_price}
+                                                    </p>
+                                                </div>
+                                                <div className="date_result">
+                                                    {/* Calculating the data */}
+                                                    <h5><span><img src="/assets/img/3135783 1.png" alt="" /></span>Result on <span className="fw-bold">
+                                                        {new Date(buy_now_data[0]?.ticket?.time_left).toLocaleString('en-US', {
+                                                            month: 'short',
+                                                            day: '2-digit',
+                                                            year: 'numeric'
+                                                        })}
+                                                    </span></h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                            }
+
                         </div>
                     </div>
                 </div>

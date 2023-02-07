@@ -23,19 +23,19 @@ const OrderHistory = () => {
                         {
                             order_history_data?.map((item) => {
                                 return (
-                                    <div className="orderhistroy_item" key={item._id}>
+                                    <div className="orderhistroy_item" key={item?._id}>
                                         <div className="product_history_img">
-                                            <img src="/assets/img/cos3.jpg" alt="" className="img-fluid" />
+                                            <img src={item?.image_link} alt="" className="img-fluid" />
                                         </div>
                                         <div className="info_item">
                                             <div className="info_pro_title">
-                                                <h4>Dual Action Exfoliator</h4>
+                                                <h4>{item?.ticket_name}</h4>
                                             </div>
                                             <div className="num_of_tick">
-                                                <h4>Number Of Ticket : <span>232</span></h4>
+                                                <h4>Ticket Purchased: <span>{item?.quantity}</span></h4>
                                             </div>
-                                            <div className="time_left">
 
+                                            {/* <div className="time_left">
                                                 <div id="coundown" className="countdown">
                                                     <div className="timeleftarea">
                                                         <div id="days" className=" days">000
@@ -58,18 +58,28 @@ const OrderHistory = () => {
                                                         <br /><span>Sec</span>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> */}
+
                                         </div>
                                         <div className="info_item">
-                                            <h3 className="dateofresult"><span><img src="/assets/img/7204809 (1) 3.png" alt="" /></span>Date Of Result
-                                                :<span>23/12/22</span> </h3>
+                                            <h3 className="dateofresult">
+                                                <span><img src="/assets/img/7204809 (1) 3.png" alt="" /></span>
+                                                Date Of Result :
+                                                <span>
+                                                    {new Date(item?.time_left).toLocaleString('en-US', {
+                                                        month: 'short',
+                                                        day: '2-digit',
+                                                        year: 'numeric'
+                                                    })}
+                                                </span>
+                                            </h3>
                                         </div>
                                         <div className="wining_status">
-                                            <h4><span><img src="/assets/img/3135783 1.png" alt="" /></span>Won</h4>
+                                            <h4><span><img src="/assets/img/3135783 1.png" alt="" /></span>Result comming soon</h4>
                                         </div>
                                     </div>
                                 )
-                            })
+                            }).reverse()
                         }
                     </div>
                 </div>

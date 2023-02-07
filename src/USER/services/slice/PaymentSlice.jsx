@@ -109,6 +109,7 @@ export const placeOrder = createAsyncThunk("/auth/order", async (orderData) => {
 export const itemBuyNow = createAsyncThunk("/auth/order/buy/now", async (orderData) => {
     try {
         const res = await BUYNOW(orderData, header)
+        console.log(res?.data)
         return res?.data
     } catch (err) {
         console.log(err)
@@ -130,7 +131,11 @@ const initialState = {
 export const PaymentSlice = createSlice({
     name: "paymentslice",
     initialState,
-    reducers: {},
+    reducers: {
+        buyNowItem(state, { payload }) {
+            state.buy_now_data.push(payload)
+        }
+    },
     extraReducers: (builder) => {
         // States for cinetPay
         builder.addCase(cinetPay.pending, (state) => {
@@ -212,4 +217,6 @@ export const PaymentSlice = createSlice({
     }
 })
 
+
+export const { buyNowItem } = PaymentSlice.actions
 export default PaymentSlice.reducer

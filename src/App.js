@@ -35,6 +35,7 @@ function App() {
         {/* Private Route Part */}
         <Route element={<PrivateRoute />}>
           <Route path='/profile' element={<Profile />} />
+          <Route path='/profile/:dueAmount' element={<Profile />} />
           <Route path='/cart' element={<Cart />} />
           <Route path='/placeorder' element={<PlaceOrder />} />
         </Route>

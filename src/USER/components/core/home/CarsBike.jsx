@@ -11,8 +11,8 @@ const CarsBike = ({ item, index }) => {
 
     useEffect(() => {
         // console.log("render");
-    }, [])
-    startTimer(time_left)
+        startTimer(time_left)
+    })
 
     return (
         <>

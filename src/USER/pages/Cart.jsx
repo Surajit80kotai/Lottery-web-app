@@ -9,7 +9,7 @@ const image = process.env.REACT_APP_NODE_HOST
 const Cart = () => {
   const { cart_data } = useSelector((state) => state.cartslice)
   const dispatch = useDispatch()
-  const [qty, setQty] = useState(1)
+  // const [qty, setQty] = useState(1)
   const cartLength = cart_data?.length
   const [amount, setAmount] = useState({ subtotal: 0, discount: 0, total: 0 })
 
@@ -38,19 +38,19 @@ const Cart = () => {
 
 
   // IncQty function
-  const IncQty = () => {
-    if (qty < 5) {
-      setQty(qty + 1)
-    }
-    return qty
-  }
+  // const IncQty = () => {
+  //   if (qty < 5) {
+  //     setQty(qty + 1)
+  //   }
+  //   return qty
+  // }
   // DecQty function
-  const DecQty = () => {
-    if (qty > 1) {
-      setQty(qty - 1)
-    }
-    return qty
-  }
+  // const DecQty = () => {
+  //   if (qty > 1) {
+  //     setQty(qty - 1)
+  //   }
+  //   return qty
+  // }
 
   // removeItem function
   const removeItem = (id) => {
@@ -133,12 +133,11 @@ const Cart = () => {
                                   })}
                                 </span></h5>
                                 {/* Quantity */}
-                                <div className="qty-container">
+                                {/* <div className="qty-container">
                                   <button onClick={DecQty} className="qty-btn-minus btn-light" type="button"><i className="fa fa-minus"></i></button>
-                                  {/* <input type="text" name="qty" value="0" className="input-qty" /> */}
                                   <h1 className='quantity_title'>{item?.resp?.quantity}</h1>
                                   <button onClick={IncQty} className="qty-btn-plus btn-light" type="button"><i className="fa fa-plus"></i></button>
-                                </div>
+                                </div> */}
                               </div>
                             </div>
 

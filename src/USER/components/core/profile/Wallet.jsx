@@ -4,15 +4,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { cinetPay, getTransactions, initPay, updateTransactions } from '../../../services/slice/PaymentSlice';
 import { getBalance } from '../../../services/slice/UserSlice';
 
-const Wallet = () => {
-    const [formValue, setFormValue] = useState({ amount: "" })
+const Wallet = ({ dueAmount }) => {
+    const [formValue, setFormValue] = useState({ amount: dueAmount })
     const dispatch = useDispatch()
     const { balance } = useSelector((state) => state.userslice)
     const { paymentData } = useSelector((state) => state.paymentslice)
     const { transaction_data } = useSelector((state) => state.paymentslice)
 
-    const payment_data = paymentData?.data
-    
 
     // handleChange function for onChange
     const handleChange = (e) => {
@@ -33,8 +31,14 @@ const Wallet = () => {
 
     // Redirect page function
     const redirectPage = () => {
+        const payment_data = {
+            amount: formValue.amount,
+            payment_url: paymentData?.data?.payment_url,
+            payment_token: paymentData?.data?.payment_token
+        }
         if (paymentData.code === "201") {
-            window.open(paymentData.data.payment_url, "_self")
+            window.open(paymentData.data.payment_url, "_blank")
+            console.log(payment_data)
             dispatch(initPay(payment_data))
         }
     }
