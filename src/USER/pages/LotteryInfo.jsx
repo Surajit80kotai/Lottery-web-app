@@ -4,6 +4,7 @@ import TrustedPayment from '../components/common/trustedPayment/TrustedPayment'
 import { useTimer } from '../customHooks/useTimer'
 import { useDispatch, useSelector } from 'react-redux'
 import { addCart, getCart } from '../services/slice/CartSlice'
+import { itemBuyNow } from '../services/slice/PaymentSlice'
 
 const LotteryInfo = () => {
     const { lid } = useParams()
@@ -43,7 +44,7 @@ const LotteryInfo = () => {
     const addToCart = () => {
         const cartData = { product_id: ticketInfo[0]._id, user_id: userID, qty: qty }
         dispatch(addCart(cartData))
-        // dispatch(getCart())
+        dispatch(getCart())
     }
 
     // buyNow function
@@ -54,13 +55,26 @@ const LotteryInfo = () => {
             : ticket?.ticket_price * qty)
         const discount = ((ticket?.ticket_price * ticket?.discount_percentage) / 100) * qty
         const amount = { subtotal: subtotal, total: total, discount: discount }
-        console.log({ product_info: ticket, price: amount });
+
+        const newTicket = {
+            product_id: ticket._id,
+            unit_price: ticket.ticket_price,
+            quantity: qty,
+            discount: ticket.discount_percentage,
+            total_price: subtotal,
+            total_discount_price: total
+        }
+
+        const orderData = { product_info: newTicket }
+        // console.log(orderData)
+        dispatch(itemBuyNow(orderData))
     }
 
     useEffect(() => {
         window.scrollTo(0, 0)
         dispatch(getCart())
     }, [dispatch, cartLen])
+
 
     useEffect(() => {
         startTimer(ticketInfo[0]?.time_left)
@@ -113,9 +127,9 @@ const LotteryInfo = () => {
                                         {
                                             ticketInfo[0]?.discount_percentage ?
                                                 <h3>Ticket Price :&nbsp;&nbsp;
-                                                    <span className="discountprice">{ticketInfo[0]?.currency}{discountedPrice * qty}</span>&nbsp;&nbsp;
+                                                    <span className="discountprice">{ticketInfo[0]?.currency}{(discountedPrice * qty).toFixed(2)}</span>&nbsp;&nbsp;
                                                     <span className="text-decoration-line-through fs-4 fw-light">
-                                                        {ticketInfo[0]?.currency}{ticketInfo[0]?.ticket_price * qty}
+                                                        {ticketInfo[0]?.currency}{(ticketInfo[0]?.ticket_price * qty).toFixed(2)}
                                                     </span>&nbsp;&nbsp;
                                                     <span className="discount_percent fs-4 ">{ticketInfo[0]?.discount_percentage}% off</span>
                                                 </h3>
@@ -126,21 +140,23 @@ const LotteryInfo = () => {
                                         }
                                     </div>
                                     {/* Promo area */}
-                                    {/* {
+                                    {
                                         ticketInfo[0]?.is_promo ?
                                             <div className="promo_area">
                                                 <h3>Add a Promo</h3>
                                                 <div className="promo_form">
                                                     <form action="">
                                                         <div className="promo_input_wrapper">
-                                                            <input type="text" placeholder="Enter Your Promo Code" />
+                                                            <input
+                                                                type="text"
+                                                                placeholder="Enter Your Promo Code" />
                                                             <button className="promobtn">Apply</button>
                                                         </div>
                                                     </form>
                                                 </div>
                                             </div>
                                             : null
-                                    } */}
+                                    }
 
                                     {/* Quantity area */}
                                     <div className="quantity">

@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { GETALLTRANSACTION, PAYINIT, PLACEORDER, UPDATETRANSACTION } from "../api/Api";
+import { BUYNOW, GETALLTRANSACTION, PAYINIT, PLACEORDER, UPDATETRANSACTION } from "../api/Api";
 
 const token = JSON.parse(window.localStorage.getItem("token"))
 // Defining header
@@ -98,7 +98,17 @@ export const placeOrder = createAsyncThunk("/auth/order", async (orderData) => {
     // console.log(orderData)
     try {
         const res = await PLACEORDER(orderData, header)
-        // console.log(res?.data)
+        return res?.data
+    } catch (err) {
+        console.log(err?.data)
+    }
+})
+
+
+//buy now
+export const itemBuyNow = createAsyncThunk("/auth/order/buy/now", async (orderData) => {
+    try {
+        const res = await BUYNOW(orderData, header)
         return res?.data
     } catch (err) {
         console.log(err)
@@ -111,6 +121,7 @@ const initialState = {
     transaction_data: [],
     updated_transac_data: [],
     ordered_data: [],
+    buy_now_data: [],
     status: "",
     loading: false
 }
@@ -184,6 +195,18 @@ export const PaymentSlice = createSlice({
             state.status = "success"
         })
         builder.addCase(placeOrder.rejected, (state) => {
+            state.status = "failed"
+        })
+
+        // States for buy now
+        builder.addCase(itemBuyNow.pending, (state) => {
+            state.status = "pending"
+        })
+        builder.addCase(itemBuyNow.fulfilled, (state, { payload }) => {
+            state.buy_now_data = payload
+            state.status = "success"
+        })
+        builder.addCase(itemBuyNow.rejected, (state) => {
             state.status = "failed"
         })
     }

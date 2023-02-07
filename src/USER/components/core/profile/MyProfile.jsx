@@ -13,10 +13,7 @@ const MyProfile = () => {
     const newDOB = `${date_of_birth.getUTCDay()}-${date_of_birth.getUTCMonth()}-${date_of_birth.getUTCFullYear()}`
     const [formValues, setFormValues] = useState({
         full_name: user.full_name,
-        email: user.email,
-        phone: user.phone,
-        // dob: newDOB,
-        // country: user.country
+        phone: user.phone
     })
     const dispatch = useDispatch()
 

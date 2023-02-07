@@ -48,8 +48,12 @@ export const UPDATETRANSACTION = (header) => API.get("/auth/update/transaction",
 // place order
 export const PLACEORDER = (orderData, header) => API.post("/auth/order", orderData, header)
 
+// buy now
+export const BUYNOW = (orderData, header) => API.post("/auth/order/buy/now", orderData, header)
+
 // update profile
 export const UPDATEPROFILE = (formData, header) => API.post("/auth/update/profile", formData, header)
 
 // update profile
 export const ORDERHISTORY = (header) => API.get("/auth/order/history", header)
+

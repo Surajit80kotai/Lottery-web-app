@@ -8,7 +8,8 @@ const header = {
         Authorization: `Bearer ${JSON.parse(window.localStorage.getItem("token"))}`
     }
 };
-const userID = (JSON.parse(window.localStorage.getItem("user")).user_id)
+
+const userID = (JSON.parse(window.localStorage.getItem("user"))?.user_id)
 
 
 // AddCart post request handle
@@ -76,7 +77,7 @@ export const CartSlice = createSlice({
         builder.addCase(addCart.pending, (state) => {
             state.status = "Loading"
         })
-        builder.addCase(addCart.fulfilled, (state, { payload }) => {
+        builder.addCase(addCart.fulfilled, (state) => {
             state.status = "Success"
             // state.cart_data.push(payload)
         })
@@ -89,7 +90,7 @@ export const CartSlice = createSlice({
         builder.addCase(delCartItem.pending, (state) => {
             state.status = "Loading"
         })
-        builder.addCase(delCartItem.fulfilled, (state, { payload }) => {
+        builder.addCase(delCartItem.fulfilled, (state) => {
             state.status = "Success"
         })
         builder.addCase(delCartItem.rejected, (state) => {
