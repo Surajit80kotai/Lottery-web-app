@@ -245,10 +245,10 @@ const SignUp = () => {
                         </div>
                         <div className="left_part">
                             <div className="company_logo text-center">
-                                <Link to="/"><img src="/assets/img/logo2.png" alt="" className="img-fluid" /></Link>
+                                <Link to="/"><img src="/assets/img/logo.png" alt="" className="img-fluid" /></Link>
                             </div>
                             <h2 className="log_title">Welcome To Registration</h2>
-                            <h6 className="dont">Already Have An Acount</h6>
+                            <h6 className="dont">Already Have An Account</h6>
                             <Link to="/login" className="Signup">Sing In</Link>
                         </div>
                     </div>

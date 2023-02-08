@@ -5,7 +5,8 @@ import { cinetPay, getTransactions, initPay, updateTransactions } from '../../..
 import { getBalance } from '../../../services/slice/UserSlice';
 
 const Wallet = ({ dueAmount }) => {
-    const [formValue, setFormValue] = useState({ amount: dueAmount })
+    const newDueAmount = dueAmount ? dueAmount : ""
+    const [formValue, setFormValue] = useState({ amount: newDueAmount })
     const dispatch = useDispatch()
     const { balance } = useSelector((state) => state.userslice)
     const { paymentData } = useSelector((state) => state.paymentslice)
@@ -123,7 +124,6 @@ const Wallet = ({ dueAmount }) => {
                                                 <thead className="table_head sticky-top ">
                                                     <tr>
                                                         <th scope="col">Date</th>
-                                                        <th scope="col">Remark</th>
                                                         <th scope="col">Merchant</th>
                                                         <th scope="col">Amount</th>
                                                         <th scope="col">Status</th>
@@ -135,7 +135,6 @@ const Wallet = ({ dueAmount }) => {
                                                             return (
                                                                 <tr key={item._id}>
                                                                     <td>{item.payment_date}</td>
-                                                                    <td>{item.type}</td>
                                                                     <td>{item.merchant}</td>
                                                                     <td>{item.currency} {item.amount}</td>
                                                                     <td>{item.status}</td>

@@ -109,7 +109,7 @@ export const placeOrder = createAsyncThunk("/auth/order", async (orderData) => {
 export const itemBuyNow = createAsyncThunk("/auth/order/buy/now", async (orderData) => {
     try {
         const res = await BUYNOW(orderData, header)
-        console.log(res?.data)
+        // console.log(res?.data)
         return res?.data
     } catch (err) {
         console.log(err)
