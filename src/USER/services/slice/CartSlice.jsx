@@ -38,8 +38,10 @@ export const delCartItem = createAsyncThunk("/auth/cart/delete", async (c_id) =>
 // GetCart get request handle
 export const getCart = createAsyncThunk("/auth/cart", async () => {
     try {
-        const res = await FETCHCART(userID, header)
-        return res?.data
+        if (userID && header) {
+            const res = await FETCHCART(userID, header)
+            return res?.data
+        }
     } catch (err) {
         console.log("Cart data is not fetched", err)
     }

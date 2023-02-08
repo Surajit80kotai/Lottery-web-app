@@ -15,12 +15,14 @@ import 'react-toastify/dist/ReactToastify.css';
 import ViewAllStudyTravel from './USER/components/core/viewAllLottery/ViewAllStudyTravel';
 import ViewAllCompPhn from './USER/components/core/viewAllLottery/ViewAllCompPhn';
 import ViewAllCosmetics from './USER/components/core/viewAllLottery/ViewAllCosmetics';
+// import PreLoader from './USER/components/core/preloader/PreLoader';
 // import TestFive from './USER/pages/test/TestFive';
 
 
 function App() {
   return (
     <div>
+      {/* <PreLoader /> */}
       <NavBar />
       <Routes>
         <Route path='/' element={<Home />} exact />

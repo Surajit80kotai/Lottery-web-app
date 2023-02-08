@@ -18,7 +18,6 @@ const ViewAllStudyTravel = () => {
 
     // Filtering category from data
     const study_travel = fetch_lott_data?.filter((item) => item.category === categoryObj["Study & abroad"])
-    console.log(study_travel)
 
     useEffect(() => {
         dispatch(fetchLottery())

@@ -16,7 +16,7 @@ const LotteryInfo = () => {
     const ticketInfo = lottData?.filter((item) => item._id === lid)
     const discountedPrice = Number((ticketInfo[0]?.ticket_price - ((ticketInfo[0]?.ticket_price * ticketInfo[0]?.discount_percentage) / 100)))
     const { cart_data } = useSelector((state) => state.cartslice)
-    const cartLen = cart_data?.length
+    const cartLength = cart_data?.length
 
     // Accesing token
     const token = JSON.parse(window.localStorage.getItem("token"))
@@ -72,7 +72,7 @@ const LotteryInfo = () => {
     useEffect(() => {
         window.scrollTo(0, 0)
         dispatch(getCart())
-    }, [dispatch, cartLen])
+    }, [dispatch, cartLength])
 
 
     useEffect(() => {

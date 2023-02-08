@@ -39,7 +39,7 @@ const Wallet = ({ dueAmount }) => {
         }
         if (paymentData.code === "201") {
             window.open(paymentData.data.payment_url, "_blank")
-            console.log(payment_data)
+            // console.log(payment_data)
             dispatch(initPay(payment_data))
         }
     }
@@ -152,7 +152,6 @@ const Wallet = ({ dueAmount }) => {
                         </div>
                     </div>
                 </div>
-
                 {/*  Modal payment */}
                 <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div className="modal-dialog modal-dialog-centered modal-lg">
@@ -161,7 +160,6 @@ const Wallet = ({ dueAmount }) => {
                                 <h3>Add Money to Wallet</h3>
                                 <h4>XAF{formValue.amount}</h4>
                             </div>
-
                             <div className="modal-body">
                                 <h4 className="option_title">Payment Option</h4>
                                 <div className="payment_section">

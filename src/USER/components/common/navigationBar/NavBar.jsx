@@ -14,7 +14,6 @@ const NavBar = () => {
 
   const logOut = () => {
     dispatch(doLogOut())
-    window.location.reload()
     navigate('/')
   }
 
