@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { ADDTOCART, DELCART, FETCHCART, UPDATECART } from "../api/Api";
+import { toast } from 'react-toastify'
 
 
 // Defining header
@@ -49,10 +50,9 @@ export const getCart = createAsyncThunk("/auth/cart", async () => {
 
 
 // updateCart get request handle
-export const updateCart = createAsyncThunk("/auth/cart/qt_update", async (id, qty) => {
+export const updateCart = createAsyncThunk("/auth/cart/qt_update", async ({ id, qty }) => {
     try {
         const res = await UPDATECART(id, qty, header)
-        console.log(res)
         return res?.data
     } catch (err) {
         console.log("Quantity not updated", err)
@@ -67,11 +67,19 @@ export const CartSlice = createSlice({
         cart_data: [],
         status: "",
         sub_total: 0,
-        total: 0
+        total: 0,
+        update_status: "",
+        delete_status: ""
     },
     reducers: {
         emptyCart(state) {
             state.cart_data = []
+        },
+        clearUpdateStatus(state) {
+            state.update_status = ""
+        },
+        clearDeleteStatus(state) {
+            state.update_status = ""
         }
     },
     extraReducers: (builder) => {
@@ -92,8 +100,10 @@ export const CartSlice = createSlice({
         builder.addCase(delCartItem.pending, (state) => {
             state.status = "Loading"
         })
-        builder.addCase(delCartItem.fulfilled, (state) => {
+        builder.addCase(delCartItem.fulfilled, (state, { payload }) => {
             state.status = "Success"
+            state.delete_status = payload
+            // console.log(payload)
         })
         builder.addCase(delCartItem.rejected, (state) => {
             state.status = "Failed"
@@ -119,7 +129,10 @@ export const CartSlice = createSlice({
         })
         builder.addCase(updateCart.fulfilled, (state, { payload }) => {
             state.status = "Success"
-            state.cart_data = payload
+            state.update_status = payload
+            if (payload.quantity > 5) {
+                toast.warning(payload.message)
+            }
         })
         builder.addCase(updateCart.rejected, (state) => {
             state.status = "Failed"
@@ -127,5 +140,5 @@ export const CartSlice = createSlice({
     }
 })
 
-export const { emptyCart } = CartSlice.actions
+export const { emptyCart, clearUpdateStatus, clearDeleteStatus } = CartSlice.actions
 export default CartSlice.reducer

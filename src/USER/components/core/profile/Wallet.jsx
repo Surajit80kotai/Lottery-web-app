@@ -175,7 +175,7 @@ const Wallet = ({ dueAmount }) => {
                                         />
                                         <label htmlFor="control_01">
                                             <div className="pay_icon">
-                                                <img src="/assets/img/pay(1).jpg" alt="" className="img-fluid" />
+                                                <img src="/assets/img/pay(1).png" alt="" className="img-fluid" />
                                             </div>
                                             <p>Pay with cinet Pay</p>
                                         </label>

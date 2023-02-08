@@ -11,7 +11,7 @@ const TrustedPayment = () => {
                     <div className="row justify-content-center">
                         <div className="col-lg-2 col-md-2">
                             <div className="payment_item">
-                                <img src="/assets/img/pay(1).jpg" alt="" />
+                                <img src="/assets/img/pay(1).png" alt="" />
                             </div>
                         </div>
                         <div className="col-lg-2 col-md-2">
