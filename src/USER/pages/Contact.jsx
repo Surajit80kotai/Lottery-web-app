@@ -78,7 +78,7 @@ const Contact = () => {
 
                                                         {/* Button */}
                                                         <div className="text-center mt-5">
-                                                            <button type="submit" className="btn_one">Register</button>
+                                                            <button type="submit" className="btn_one">Submit &rarr;</button>
                                                         </div>
                                                     </form>
                                                 </div>
