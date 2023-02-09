@@ -7,7 +7,7 @@ const Banner = ({ house, vehicle }) => {
     const [timerDays, timerHours, timerMinutes, timerSeconds, startTimer] = useTimer()
 
     useEffect(() => {
-        startTimer(1675708200000)
+        startTimer(1677522600000)
     }, [startTimer])
 
 
@@ -81,7 +81,7 @@ const Banner = ({ house, vehicle }) => {
                                 (timerDays && timerHours && timerMinutes && timerSeconds) >= 0 ?
                                     <div>
                                         <div className="time_counter">
-                                            <h1 className="banner_title">{house[0]?.ticket_name}</h1>
+                                            <h1 className="banner_title">{vehicle[0]?.ticket_name}</h1>
                                             <h3>Timeleft</h3>
                                             <div id="coundown" className="countdown">
                                                 <div className="one_time">
@@ -112,7 +112,7 @@ const Banner = ({ house, vehicle }) => {
 
                                         </div>
                                         <div className="ticket_price">
-                                            <h4>Ticket Price<span><h3 className="currencysymbol">{house[0]?.currency}</h3></span>{house[0]?.ticket_price}</h4>
+                                            <h4>Ticket Price<span><h3 className="currencysymbol">{vehicle[0]?.currency}</h3></span>{vehicle[0]?.ticket_price}</h4>
                                         </div>
                                     </div>
                                     : <h1 className='text-white'>Ticket is unavailabe right now</h1>
@@ -130,7 +130,7 @@ const Banner = ({ house, vehicle }) => {
                                 (timerDays && timerHours && timerMinutes && timerSeconds) >= 0 ?
                                     <div>
                                         <div className="time_counter">
-                                            <h1 className="banner_title">{house[0]?.ticket_name}</h1>
+                                            <h1 className="banner_title">{house[1]?.ticket_name}</h1>
                                             <h3>Timeleft</h3>
                                             <div id="coundown" className="countdown">
                                                 <div className="one_time">
@@ -161,7 +161,7 @@ const Banner = ({ house, vehicle }) => {
 
                                         </div>
                                         <div className="ticket_price">
-                                            <h4>Ticket Price<span><h3 className="currencysymbol">{house[0]?.currency}</h3></span>{house[0]?.ticket_price}</h4>
+                                            <h4>Ticket Price<span><h3 className="currencysymbol">{house[1]?.currency}</h3></span>{house[1]?.ticket_price}</h4>
                                         </div>
                                     </div>
                                     : <h1 className='text-white'>Ticket is unavailabe right now</h1>
