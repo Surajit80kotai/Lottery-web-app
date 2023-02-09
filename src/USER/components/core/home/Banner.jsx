@@ -23,7 +23,7 @@ const Banner = ({ house, vehicle }) => {
                 <div className="carousel-inner">
                     <div className="carousel-item active">
                         <div className="banner_img">
-                            <img src="assets/img/banner1.jpg" alt="baaner" className="img-fluid" />
+                            <img src="/assets/img/banner1.jpg" alt="baaner" className="img-fluid" />
                         </div>
                         <div className="banner_content">
                             {/* Condition for timer run-out */}
@@ -72,7 +72,7 @@ const Banner = ({ house, vehicle }) => {
                     </div>
                     <div className="carousel-item">
                         <div className="banner_img">
-                            <img src="assets/img/banner2.jpg" alt="baaner" className="img-fluid" />
+                            <img src="/assets/img/banner2.jpg" alt="baaner" className="img-fluid" />
                         </div>
                         <div className="banner_content">
                             {/* Condition for timer run-out */}
@@ -121,7 +121,7 @@ const Banner = ({ house, vehicle }) => {
                     </div>
                     <div className="carousel-item">
                         <div className="banner_img">
-                            <img src="assets/img/banner3.jpg" alt="baaner" className="img-fluid" />
+                            <img src="/assets/img/banner3.jpg" alt="baaner" className="img-fluid" />
                         </div>
                         <div className="banner_content">
                             {/* Condition for timer run-out */}
