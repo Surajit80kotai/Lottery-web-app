@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom'
 import TrustedPayment from '../components/common/trustedPayment/TrustedPayment'
 import { useTimer } from '../customHooks/useTimer'
 import { useDispatch, useSelector } from 'react-redux'
-import { addCart, getCart } from '../services/slice/CartSlice'
+import { addCart, clearAddStatus, getCart } from '../services/slice/CartSlice'
 import { buyNowItem } from '../services/slice/PaymentSlice'
 
 const LotteryInfo = () => {
@@ -15,7 +15,7 @@ const LotteryInfo = () => {
     const userID = (JSON.parse(window.localStorage.getItem("user")))?.user_id
     const ticketInfo = lottData?.filter((item) => item._id === lid)
     const discountedPrice = Number((ticketInfo[0]?.ticket_price - ((ticketInfo[0]?.ticket_price * ticketInfo[0]?.discount_percentage) / 100)))
-    const { cart_data } = useSelector((state) => state.cartslice)
+    const { cart_data, add_cart_status } = useSelector((state) => state.cartslice)
     const cartLength = cart_data?.length
 
     // Accesing token
@@ -44,7 +44,6 @@ const LotteryInfo = () => {
     const addToCart = () => {
         const cartData = { product_id: ticketInfo[0]._id, user_id: userID, qty: qty }
         dispatch(addCart(cartData))
-        dispatch(getCart())
     }
 
     // buyNow function
@@ -71,8 +70,11 @@ const LotteryInfo = () => {
 
     useEffect(() => {
         window.scrollTo(0, 0)
-        dispatch(getCart())
-    }, [dispatch, cartLength])
+        return () => {
+            dispatch(getCart())
+            dispatch(clearAddStatus())
+        }
+    }, [dispatch, cartLength, add_cart_status])
 
 
     useEffect(() => {

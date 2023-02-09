@@ -65,6 +65,7 @@ export const CartSlice = createSlice({
     name: "cartslice",
     initialState: {
         cart_data: [],
+        add_cart_status: [],
         status: "",
         sub_total: 0,
         total: 0,
@@ -75,6 +76,9 @@ export const CartSlice = createSlice({
     reducers: {
         emptyCart(state) {
             state.cart_data = []
+        },
+        clearAddStatus(state) {
+            state.add_cart_status = ""
         },
         clearUpdateStatus(state) {
             state.update_status = ""
@@ -92,8 +96,7 @@ export const CartSlice = createSlice({
         builder.addCase(addCart.fulfilled, (state, { payload }) => {
             state.status = "Success"
             state.loading = false
-            // state.cart_data.push(payload)
-            // console.log(payload)
+            state.add_cart_status = (payload)
         })
         builder.addCase(addCart.rejected, (state) => {
             state.status = "Failed"
@@ -154,5 +157,5 @@ export const CartSlice = createSlice({
     }
 })
 
-export const { emptyCart, clearUpdateStatus, clearDeleteStatus } = CartSlice.actions
+export const { emptyCart, clearUpdateStatus, clearDeleteStatus, clearAddStatus } = CartSlice.actions
 export default CartSlice.reducer
