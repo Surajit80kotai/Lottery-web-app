@@ -5,10 +5,11 @@ import { fetchLogin } from '../services/slice/AuthSlice'
 import "slick-carousel/slick/slick.css";
 // import { useGoogleOneTapLogin } from 'react-google-one-tap-login'
 import { toast } from 'react-toastify'
+import PreLoader from '../components/core/preloader/PreLoader';
 
 
 const Login = () => {
-    const { login } = useSelector((state) => state.authslice)
+    const { login, loading } = useSelector((state) => state.authslice)
     const { error_user, error_password } = login
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -53,6 +54,9 @@ const Login = () => {
 
     return (
         <>
+            {/* PreLoader */}
+            {loading && <PreLoader />}
+
             <main className="main">
                 <div className="wrapper_area margin-top">
                     <div className="log_area">

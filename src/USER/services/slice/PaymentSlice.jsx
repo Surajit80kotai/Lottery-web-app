@@ -156,63 +156,78 @@ export const PaymentSlice = createSlice({
         // States for payment initialization
         builder.addCase(initPay.pending, (state) => {
             state.status = "pending"
+            state.loading = true
         })
         builder.addCase(initPay.fulfilled, (state, { payload }) => {
             state.paymentData = payload
             state.status = "success"
+            state.loading = false
         })
         builder.addCase(initPay.rejected, (state) => {
             state.status = "failed"
+            state.loading = false
         })
 
 
         // States for get all transaction
         builder.addCase(getTransactions.pending, (state) => {
             state.status = "pending"
+            state.loading = true
         })
         builder.addCase(getTransactions.fulfilled, (state, { payload }) => {
             state.transaction_data = payload
             state.status = "success"
+            state.loading = false
         })
         builder.addCase(getTransactions.rejected, (state) => {
             state.status = "failed"
+            state.loading = false
         })
 
 
         // States for update transaction
         builder.addCase(updateTransactions.pending, (state) => {
             state.status = "pending"
+            state.loading = true
         })
         builder.addCase(updateTransactions.fulfilled, (state, { payload }) => {
             state.updated_transac_data = payload
             state.status = "success"
+            state.loading = false
         })
         builder.addCase(updateTransactions.rejected, (state) => {
             state.status = "failed"
+            state.loading = false
         })
 
         // States for place order
         builder.addCase(placeOrder.pending, (state) => {
             state.status = "pending"
+            state.loading = true
         })
         builder.addCase(placeOrder.fulfilled, (state, { payload }) => {
             state.ordered_data = payload
             state.status = "success"
+            state.loading = false
         })
         builder.addCase(placeOrder.rejected, (state) => {
             state.status = "failed"
+            state.loading = false
         })
 
         // States for buy now
         builder.addCase(itemBuyNow.pending, (state) => {
             state.status = "pending"
+            state.loading = true
         })
         builder.addCase(itemBuyNow.fulfilled, (state, { payload }) => {
             state.buy_now_data = payload
             state.status = "success"
+            state.loading = false
         })
         builder.addCase(itemBuyNow.rejected, (state) => {
             state.status = "failed"
+            state.loading = false
         })
     }
 })

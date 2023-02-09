@@ -9,11 +9,12 @@ import StudyTravel from '../components/core/home/StudyTravel'
 import TrustedPayment from '../components/common/trustedPayment/TrustedPayment'
 import { fetchCategory, fetchLottery } from '../services/slice/LotterySlice'
 import { getCart } from '../services/slice/CartSlice'
+import PreLoader from '../components/core/preloader/PreLoader'
 
 
 const Home = () => {
     // const token = JSON.parse(window.localStorage.getItem("token"))
-    const { fetch_lott_data, category_data } = useSelector((state) => state.lotteryslice)
+    const { fetch_lott_data, category_data, loading } = useSelector((state) => state.lotteryslice)
     const { cart_data } = useSelector((state) => state.cartslice)
     const cartLength = cart_data?.length
     const dispatch = useDispatch()
@@ -43,6 +44,9 @@ const Home = () => {
 
     return (
         <>
+            {/* PreLoader */}
+            {loading && <PreLoader />}
+
             {/* Banner */}
             <Banner
                 house={house}

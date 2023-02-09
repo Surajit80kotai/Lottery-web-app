@@ -12,8 +12,7 @@ const Cart = () => {
   const cartLength = cart_data?.length
   const [amount, setAmount] = useState({ subtotal: 0, discount: 0, total: 0 })
 
-  // Calculate Function
-  // Calculate Sum
+  // CalculateSum Function
   const calculateSum = () => {
     let st = 0
     let dc = 0
@@ -52,26 +51,21 @@ const Cart = () => {
   // removeItem function
   const removeItem = (id) => {
     dispatch(delCartItem(id))
-    // dispatch(getCart())
   }
 
 
-  // mount cycle
+
   useEffect(() => {
     window.scrollTo(0, 0)
     calculateSum()
     dispatch(getCart())
+    // cleanUp
     return () => {
       dispatch(clearUpdateStatus())
       dispatch(clearDeleteStatus())
     }
   }, [dispatch, cartLength, update_status, delete_status])
 
-
-  // update cycle
-  // useEffect(() => {
-  //   dispatch(getCart())
-  // }, [dispatch, cartLength])
 
 
   return (

@@ -2,9 +2,10 @@ import React from 'react'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { userOrderHistory } from '../../../services/slice/UserSlice'
+import PreLoader from '../preloader/PreLoader'
 
 const OrderHistory = () => {
-    const { order_history_data } = useSelector(state => state.userslice)
+    const { order_history_data, loading } = useSelector(state => state.userslice)
     const dispatch = useDispatch()
 
 
@@ -14,6 +15,9 @@ const OrderHistory = () => {
 
     return (
         <>
+            {/* PreLoader */}
+            {loading && <PreLoader />}
+
             <div className="content_wrapper">
 
                 {/* order history  */}

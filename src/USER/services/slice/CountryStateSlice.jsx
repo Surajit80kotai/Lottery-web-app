@@ -29,33 +29,40 @@ const CountryStateSlice = createSlice({
     initialState: {
         countryData: [],
         stateData: [],
-        msg: ""
+        msg: "",
+        loading: false
     },
     reducers: {},
     extraReducers: (builder) => {
         // For country fetch
         builder.addCase(fetchCountry.pending, (state) => {
             state.msg = "Loading.."
+            state.loading = true
         })
         builder.addCase(fetchCountry.fulfilled, (state, { payload }) => {
             state.msg = "Success"
+            state.loading = false
             state.countryData = payload
         })
         builder.addCase(fetchCountry.rejected, (state) => {
             state.msg = "Failed"
+            state.loading = false
         })
 
 
         //  For state fetch
         builder.addCase(fetchStates.pending, (state) => {
             state.msg = "Loading.."
+            state.loading = true
         })
         builder.addCase(fetchStates.fulfilled, (state, { payload }) => {
             state.msg = "Success"
+            state.loading = false
             state.stateData = payload
         })
         builder.addCase(fetchStates.rejected, (state) => {
             state.msg = "Failed"
+            state.loading = false
         })
     }
 

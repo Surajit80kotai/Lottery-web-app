@@ -69,7 +69,8 @@ export const CartSlice = createSlice({
         sub_total: 0,
         total: 0,
         update_status: "",
-        delete_status: ""
+        delete_status: "",
+        loading: false
     },
     reducers: {
         emptyCart(state) {
@@ -86,49 +87,61 @@ export const CartSlice = createSlice({
         // Post request states for Addcart system
         builder.addCase(addCart.pending, (state) => {
             state.status = "Loading"
+            state.loading = true
         })
-        builder.addCase(addCart.fulfilled, (state) => {
+        builder.addCase(addCart.fulfilled, (state, { payload }) => {
             state.status = "Success"
+            state.loading = false
             // state.cart_data.push(payload)
+            // console.log(payload)
         })
         builder.addCase(addCart.rejected, (state) => {
             state.status = "Failed"
+            state.loading = false
         })
 
 
         // states for Deletecart system
         builder.addCase(delCartItem.pending, (state) => {
             state.status = "Loading"
+            state.loading = true
         })
         builder.addCase(delCartItem.fulfilled, (state, { payload }) => {
             state.status = "Success"
+            state.loading = false
             state.delete_status = payload
             // console.log(payload)
         })
         builder.addCase(delCartItem.rejected, (state) => {
             state.status = "Failed"
+            state.loading = false
         })
 
 
         // Get request states for Gatcart system
         builder.addCase(getCart.pending, (state) => {
             state.status = "Loading"
+            state.loading = true
         })
         builder.addCase(getCart.fulfilled, (state, { payload }) => {
             state.status = "Success"
+            state.loading = false
             state.cart_data = payload
         })
         builder.addCase(getCart.rejected, (state) => {
             state.status = "Failed"
+            state.loading = false
         })
 
 
         // states for Updatecart system
         builder.addCase(updateCart.pending, (state) => {
             state.status = "Loading"
+            state.loading = true
         })
         builder.addCase(updateCart.fulfilled, (state, { payload }) => {
             state.status = "Success"
+            state.loading = false
             state.update_status = payload
             if (payload.quantity > 5) {
                 toast.warning(payload.message)
@@ -136,6 +149,7 @@ export const CartSlice = createSlice({
         })
         builder.addCase(updateCart.rejected, (state) => {
             state.status = "Failed"
+            state.loading = false
         })
     }
 })

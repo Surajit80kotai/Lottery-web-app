@@ -5,6 +5,7 @@ import { getBalance } from '../services/slice/UserSlice';
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import { itemBuyNow, placeOrder } from '../services/slice/PaymentSlice';
+import PreLoader from '../components/core/preloader/PreLoader';
 
 
 const PlaceOrder = () => {
@@ -14,7 +15,7 @@ const PlaceOrder = () => {
     // States from slices
     const { cart_data } = useSelector((state) => state.cartslice)
     const { balance } = useSelector((state) => state.userslice)
-    const { ordered_data, buy_now_data } = useSelector((state) => state.paymentslice)
+    const { ordered_data, buy_now_data, loading } = useSelector((state) => state.paymentslice)
     const dispatch = useDispatch()
 
     const image = process.env.REACT_APP_NODE_HOST
@@ -99,6 +100,9 @@ const PlaceOrder = () => {
 
     return (
         <>
+            {/* PreLoader */}
+            {loading && <PreLoader />}
+
             <main>
                 <div className="cart_list_wrapper pb-5">
                     <div className="container pt-5">

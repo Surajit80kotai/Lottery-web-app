@@ -34,7 +34,7 @@ export const updateProfile = createAsyncThunk("/auth/update/profile", async ({ f
 
 
 // order history
-export const userOrderHistory = createAsyncThunk("", async () => {
+export const userOrderHistory = createAsyncThunk("/auth/order/history", async () => {
     try {
         const res = await ORDERHISTORY(header)
         return res?.data
@@ -48,7 +48,8 @@ const initialState = {
     balance: [],
     profile_data: [],
     order_history_data: [],
-    balance_status: ""
+    balance_status: "",
+    loading: false
 }
 
 // Creating Slice
@@ -60,37 +61,46 @@ export const UserSlice = createSlice({
         // states for fetchLottery
         builder.addCase(getBalance.pending, (state) => {
             state.balance_status = "Loading"
+            state.loading = true
         })
         builder.addCase(getBalance.fulfilled, (state, { payload }) => {
             state.balance_status = "Success"
+            state.loading = false
             state.balance = payload
         })
         builder.addCase(getBalance.rejected, (state) => {
             state.balance_status = "Failed"
+            state.loading = false
         })
 
         // states for updateProfile
         builder.addCase(updateProfile.pending, (state) => {
             state.balance_status = "Loading"
+            state.loading = true
         })
         builder.addCase(updateProfile.fulfilled, (state, { payload }) => {
             state.balance_status = "Success"
+            state.loading = false
             state.profile_data = payload
         })
         builder.addCase(updateProfile.rejected, (state) => {
             state.balance_status = "Failed"
+            state.loading = false
         })
 
         // states for orderHistory
         builder.addCase(userOrderHistory.pending, (state) => {
             state.balance_status = "Loading"
+            state.loading = true
         })
         builder.addCase(userOrderHistory.fulfilled, (state, { payload }) => {
             state.balance_status = "Success"
+            state.loading = false
             state.order_history_data = payload
         })
         builder.addCase(userOrderHistory.rejected, (state) => {
             state.balance_status = "Failed"
+            state.loading = false
         })
     }
 })

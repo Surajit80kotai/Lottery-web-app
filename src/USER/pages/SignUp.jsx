@@ -4,6 +4,7 @@ import { fetchSignUp } from '../services/slice/AuthSlice'
 import "slick-carousel/slick/slick.css";
 import { Link, useNavigate } from 'react-router-dom'
 import { fetchCountry, fetchStates } from '../services/slice/CountryStateSlice';
+import PreLoader from '../components/core/preloader/PreLoader';
 // import { toast } from 'react-toastify'
 
 
@@ -18,7 +19,7 @@ const initialState = {
 }
 
 const SignUp = () => {
-    const { signupErr } = useSelector((state) => state.authslice)
+    const { signupErr, loading } = useSelector((state) => state.authslice)
     // console.log(signupErr);
     const { countryData } = useSelector((state) => state.countrystateslice)
     const dispatch = useDispatch()
@@ -86,6 +87,9 @@ const SignUp = () => {
 
     return (
         <>
+            {/* PreLoader */}
+            {loading && <PreLoader />}
+
             <main className="main">
                 <div className="wrapper_area margin-top-5">
 

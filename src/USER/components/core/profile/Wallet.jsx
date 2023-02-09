@@ -3,15 +3,14 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { cinetPay, getTransactions, initPay, updateTransactions } from '../../../services/slice/PaymentSlice';
 import { getBalance } from '../../../services/slice/UserSlice';
+import PreLoader from '../preloader/PreLoader';
 
 const Wallet = ({ dueAmount }) => {
     const newDueAmount = dueAmount ? dueAmount : ""
     const [formValue, setFormValue] = useState({ amount: newDueAmount })
     const dispatch = useDispatch()
     const { balance } = useSelector((state) => state.userslice)
-    const { paymentData } = useSelector((state) => state.paymentslice)
-    const { transaction_data } = useSelector((state) => state.paymentslice)
-
+    const { paymentData, transaction_data, loading } = useSelector((state) => state.paymentslice)
 
     // handleChange function for onChange
     const handleChange = (e) => {
@@ -54,6 +53,9 @@ const Wallet = ({ dueAmount }) => {
 
     return (
         <>
+            {/* PreLoader */}
+            {loading && <PreLoader />}
+
             <div className="content_wrapper">
                 <div className="paymentwallet_bg">
                     <h1>Check Your Current Balance</h1>

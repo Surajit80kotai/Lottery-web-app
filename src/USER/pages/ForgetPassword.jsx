@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { fetchForgetPass } from '../services/slice/AuthSlice'
 import { Flip, toast, ToastContainer } from 'react-toastify'
+import PreLoader from '../components/core/preloader/PreLoader'
 
 const ForgetPassword = () => {
     const [formValues, setFormValues] = useState({ email: "" })
     const dispatch = useDispatch()
-    // const { error } = useSelector((state) => state.authslice)
+    const { loading } = useSelector((state) => state.authslice)
 
     // handleChange Function for input change
     const handleChange = (e) => {
@@ -23,6 +24,9 @@ const ForgetPassword = () => {
 
     return (
         <>
+            {/* PreLoader */}
+            {loading && <PreLoader />}
+
             <main className="main">
                 <div className="container">
 
@@ -61,7 +65,7 @@ const ForgetPassword = () => {
 
                 </div>
             </main>
-            <ToastContainer style={{ "fontSize": "16px" }} transition={Flip} position="top-center"/>
+            <ToastContainer style={{ "fontSize": "16px" }} transition={Flip} position="top-center" />
         </>
     )
 }

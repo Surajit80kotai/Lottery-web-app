@@ -91,28 +91,47 @@ const LotteryInfo = () => {
                                 <div className="product_slider_images">
 
                                     {/* Main image  */}
-                                    <div className="mainproduct_image img-fluid">
+                                    {/* <div className="mainproduct_image img-fluid">
                                         {
                                             (is_image?.length) ? <img src={mainimage} alt="" className="img-fluid " />
                                                 : <img src="/assets/img/imageunavailable.jpeg" alt="" className="img-fluid " />
                                         }
-                                    </div>
+                                    </div> */}
 
-                                    {/* <div className="carousel carousel-main" data-flickity='{"pageDots": false }'>
-                                </div> */}
-                                    {/* Bottom slider  */}
-                                    {/* <div className="carousel carousel-nav"
-                                    data-flickity='{ "asNavFor": ".carousel-main", "contain": true, "pageDots": false,"prevNextButtons": true }'>
-                                    {
-                                        listimage?.map((curImg, index) => {
-                                            return (
-                                                <div className="carousel-cell" key={index}>
-                                                    <img src={curImg[index]} alt='' />
+                                    {/* carausal images */}
+                                    <div className="mainproduct_image img-fluid">
+                                        <div id="carouselExampleControls" className="carousel slide" data-bs-ride="carousel">
+                                            <div className="carousel-inner">
+                                                {
+                                                    (is_image?.length) ?
+                                                        <div className="carousel-item active">
+                                                            <img src={mainimage} className="d-block w-100" alt="" />
+                                                        </div>
+                                                        : <div className="carousel-item active">
+                                                            <img src="/assets/img/imageunavailable.jpeg" className="d-block w-100" alt="" />
+                                                        </div>
+                                                }
+
+                                                {/* <div className="carousel-item active">
+                                                    <img src="/assets/img/imageunavailable.jpeg" className="d-block w-100" alt="" />
                                                 </div>
-                                            )
-                                        })
-                                    }
-                                </div> */}
+                                                 <div className="carousel-item">
+                                                     <img src="/assets/img/imageunavailable.jpeg" className="d-block w-100" alt=""/>
+                                                </div>
+                                                <div className="carousel-item">
+                                                     <img src="/assets/img/imageunavailable.jpeg" className="d-block w-100" alt=""/>
+                                                </div> */}
+                                            </div>
+                                            <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                                                <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                <span className="visually-hidden">Previous</span>
+                                            </button>
+                                            <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                                                <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                                                <span className="visually-hidden">Next</span>
+                                            </button>
+                                        </div>
+                                    </div>
 
                                 </div>
                             </div>

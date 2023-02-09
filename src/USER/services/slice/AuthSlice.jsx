@@ -64,7 +64,8 @@ const initialState = {
         error_user: "",
         error_password: ""
     },
-    signupErr: {}
+    signupErr: {},
+    loading: false
 }
 
 // Creating Slice
@@ -83,13 +84,16 @@ export const AuthSlice = createSlice({
         //States for Signup
         builder.addCase(fetchSignUp.pending, (state) => {
             state.msg = "Pending"
+            state.loading = true
         })
         builder.addCase(fetchSignUp.fulfilled, (state, { payload }) => {
             state.msg = "Success"
+            state.loading = false
             state.user = payload
         })
         builder.addCase(fetchSignUp.rejected, (state, { payload }) => {
             state.msg = "Failed"
+            state.loading = false
             state.signupErr = payload
         })
 
@@ -97,14 +101,17 @@ export const AuthSlice = createSlice({
         //States for Login
         builder.addCase(fetchLogin.pending, (state) => {
             state.msg = "Loading"
+            state.loading = true
         })
         builder.addCase(fetchLogin.fulfilled, (state, { payload }) => {
             state.msg = "Success"
+            state.loading = false
             state.user = payload
             window.localStorage.getItem("token")
         })
         builder.addCase(fetchLogin.rejected, (state, { payload }) => {
             state.msg = "Failed"
+            state.loading = false
             if (payload.data.type === "user") {
                 state.login.error_user = payload.data
                 state.login.error_password = ""
@@ -118,13 +125,16 @@ export const AuthSlice = createSlice({
         //States for ForgetPass
         builder.addCase(fetchForgetPass.pending, (state) => {
             state.msg = "Loading"
+            state.loading = true
         })
         builder.addCase(fetchForgetPass.fulfilled, (state, { payload }) => {
             state.msg = "Success"
+            state.loading = false
             state.user = payload
         })
         builder.addCase(fetchForgetPass.rejected, (state, { payload }) => {
             state.msg = "Failed"
+            state.loading = false
             state.error = payload
         })
     }

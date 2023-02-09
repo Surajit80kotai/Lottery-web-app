@@ -3,9 +3,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { fetchCategory, fetchLottery } from '../../../services/slice/LotterySlice'
 import TrustedPayment from '../../common/trustedPayment/TrustedPayment'
 import HomeLottery from '../home/HomeLottery'
+import PreLoader from '../preloader/PreLoader'
 
 const ViewAllHome = () => {
-    const { fetch_lott_data, category_data } = useSelector((state) => state.lotteryslice)
+    const { fetch_lott_data, category_data, loading } = useSelector((state) => state.lotteryslice)
     const dispatch = useDispatch()
 
     // Getting category_name & category_id
@@ -27,6 +28,9 @@ const ViewAllHome = () => {
 
     return (
         <>
+            {/* PreLoader */}
+            {loading && <PreLoader />}
+
             <main>
                 <div className="prodcut_wrapper">
                     <div className="one_row">

@@ -4,10 +4,11 @@ import { Link } from 'react-router-dom'
 import { fetchCountry } from '../../../services/slice/CountryStateSlice'
 import { updateProfile } from '../../../services/slice/UserSlice'
 import { toast } from 'react-toastify'
+import PreLoader from '../preloader/PreLoader'
 
 
 const MyProfile = () => {
-    const { countryData } = useSelector((state) => state.countrystateslice)
+    const { countryData, loading } = useSelector((state) => state.countrystateslice)
     const user = JSON.parse(window.localStorage.getItem("user"))
     const date_of_birth = new Date(user?.dob)
     const newDOB = `${date_of_birth.getUTCDay()}-${date_of_birth.getUTCMonth()}-${date_of_birth.getUTCFullYear()}`
@@ -46,6 +47,9 @@ const MyProfile = () => {
 
     return (
         <>
+            {/* PreLoader */}
+            {loading && <PreLoader />}
+
             <div className="content_wrapper">
                 <div className="container">
                     <div className="user_information_area">
