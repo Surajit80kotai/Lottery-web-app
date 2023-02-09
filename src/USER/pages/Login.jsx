@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { fetchLogin } from '../services/slice/AuthSlice'
@@ -6,6 +6,7 @@ import "slick-carousel/slick/slick.css";
 // import { useGoogleOneTapLogin } from 'react-google-one-tap-login'
 import { toast } from 'react-toastify'
 import PreLoader from '../components/core/preloader/PreLoader';
+import Cookies from 'universal-cookie';
 
 
 const Login = () => {
@@ -23,12 +24,20 @@ const Login = () => {
         // console.log(formValues);
     }
 
+    // cookies setup for remeberme
+    const cookies = new Cookies()
+    cookies.set("email", formValues.email, { path: "/" })
+    cookies.set("password", formValues.password, { path: "/" })
+
+
     // handleSubmit Function for form submit
     const handleSubmit = (e) => {
         e.preventDefault()
         dispatch(fetchLogin({ formValues, navigate, toast }))
-
         if (click) {
+            // formValues.email = cookies.get("email")
+            // formValues.password = cookies.get("password")
+            // console.log(formValues.email = email)
             setFormValues({ email: formValues.email, password: formValues.password })
         }
         else {
@@ -48,8 +57,6 @@ const Login = () => {
     //         client_id: "500684738770-76qgk032h22dar4b6pgosa1u07uhmhkg.apps.googleusercontent.com"
     //     }
     // })
-
-
 
 
     return (
