@@ -5,6 +5,7 @@ import { fetchLogin } from '../services/slice/AuthSlice'
 import "slick-carousel/slick/slick.css";
 // import { useGoogleOneTapLogin } from 'react-google-one-tap-login'
 import { toast } from 'react-toastify'
+// import { Flip, ToastContainer } from 'react-toastify'
 import PreLoader from '../components/core/preloader/PreLoader';
 // import Cookies from 'universal-cookie';
 
@@ -153,6 +154,7 @@ const Login = () => {
                         </div>
                     </div>
                 </div>
+                {/* <ToastContainer style={{ "fontSize": "16px" }} transition={Flip} position="top-center" autoClose={3000} /> */}
             </main>
         </>
     )

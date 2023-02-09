@@ -5,12 +5,12 @@ import { FORGETPASSWORD, LOGIN, SIGNUP } from "../api/Api";
 //AsyncThunk For SignUp 
 export const fetchSignUp = createAsyncThunk(
     "signup",
-    async ({ formValues, navigate }, { rejectWithValue }) => {
+    async ({ formValues, navigate, toast }, { rejectWithValue }) => {
 
         try {
             const res = await SIGNUP(formValues)
-            // toast.success('Registered Successfully. Please login to continue')
             navigate('/login')
+            // toast.success('Registered Successfully. Please login to continue')
             return res?.data
         } catch (err) {
             // console.log("Sign Slice", rejectWithValue(err.response.data.errors));
