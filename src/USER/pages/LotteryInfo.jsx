@@ -17,7 +17,7 @@ const LotteryInfo = () => {
     const discountedPrice = Number((ticketInfo[0]?.ticket_price - ((ticketInfo[0]?.ticket_price * ticketInfo[0]?.discount_percentage) / 100)))
     const { cart_data, add_cart_status } = useSelector((state) => state.cartslice)
     const cartLength = cart_data?.length
-    const social_user = JSON.parse(window.localStorage.getItem("social_user"))
+    const accessToken = JSON.parse(window.localStorage.getItem("accessToken"))
 
     // Accesing token
     const token = JSON.parse(window.localStorage.getItem("token"))
@@ -208,13 +208,13 @@ const LotteryInfo = () => {
                                     {/* Add to cart buttton */}
                                     <div className="btn_area mt-5">
                                         {
-                                            token || social_user ?
+                                            token || accessToken ?
                                                 <Link to="#!" onClick={addToCart} className="btn2">Add To Cart</Link>
                                                 : <Link to="/login" className="btn2">Add To Cart</Link>
                                         }
 
                                         {
-                                            token || social_user ?
+                                            token || accessToken ?
                                                 <Link to="/placeorder" onClick={() => buyNow(ticketInfo[0])} className="btn2">Buy Ticket</Link>
                                                 : <Link to="/login" className="btn2">Buy Ticket</Link>
                                         }

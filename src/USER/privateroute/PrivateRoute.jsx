@@ -3,11 +3,11 @@ import { Navigate, Outlet } from 'react-router-dom'
 
 const PrivateRoute = () => {
     const token = JSON.parse(window.localStorage.getItem('token'))
-    const social_user = JSON.parse(window.localStorage.getItem("social_user"))
+    const accessToken = JSON.parse(window.localStorage.getItem("accessToken"))
     return (
         <>
             {
-                token || social_user ? <Outlet /> : <Navigate to='/' />
+                token || accessToken ? <Outlet /> : <Navigate to='/' />
             }
         </>
     )
