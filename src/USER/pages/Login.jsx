@@ -46,7 +46,7 @@ const Login = () => {
         }
     }
 
-    // googleLogin function
+    // socailLogin function
     const socialLogin = async (provider) => {
         const result = await signInWithPopup(auth, provider)
         window.localStorage.setItem("social_user", JSON.stringify(result?.user))
@@ -55,8 +55,6 @@ const Login = () => {
         toast.success('Loged In Successfully')
         console.log(result);
     }
-
-    // facebookLogin function
 
 
     return (
