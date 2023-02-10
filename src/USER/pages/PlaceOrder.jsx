@@ -24,7 +24,7 @@ const PlaceOrder = () => {
     // On orderPlace function
     const procced = () => {
         if (cart_data) {
-            const cartData = cart_data.reduce((acc, { resp, info }) => {
+            const cartData = cart_data?.reduce((acc, { resp, info }) => {
                 // const { resp, info } = cur
                 acc.push({
                     id: resp._id,
@@ -38,8 +38,7 @@ const PlaceOrder = () => {
             }, [])
             const orderData = { price: amount, product_info: cartData }
             dispatch(placeOrder(orderData))
-        }
-        if (buy_now_data) {
+        }else if (buy_now_data) {
             dispatch(itemBuyNow(buy_now_data))
         }
     }
@@ -293,7 +292,7 @@ const PlaceOrder = () => {
                                     <div className="order_history_summary col-md-8">
 
                                         <div className="cart_list_item">
-                                            <Link to="#!">
+                                            <Link to={`/info/${buy_now_data[0]?.ticket?._id}`}>
                                                 <div className="cart_item_img">
                                                     <img src={image + buy_now_data[0]?.ticket?.is_image} alt="" className="img-fluid" />
                                                 </div>

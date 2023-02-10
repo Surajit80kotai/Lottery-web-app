@@ -133,6 +133,7 @@ export const PaymentSlice = createSlice({
     initialState,
     reducers: {
         buyNowItem(state, { payload }) {
+            console.log("payment slice reducers",payload);
             state.buy_now_data.push(payload)
         }
     },
