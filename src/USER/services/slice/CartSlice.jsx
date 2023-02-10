@@ -65,10 +65,10 @@ export const CartSlice = createSlice({
     name: "cartslice",
     initialState: {
         cart_data: [],
-        add_cart_status: [],
         status: "",
         sub_total: 0,
         total: 0,
+        add_cart_status: "",
         update_status: "",
         delete_status: "",
         loading: false
@@ -84,7 +84,7 @@ export const CartSlice = createSlice({
             state.update_status = ""
         },
         clearDeleteStatus(state) {
-            state.update_status = ""
+            state.delete_status = ""
         }
     },
     extraReducers: (builder) => {
@@ -96,7 +96,7 @@ export const CartSlice = createSlice({
         builder.addCase(addCart.fulfilled, (state, { payload }) => {
             state.status = "Success"
             state.loading = false
-            state.add_cart_status = (payload)
+            state.add_cart_status = payload
         })
         builder.addCase(addCart.rejected, (state) => {
             state.status = "Failed"

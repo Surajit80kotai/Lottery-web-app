@@ -15,6 +15,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import ViewAllStudyTravel from './USER/components/core/viewAllLottery/ViewAllStudyTravel';
 import ViewAllCompPhn from './USER/components/core/viewAllLottery/ViewAllCompPhn';
 import ViewAllCosmetics from './USER/components/core/viewAllLottery/ViewAllCosmetics';
+import AboutUs from './USER/pages/AboutUs';
+import HowToPlay from './USER/pages/HowToPlay';
+import Charities from './USER/pages/Charities';
 // import PreLoader from './USER/components/core/preloader/PreLoader';
 // import TestFive from './USER/pages/test/TestFive';
 
@@ -26,6 +29,9 @@ function App() {
       <NavBar />
       <Routes>
         <Route path='/' element={<Home />} exact />
+        <Route path='/aboutus' element={<AboutUs />} />
+        <Route path='/howtoplay' element={<HowToPlay />} />
+        <Route path='/charities' element={<Charities />} />
         <Route path='/contact' element={<Contact />} />
         <Route path='/info/:lid' element={<LotteryInfo />} />
         <Route path='/viewallhome' element={<ViewAllHome />} />
