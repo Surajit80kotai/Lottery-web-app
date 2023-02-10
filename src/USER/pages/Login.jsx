@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { fetchLogin } from '../services/slice/AuthSlice'
-import "slick-carousel/slick/slick.css";
-// import { useGoogleOneTapLogin } from 'react-google-one-tap-login'
 import { toast } from 'react-toastify'
+import { auth, google, facebook } from '../congif/firebase'
+import { signInWithPopup } from 'firebase/auth'
 // import { Flip, ToastContainer } from 'react-toastify'
 import PreLoader from '../components/core/preloader/PreLoader';
 // import Cookies from 'universal-cookie';
@@ -46,18 +46,16 @@ const Login = () => {
         }
     }
 
-    // Social Login
-    // const googleLogIn = useGoogleOneTapLogin({
-    //     onSuccess: (res) => {
-    //         console.log(res)
-    //     },
-    //     onError: (err) => {
-    //         console.log(err)
-    //     },
-    //     googleAccountConfigs: {
-    //         client_id: "500684738770-76qgk032h22dar4b6pgosa1u07uhmhkg.apps.googleusercontent.com"
-    //     }
-    // })
+    // googleLogin function
+    const socialLogin = async (provider) => {
+        const result = await signInWithPopup(auth, provider)
+        window.localStorage.setItem("social_user", JSON.stringify(result?.user))
+        navigate('/')
+        toast.success('Loged In Successfully')
+        // console.log(result.user);
+    }
+
+    // facebookLogin function
 
 
     return (
@@ -73,8 +71,8 @@ const Login = () => {
                             <div className="right_top">
                                 <h2 className="heading_form">Login</h2>
                                 <div className="social_sign">
-                                    <Link to="#!" className="social_signup"><i className="fab fa-facebook-f"></i></Link>
-                                    <Link to="#!" className="social_signup"><i className="fab fa-google"></i></Link>
+                                    <button onClick={() => socialLogin(facebook)} className="social_signup"><i className="fab fa-facebook-f"></i></button>
+                                    <button onClick={() => socialLogin(google)} className="social_signup"><i className="fab fa-google"></i></button>
                                 </div>
                             </div>
 

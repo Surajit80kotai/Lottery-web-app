@@ -10,11 +10,12 @@ import PreLoader from '../preloader/PreLoader'
 const MyProfile = () => {
     const { countryData, loading } = useSelector((state) => state.countrystateslice)
     const user = JSON.parse(window.localStorage.getItem("user"))
+    const social_user = JSON.parse(window.localStorage.getItem("social_user"))
     const date_of_birth = new Date(user?.dob)
     const newDOB = `${date_of_birth.getUTCDay()}-${date_of_birth.getUTCMonth()}-${date_of_birth.getUTCFullYear()}`
     const [formValues, setFormValues] = useState({
-        full_name: user.full_name,
-        phone: user.phone
+        full_name: user?.full_name,
+        phone: user?.phone
     })
     const dispatch = useDispatch()
     // const userCurrency = (JSON.parse(window.localStorage.getItem("user"))?.currency)
@@ -59,12 +60,32 @@ const MyProfile = () => {
                         <h3 className="user_title">Personal Information</h3>
                         <div className="row mt-5">
                             <div className="col-md-3">
-                                <div className="profile_img ">
-                                    <img src="/assets/img/avatar.png" alt="" className="img-fluid" />
-                                </div>
-                                <div className="user_name">
-                                    <h2 className=" text-center mt-3">{user?.full_name}</h2>
-                                </div>
+                                {
+                                    user ?
+                                        <div className="profile_img ">
+                                            <img src="/assets/img/avatar.png" alt="" className="img-fluid" />
+                                        </div>
+                                        :
+                                        <div className="profile_img ">
+                                            {
+                                                social_user?.photoUrl ?
+                                                    <img src={social_user?.photoUrl} alt="" className="img-fluid" />
+                                                    : <img src="/assets/img/avatar.png" alt="" className="img-fluid" />
+                                            }
+                                        </div>
+                                }
+
+                                {
+                                    user ?
+                                        <div className="user_name">
+                                            <h2 className=" text-center mt-3">{user?.full_name}</h2>
+                                        </div>
+                                        :
+                                        <div className="user_name">
+                                            <h2 className=" text-center mt-3">{social_user?.displayName}</h2>
+                                        </div>
+                                }
+
                             </div>
                             <div className="col-md-9">
                                 <div className="profile_edit_form">
@@ -73,101 +94,151 @@ const MyProfile = () => {
                                         {/* Full Name */}
                                         <div className="mb-3">
                                             <label htmlFor="full_name" className="form-label label_style">Your Full Name</label>
-                                            <input
-                                                type="text"
-                                                className="form-control form_input in_disa"
-                                                id="full_name"
-                                                name="full_name"
-                                                placeholder={user?.full_name}
-                                                value={formValues.full_name}
-                                                onChange={handleChange} disabled
-                                            />
-                                            {/* <!-- <div className="alert alert-danger mt-2" role="alert">
-                                                            Please Enter Email Or Phone Number
-                                                        </div> --> */}
+                                            {
+                                                user ?
+                                                    <input
+                                                        type="text"
+                                                        className="form-control form_input in_disa"
+                                                        id="full_name"
+                                                        name="full_name"
+                                                        placeholder={user?.full_name}
+                                                        value={formValues.full_name}
+                                                        onChange={handleChange} disabled
+                                                    />
+                                                    : <input
+                                                        type="text"
+                                                        className="form-control form_input in_disa"
+                                                        id="full_name"
+                                                        name="full_name"
+                                                        placeholder={social_user?.displayName}
+                                                        onChange={handleChange} disabled
+                                                    />
+                                            }
                                         </div>
 
                                         {/* Email */}
                                         <div className="mb-3">
                                             <label htmlFor="email" className="form-label label_style">Email</label>
-                                            <input
-                                                type="email"
-                                                className="form-control form_input in_disa"
-                                                id="email"
-                                                name="email"
-                                                aria-describedby="emailHelp"
-                                                placeholder={user?.email} disabled
-                                                value={formValues.email}
-                                                onChange={handleChange}
-                                                readOnly
-                                            />
-                                            {/* <!-- <div className="alert alert-danger mt-2" role="alert">
-                                                            Please Enter Email Or Phone Number
-                                                        </div> --> */}
+                                            {
+                                                user ?
+                                                    <input
+                                                        type="email"
+                                                        className="form-control form_input in_disa"
+                                                        id="email"
+                                                        name="email"
+                                                        aria-describedby="emailHelp"
+                                                        placeholder={user?.email} disabled
+                                                        onChange={handleChange}
+                                                        readOnly
+                                                    />
+                                                    :
+                                                    <input
+                                                        type="email"
+                                                        className="form-control form_input in_disa"
+                                                        id="email"
+                                                        name="email"
+                                                        aria-describedby="emailHelp"
+                                                        placeholder={social_user?.email}
+                                                        onChange={handleChange}
+                                                        readOnly
+                                                    />
+                                            }
                                         </div>
 
                                         {/* Phone */}
                                         <div className="mb-3">
                                             <label htmlFor="phone" className="form-label label_style">Phone Number</label>
-                                            <input
-                                                type="text"
-                                                className="form-control form_input in_disa"
-                                                id="phone"
-                                                name="phone"
-                                                aria-describedby="emailHelp"
-                                                placeholder={user?.phone} disabled
-                                                value={formValues.phone}
-                                                onChange={handleChange}
-                                                maxLength={10}
-                                            />
-                                            {/* <!-- <div className="alert alert-danger mt-2" role="alert">
-                                                            Please Enter Email Or Phone Number
-                                                        </div> --> */}
+                                            {
+                                                user ?
+                                                    <input
+                                                        type="text"
+                                                        className="form-control form_input in_disa"
+                                                        id="phone"
+                                                        name="phone"
+                                                        aria-describedby="emailHelp"
+                                                        placeholder={user?.phone} disabled
+                                                        value={formValues.phone}
+                                                        onChange={handleChange}
+                                                        maxLength={10}
+                                                    />
+                                                    :
+                                                    <input
+                                                        type="text"
+                                                        className="form-control form_input in_disa"
+                                                        id="phone"
+                                                        name="phone"
+                                                        aria-describedby="emailHelp"
+                                                        placeholder="Phone number did not registered"
+                                                        readOnly
+                                                        disabled
+                                                    />
+
+                                            }
                                         </div>
 
                                         {/* DOB */}
                                         <div className="mb-3">
                                             <label htmlFor="dob" className="form-label label_style">Date Of Birth</label>
-                                            <input
-                                                type="text"
-                                                className="form-control form_input in_disa"
-                                                id="dob"
-                                                name="dob"
-                                                aria-describedby="emailHelp"
-                                                placeholder={newDOB}
-                                                value={formValues.dob} disabled
-                                                onChange={handleChange}
-                                                readOnly
-                                            />
-                                            {/* <!-- <div className="alert alert-danger mt-2" role="alert">
-                                                            Please Enter Email Or Phone Number
-                                                        </div> --> */}
+                                            {
+                                                user ?
+                                                    <input
+                                                        type="text"
+                                                        className="form-control form_input in_disa"
+                                                        id="dob"
+                                                        name="dob"
+                                                        aria-describedby="emailHelp"
+                                                        placeholder={newDOB}
+                                                        value={formValues.dob} disabled
+                                                        onChange={handleChange}
+                                                        readOnly
+                                                    />
+                                                    :
+                                                    <input
+                                                        type="text"
+                                                        className="form-control form_input in_disa"
+                                                        id="dob"
+                                                        name="dob"
+                                                        aria-describedby="emailHelp"
+                                                        placeholder="Birth date did not registered"
+                                                        readOnly
+                                                        disabled
+                                                    />
+                                            }
+
                                         </div>
 
                                         {/* Country */}
                                         <div className="mb-3">
                                             <label htmlFor="country" className="form-label label_style">Address</label>
-                                            {/* <i className="bi bi-chevron-down"></i> */}
-                                            <select
-                                                className="form-select form_input form_select"
-                                                aria-label="Default select example"
-                                                id="selects"
-                                                name='country'
-                                                value={formValues.country}
-                                                onChange={handleChange}
-                                                disabled >
-                                                {
-                                                    countryData?.map((country) => {
-                                                        return (
-                                                            <option key={country.countries_id
-                                                            } value={country.name + "||" + country.countries_id}>{country.name}</option>
-                                                        )
-                                                    })
-                                                }
-                                            </select>
-                                            {/* <!-- <div className="alert alert-danger mt-2" role="alert">
-                                                            Please Enter Email Or Phone Number
-                                                        </div> --> */}
+                                            {
+                                                user ?
+                                                    <select
+                                                        className="form-select form_input form_select"
+                                                        aria-label="Default select example"
+                                                        id="selects"
+                                                        name='country'
+                                                        value={formValues.country}
+                                                        onChange={handleChange}
+                                                        disabled >
+                                                        {
+                                                            countryData?.map((country) => {
+                                                                return (
+                                                                    <option key={country.countries_id
+                                                                    } value={country.name + "||" + country.countries_id}>{country.name}</option>
+                                                                )
+                                                            })
+                                                        }
+                                                    </select>
+                                                    :
+                                                    <select
+                                                        className="form-select form_input form_select"
+                                                        aria-label="Default select example"
+                                                        id="selects"
+                                                        name='country'
+                                                        disabled >
+                                                        <option readOnly>Country number did not registered</option>
+                                                    </select>
+                                            }
                                         </div>
 
                                         {/* Edit Button */}

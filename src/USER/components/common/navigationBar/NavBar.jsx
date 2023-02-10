@@ -3,16 +3,21 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { doLogOut } from '../../../services/slice/AuthSlice'
 import { getCart } from '../../../services/slice/CartSlice'
+import { auth } from '../../../congif/firebase'
+import { signOut } from 'firebase/auth'
 
 const NavBar = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const token = JSON.parse(window.localStorage.getItem("token"))
   const user = JSON.parse(window.localStorage.getItem("user"))
+  const social_user = JSON.parse(window.localStorage.getItem("social_user"))
   const { cart_data } = useSelector((state) => state.cartslice)
   const cartLength = cart_data?.length
 
-  const logOut = () => {
+  const logOut = async () => {
+    await signOut(auth)
+    window.localStorage.removeItem("social_user")
     dispatch(doLogOut())
     navigate('/')
   }
@@ -129,14 +134,16 @@ const NavBar = () => {
             <div className="area_profile">
               <div className="dropdown">
                 {
-                  token ?
-                    <Link className=" dropdown-toggle userbtn mx-2" to="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">{user?.full_name}<i className="fas fa-user mx-2"></i>
+                  token || social_user ?
+                    <Link className=" dropdown-toggle userbtn mx-2" to="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      {token ? user?.full_name : social_user?.displayName}
+                      <i className="fas fa-user mx-2"></i>
                     </Link>
                     : null
                 }
 
                 {
-                  token ?
+                  token || social_user ?
                     <ul className="dropdown-menu">
                       <li className="user-menu__item">
                         <Link className="user-menu-link dropdown-item" to="/profile">
@@ -159,7 +166,7 @@ const NavBar = () => {
 
             {/* Cart Icon */}
             {
-              token ?
+              token || social_user ?
                 <div className="cart">
                   <Link to="/cart" className="cartbtn"><i className="fas fa-shopping-cart"></i>
                     {cartLength > 0 ? <span className="label">{cartLength}</span> : null}</Link>
@@ -169,7 +176,7 @@ const NavBar = () => {
 
             {/* Login SignUp */}
             {
-              !token ?
+              !token && !social_user ?
                 <div className="collapse navbar-collapse mx-5" id="navbarSupportedContent">
                   <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                     <li className="nav-item">
