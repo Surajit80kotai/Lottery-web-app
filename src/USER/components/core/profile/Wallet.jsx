@@ -11,6 +11,8 @@ const Wallet = ({ dueAmount }) => {
     const dispatch = useDispatch()
     const { balance } = useSelector((state) => state.userslice)
     const { paymentData, transaction_data, loading } = useSelector((state) => state.paymentslice)
+    const userCurrency = (JSON.parse(window.localStorage.getItem("user"))?.currency)
+    const userCurrency_symbol = (JSON.parse(window.localStorage.getItem("user"))?.currency_symbol)
 
     // handleChange function for onChange
     const handleChange = (e) => {
@@ -75,7 +77,7 @@ const Wallet = ({ dueAmount }) => {
                                     <div className="total_balns">
                                         <span>Total Balance</span>
                                         {
-                                            balance?.balance > 0 ? <h5 className="total_amount">XAF {(balance?.balance)?.toFixed(2)}</h5> : <h5 className="total_amount">XAF 0</h5>
+                                            balance?.balance > 0 ? <h5 className="total_amount">{userCurrency_symbol} {(balance?.balance)?.toFixed(2)}</h5> : <h5 className="total_amount">{userCurrency_symbol} 0</h5>
                                         }
 
                                     </div>
@@ -90,7 +92,7 @@ const Wallet = ({ dueAmount }) => {
                                             <div className="col-md-6">
                                                 <div className="payment_input">
                                                     <div className="currency_icon">
-                                                        <p>XAF</p>
+                                                        <p>{userCurrency}</p>
                                                     </div>
                                                     <input
                                                         type="text"
@@ -160,7 +162,7 @@ const Wallet = ({ dueAmount }) => {
                         <div className="modal-content">
                             <div className="modal-header">
                                 <h3>Add Money to Wallet</h3>
-                                <h4>XAF{formValue.amount}</h4>
+                                <h4>{userCurrency_symbol}{formValue.amount}</h4>
                             </div>
                             <div className="modal-body">
                                 <h4 className="option_title">Payment Option</h4>

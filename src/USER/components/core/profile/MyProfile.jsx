@@ -17,6 +17,9 @@ const MyProfile = () => {
         phone: user.phone
     })
     const dispatch = useDispatch()
+    // const userCurrency = (JSON.parse(window.localStorage.getItem("user"))?.currency)
+    const userCurrency_symbol = (JSON.parse(window.localStorage.getItem("user"))?.currency_symbol)
+
 
     // handleChange for onChange
     const handleChange = (e) => {
@@ -195,7 +198,7 @@ const MyProfile = () => {
                                     </div>
                                     <p>Best Play of the month</p>
                                     <div className="total_amount">
-                                        <h4> $42.8k</h4>
+                                        <h4>{userCurrency_symbol}42.8k</h4>
                                     </div>
                                     <div className="mt-5">
                                         <Link to="#!" className="btn2">View all</Link>
@@ -235,7 +238,7 @@ const MyProfile = () => {
                                     </div>
                                     <p>Best Play of the month</p>
                                     <div className="total_amount">
-                                        <h4> $42.8k</h4>
+                                        <h4>{userCurrency_symbol}42.8k</h4>
                                     </div>
                                     <div className="mt-5">
                                         <Link to="#!" className="btn2">View all</Link>

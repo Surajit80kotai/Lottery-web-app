@@ -5,6 +5,8 @@ import { useTimer } from '../../../customHooks/useTimer';
 const Banner = ({ house, vehicle }) => {
 
     const [timerDays, timerHours, timerMinutes, timerSeconds, startTimer] = useTimer()
+    // const userCurrency = (JSON.parse(window.localStorage.getItem("user"))?.currency)
+    const userCurrency_symbol = (JSON.parse(window.localStorage.getItem("user"))?.currency_symbol)
 
     useEffect(() => {
         startTimer(1677522600000)
@@ -63,7 +65,7 @@ const Banner = ({ house, vehicle }) => {
 
                                         </div>
                                         <div className="ticket_price">
-                                            <h4>Ticket Price<span><h3 className="currencysymbol">{house[0]?.currency}</h3></span>{house[0]?.ticket_price}</h4>
+                                            <h4>Ticket Price<span><h3 className="currencysymbol">{userCurrency_symbol}</h3></span>{house[0]?.ticket_price}</h4>
                                         </div>
                                     </div>
                                     : <h1 className='text-white'>Ticket is unavailabe right now</h1>
@@ -112,7 +114,7 @@ const Banner = ({ house, vehicle }) => {
 
                                         </div>
                                         <div className="ticket_price">
-                                            <h4>Ticket Price<span><h3 className="currencysymbol">{vehicle[0]?.currency}</h3></span>{vehicle[0]?.ticket_price}</h4>
+                                            <h4>Ticket Price<span><h3 className="currencysymbol">{userCurrency_symbol}</h3></span>{vehicle[0]?.ticket_price}</h4>
                                         </div>
                                     </div>
                                     : <h1 className='text-white'>Ticket is unavailabe right now</h1>
@@ -161,7 +163,7 @@ const Banner = ({ house, vehicle }) => {
 
                                         </div>
                                         <div className="ticket_price">
-                                            <h4>Ticket Price<span><h3 className="currencysymbol">{house[1]?.currency}</h3></span>{house[1]?.ticket_price}</h4>
+                                            <h4>Ticket Price<span><h3 className="currencysymbol">{userCurrency_symbol}</h3></span>{house[1]?.ticket_price}</h4>
                                         </div>
                                     </div>
                                     : <h1 className='text-white'>Ticket is unavailabe right now</h1>
