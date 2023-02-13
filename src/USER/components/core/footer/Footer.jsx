@@ -32,7 +32,7 @@ const Footer = () => {
                             <ul className="footlinks">
                                 <li><Link to="#"><span><i className="fas fa-caret-right"></i></span>Agents</Link></li>
                                 <li><Link to="#"><span><i className="fas fa-caret-right"></i></span>Influencer</Link></li>
-                                <li><Link to="#"><span><i className="fas fa-caret-right"></i></span>Affiliate Partner</Link></li>
+                                {/* <li><Link to="#"><span><i className="fas fa-caret-right"></i></span>Affiliate Partner</Link></li> */}
 
                             </ul>
                         </div>

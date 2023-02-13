@@ -6,6 +6,7 @@ import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import { itemBuyNow, placeOrder } from '../services/slice/PaymentSlice';
 import PreLoader from '../components/core/preloader/PreLoader';
+// import { emptyCart } from '../services/slice/CartSlice';
 
 
 const PlaceOrder = () => {
@@ -17,13 +18,14 @@ const PlaceOrder = () => {
     const { balance } = useSelector((state) => state.userslice)
     const { ordered_data, buy_now_data, loading } = useSelector((state) => state.paymentslice)
     const dispatch = useDispatch()
-
+    
     const image = process.env.REACT_APP_NODE_HOST
     const dueAmount = Number(amount?.total - balance?.balance)
-
+    
     // On orderPlace function
     const procced = () => {
-        if (cart_data) {
+        if (cart_data?.length) {
+            // console.log("if");
             const cartData = cart_data?.reduce((acc, { resp, info }) => {
                 // const { resp, info } = cur
                 acc.push({
@@ -38,7 +40,8 @@ const PlaceOrder = () => {
             }, [])
             const orderData = { price: amount, product_info: cartData }
             dispatch(placeOrder(orderData))
-        }else if (buy_now_data) {
+        }else if (buy_now_data?.length) {
+            // console.log("else");
             dispatch(itemBuyNow(buy_now_data))
         }
     }
