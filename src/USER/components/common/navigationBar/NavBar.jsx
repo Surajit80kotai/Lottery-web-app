@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { doLogOut } from '../../../services/slice/AuthSlice'
 import { getCart } from '../../../services/slice/CartSlice'
-import { auth } from '../../../congif/firebase'
+import { auth } from '../../../config/firebase'
 import { signOut } from 'firebase/auth'
 
 const NavBar = () => {
