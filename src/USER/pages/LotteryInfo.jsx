@@ -24,7 +24,8 @@ const LotteryInfo = () => {
 
     const mainimage = ticketInfo[0]?.main_image
     const is_image = ticketInfo[0]?.is_image
-
+    const list_image = ticketInfo[0]?.list_image
+    const image = process.env.REACT_APP_NODE_HOST
 
     // IncQty function
     const IncQty = () => {
@@ -93,19 +94,23 @@ const LotteryInfo = () => {
                             <div className="col-md-6 ">
                                 <div className="product_slider_images">
 
-                                    {/* Main image  */}
-                                    {/* <div className="mainproduct_image img-fluid">
-                                        {
-                                            (is_image?.length) ? <img src={mainimage} alt="" className="img-fluid " />
-                                                : <img src="/assets/img/imageunavailable.jpeg" alt="" className="img-fluid " />
-                                        }
-                                    </div> */}
-
                                     {/* carausal images */}
                                     <div className="mainproduct_image img-fluid">
                                         <div id="carouselExampleControls" className="carousel slide" data-bs-ride="carousel">
                                             <div className="carousel-inner">
-                                                {
+                                                {list_image?.length ?
+                                                    list_image?.map((item, index) => {
+                                                        let act = ""
+                                                        if (index === 0) {
+                                                            act = "active";
+                                                        }
+                                                        return (
+                                                            <div className={`carousel-item ${act}`} key={index} >
+                                                                <img src={image + item} className="d-block w-100" alt="" />
+                                                            </div>
+                                                        )
+                                                    })
+                                                    :
                                                     (is_image?.length) ?
                                                         <div className="carousel-item active">
                                                             <img src={mainimage} className="d-block w-100" alt="" />
