@@ -213,14 +213,14 @@ const PlaceOrder = () => {
                                                         <h4 className="price_text">Price <span> ({buy_now_data?.length} Item):</span></h4>
                                                         <h6 className="price_value">
                                                             {buy_now_data ? <span>{buy_now_data[0]?.product_info?.currency}</span> : 0}
-                                                            {buy_now_data[0]?.amount ? (buy_now_data[0]?.amount?.subtotal) : 0}
+                                                            {buy_now_data[0]?.amount ? (buy_now_data[0]?.amount?.subtotal).toFixed(2) : 0}
                                                         </h6>
                                                     </div>
                                                     <div className="price_item mb-5">
                                                         <h4 className="price_text">Total Discount :</h4>
                                                         <h6 className="price_value text-success">
                                                             {cart_data ? <span>{cart_data[0]?.info[0]?.currency}-</span> : 0}
-                                                            {buy_now_data[0]?.amount ? (buy_now_data[0]?.amount?.discount) : 0}
+                                                            {buy_now_data[0]?.amount ? (buy_now_data[0]?.amount?.discount).toFixed(2) : 0}
                                                         </h6>
                                                     </div>
                                                     <div className="price_item mt-5">
@@ -228,7 +228,7 @@ const PlaceOrder = () => {
                                                         <h6 className="price_value">
                                                             {cart_data ? <span>{cart_data[0]?.info[0]?.currency}</span> : 0}
 
-                                                            {buy_now_data[0]?.amount ? (buy_now_data[0]?.amount?.total) : 0}
+                                                            {buy_now_data[0]?.amount ? (buy_now_data[0]?.amount?.total).toFixed(2) : 0}
                                                         </h6>
                                                     </div>
                                                 </div>

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { ORDERHISTORY, UPDATEPROFILE, WALLETBALANCE } from "../api/Api";
+import { CONTACTUS, ORDERHISTORY, UPDATEPROFILE, WALLETBALANCE } from "../api/Api";
 
 // Defining header
 const header = {
@@ -57,12 +57,30 @@ export const userOrderHistory = createAsyncThunk("/auth/order/history", async ()
 })
 
 
+// contact us
+export const contactUs = createAsyncThunk("/auth/contact", async ({ formData, toast }) => {
+    try {
+        const res = await CONTACTUS(formData)
+        // console.log(res?.data);
+        if (res?.data?.responseCode === 200) {
+            toast.info(res?.data?.message)
+        } else if (res?.data?.responseCode === 452) {
+            toast.info(res?.data?.message)
+        }
+        return res?.data
+    } catch (err) {
+        console.log(err);
+    }
+})
+
+
 const initialState = {
     balance: [],
     profile_data: [],
     order_history_data: [],
     balance_status: "",
-    loading: false
+    loading: false,
+    status: ""
 }
 
 // Creating Slice
@@ -95,6 +113,7 @@ export const UserSlice = createSlice({
             state.balance_status = "Success"
             state.loading = false
             state.profile_data = payload
+            // console.log(payload);
         })
         builder.addCase(updateProfile.rejected, (state) => {
             state.balance_status = "Failed"
@@ -113,6 +132,20 @@ export const UserSlice = createSlice({
         })
         builder.addCase(userOrderHistory.rejected, (state) => {
             state.balance_status = "Failed"
+            state.loading = false
+        })
+
+        // states for contactUs
+        builder.addCase(contactUs.pending, (state) => {
+            state.status = "Loading"
+            state.loading = true
+        })
+        builder.addCase(contactUs.fulfilled, (state, { payload }) => {
+            state.status = "Success"
+            state.loading = false
+        })
+        builder.addCase(contactUs.rejected, (state) => {
+            state.status = "Failed"
             state.loading = false
         })
     }

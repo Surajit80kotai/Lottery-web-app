@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { fetchLogin } from '../services/slice/AuthSlice'
 import { toast } from 'react-toastify'
-import { auth, google, facebook } from '../congif/firebase'
+import { auth, google, facebook } from '../config/firebase'
 import { signInWithPopup } from 'firebase/auth'
 // import { Flip, ToastContainer } from 'react-toastify'
 import PreLoader from '../components/core/preloader/PreLoader';

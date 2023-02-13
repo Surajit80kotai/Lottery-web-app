@@ -1,6 +1,29 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { contactUs } from '../services/slice/UserSlice'
+import { toast } from 'react-toastify'
+import PreLoader from '../components/core/preloader/PreLoader'
 
 const Contact = () => {
+    const [formData, setFormData] = useState({
+        name: "",
+        email: "",
+        phone: "",
+        message: ""
+    })
+    const dispatch = useDispatch()
+    const { loading } = useSelector((state) => state.userslice)
+
+    // handleChange for onChange
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value })
+    }
+
+    // handleSubmit for onSubmit
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        dispatch(contactUs({ formData, toast }))
+    }
 
     useEffect(() => {
         window.scrollTo(0, 0)
@@ -8,6 +31,9 @@ const Contact = () => {
 
     return (
         <>
+            {/* PreLoader */}
+            {loading && <PreLoader />}
+
             <main>
                 <div className="contact_wrapper">
                     <div className="container ">
@@ -19,7 +45,7 @@ const Contact = () => {
                                         <div className="col-md-8">
                                             <div className="contact_form">
                                                 <div className="form_areas">
-                                                    <form method="post" encType="multipart/form-data">
+                                                    <form method="post" encType="multipart/form-data" onSubmit={handleSubmit}>
 
                                                         {/* Full Name */}
                                                         <div className="m_gap mb-3">
@@ -27,9 +53,12 @@ const Contact = () => {
                                                             <input
                                                                 type="text"
                                                                 className="form-control form_input" id="fullname"
-                                                                name="fullname"
+                                                                name="name"
                                                                 placeholder="Enter Your Full Name"
                                                                 aria-describedby="emailHelp"
+                                                                value={formData.name}
+                                                                onChange={handleChange}
+                                                                required
                                                             />
 
                                                         </div>
@@ -38,7 +67,7 @@ const Contact = () => {
                                                         <div className="row">
                                                             <div className="col-md">
                                                                 <div className="m_gap mb-3">
-                                                                    <label htmlFor="email" className="form-label label_style">Email <span className="requried">*</span></label>
+                                                                    <label htmlFor="email" className="form-label label_style">Email</label>
                                                                     <input
                                                                         type="email"
                                                                         className="form-control form_input"
@@ -46,20 +75,26 @@ const Contact = () => {
                                                                         name="email"
                                                                         placeholder="Enter Your Email Id"
                                                                         aria-describedby="emailHelp"
+                                                                        value={formData.email}
+                                                                        onChange={handleChange}
                                                                     />
 
                                                                 </div>
                                                             </div>
                                                             <div className="col-md">
                                                                 <div className="m_gap mb-3">
-                                                                    <label htmlFor="mobilenumber" className="form-label label_style">Mobile Number</label>
+                                                                    <label htmlFor="mobilenumber" className="form-label label_style">Mobile Number <span className="requried">*</span></label>
                                                                     <input
-                                                                        type="text"
+                                                                        type="tel"
                                                                         className="form-control form_input"
                                                                         id="mobilenumber"
-                                                                        name="mobilenumber"
+                                                                        name="phone"
                                                                         aria-describedby="emailHelp"
                                                                         placeholder="Enter Your Mobile Number"
+                                                                        maxLength={10}
+                                                                        required
+                                                                        value={formData.phone}
+                                                                        onChange={handleChange}
                                                                     />
 
                                                                 </div>
@@ -72,7 +107,11 @@ const Contact = () => {
                                                             <textarea
                                                                 className="form-control form_input"
                                                                 id="floatingTextarea2"
-                                                                style={{ "height": "100px" }}
+                                                                style={{ "height": "100px", "fontSize": "1.5rem" }}
+                                                                required
+                                                                name='message'
+                                                                value={formData.message}
+                                                                onChange={handleChange}
                                                             ></textarea>
                                                         </div>
 

@@ -57,3 +57,5 @@ export const UPDATEPROFILE = (formData, header) => API.post("/auth/update/profil
 // update profile
 export const ORDERHISTORY = (header) => API.get("/auth/order/history", header)
 
+// contact us
+export const CONTACTUS = (formData) => API.post("/auth/contact", formData)
