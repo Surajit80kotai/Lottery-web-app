@@ -18,16 +18,16 @@ const PlaceOrder = () => {
     const { balance } = useSelector((state) => state.userslice)
     const { ordered_data, buy_now_data, loading } = useSelector((state) => state.paymentslice)
     const dispatch = useDispatch()
-    
+
     const image = process.env.REACT_APP_NODE_HOST
     const dueAmount = Number(amount?.total - balance?.balance)
-    
+
+    // console.log(buy_now_data);
+
     // On orderPlace function
     const procced = () => {
         if (cart_data?.length) {
-            // console.log("if");
             const cartData = cart_data?.reduce((acc, { resp, info }) => {
-                // const { resp, info } = cur
                 acc.push({
                     id: resp._id,
                     user_id: resp.user_id,
@@ -39,33 +39,35 @@ const PlaceOrder = () => {
                 return acc
             }, [])
             const orderData = { price: amount, product_info: cartData }
+            // console.log(orderData);
             dispatch(placeOrder(orderData))
-        }else if (buy_now_data?.length) {
-            // console.log("else");
-            dispatch(itemBuyNow(buy_now_data))
+        } else if (buy_now_data) {
+            const buyNowData = buy_now_data?.product_info
+            // console.log(buyNowData);
+            dispatch(itemBuyNow(buyNowData))
         }
     }
 
 
     // checkOrderData function
     const checkOrderData = () => {
-        if (ordered_data.error === "true") {
+        if (buy_now_data.error === "true" || ordered_data.error === "true") {
             const cartIds = ordered_data?.meta?.map((item) => item.cart_id)
-            cartIds.map((item) => {
+            cartIds?.map((item) => {
                 var element = document.getElementById(item);
                 return element.style.backgroundColor = "#ff616170";
             })
             toast.error("Quantity Is Unavilabe !!")
         }
-        else if (ordered_data.message === "Order success") {
-            toast.success(`${ordered_data.message}`)
+        else if (buy_now_data.message === "Order success" || ordered_data.message === "Order success") {
+            toast.success("Order success")
         }
     }
 
 
     useEffect(() => {
         checkOrderData()
-    }, [ordered_data, balance])
+    }, [buy_now_data, ordered_data, balance])
 
 
     useEffect(() => {
@@ -215,15 +217,15 @@ const PlaceOrder = () => {
                                                     <div className="price_item borderbottom">
                                                         <h4 className="price_text">Price <span> ({buy_now_data?.length} Item):</span></h4>
                                                         <h6 className="price_value">
-                                                            {buy_now_data ? <span>{buy_now_data[0]?.product_info?.currency}</span> : 0}
-                                                            {buy_now_data[0]?.amount ? (buy_now_data[0]?.amount?.subtotal).toFixed(2) : 0}
+                                                            {buy_now_data ? <span>{buy_now_data?.product_info?.currency}</span> : 0}
+                                                            {buy_now_data?.amount ? (buy_now_data?.amount?.subtotal).toFixed(2) : 0}
                                                         </h6>
                                                     </div>
                                                     <div className="price_item mb-5">
                                                         <h4 className="price_text">Total Discount :</h4>
                                                         <h6 className="price_value text-success">
                                                             {cart_data ? <span>{cart_data[0]?.info[0]?.currency}-</span> : 0}
-                                                            {buy_now_data[0]?.amount ? (buy_now_data[0]?.amount?.discount).toFixed(2) : 0}
+                                                            {buy_now_data?.amount ? (buy_now_data?.amount?.discount).toFixed(2) : 0}
                                                         </h6>
                                                     </div>
                                                     <div className="price_item mt-5">
@@ -231,7 +233,7 @@ const PlaceOrder = () => {
                                                         <h6 className="price_value">
                                                             {cart_data ? <span>{cart_data[0]?.info[0]?.currency}</span> : 0}
 
-                                                            {buy_now_data[0]?.amount ? (buy_now_data[0]?.amount?.total).toFixed(2) : 0}
+                                                            {buy_now_data?.amount ? (buy_now_data?.amount?.total).toFixed(2) : 0}
                                                         </h6>
                                                     </div>
                                                 </div>
@@ -295,26 +297,26 @@ const PlaceOrder = () => {
                                     <div className="order_history_summary col-md-8">
 
                                         <div className="cart_list_item">
-                                            <Link to={`/info/${buy_now_data[0]?.ticket?._id}`}>
+                                            <Link to={`/info/${buy_now_data?.ticket?._id}`}>
                                                 <div className="cart_item_img">
-                                                    <img src={image + buy_now_data[0]?.ticket?.is_image} alt="" className="img-fluid" />
+                                                    <img src={image + buy_now_data?.ticket?.is_image} alt="" className="img-fluid" />
                                                 </div>
                                             </Link>
                                             <div className="cart_item_content">
                                                 <div className="cart_title">
-                                                    <h3>{buy_now_data[0]?.ticket?.ticket_name}</h3>
+                                                    <h3>{buy_now_data?.ticket?.ticket_name}</h3>
                                                 </div>
                                                 <div className="other_info">
-                                                    <p className="amount fw-bold text-dark">Item Quantity : {buy_now_data[0]?.product_info?.quantity}</p>
+                                                    <p className="amount fw-bold text-dark">Item Quantity : {buy_now_data?.product_info?.quantity}</p>
                                                     {/* Calculation of discounted price */}
                                                     <p className="tic_price fw-bold text-dark">Price Of Ticket :
-                                                        {buy_now_data[0]?.product_info?.total_discount_price}
+                                                        {buy_now_data?.product_info?.total_discount_price}
                                                     </p>
                                                 </div>
                                                 <div className="date_result">
                                                     {/* Calculating the data */}
                                                     <h5><span><img src="/assets/img/3135783 1.png" alt="" /></span>Result on <span className="fw-bold">
-                                                        {new Date(buy_now_data[0]?.ticket?.time_left).toLocaleString('en-US', {
+                                                        {new Date(buy_now_data?.ticket?.time_left).toLocaleString('en-US', {
                                                             month: 'short',
                                                             day: '2-digit',
                                                             year: 'numeric'

@@ -109,7 +109,6 @@ export const placeOrder = createAsyncThunk("/auth/order", async (orderData) => {
 export const itemBuyNow = createAsyncThunk("/auth/order/buy/now", async (orderData) => {
     try {
         const res = await BUYNOW(orderData, header)
-        console.log(res?.data)
         return res?.data
     } catch (err) {
         console.log(err)
@@ -133,8 +132,7 @@ export const PaymentSlice = createSlice({
     initialState,
     reducers: {
         buyNowItem(state, { payload }) {
-            console.log("payment slice reducers",payload);
-            state.buy_now_data.push(payload)
+            state.buy_now_data = payload
         }
     },
     extraReducers: (builder) => {
@@ -223,6 +221,7 @@ export const PaymentSlice = createSlice({
         })
         builder.addCase(itemBuyNow.fulfilled, (state, { payload }) => {
             state.buy_now_data = payload
+            // console.log(payload);
             state.status = "success"
             state.loading = false
         })

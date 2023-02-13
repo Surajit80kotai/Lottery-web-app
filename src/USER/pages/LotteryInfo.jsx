@@ -58,11 +58,11 @@ const LotteryInfo = () => {
 
         const newTicket = {
             product_id: ticket._id,
-            unit_price: ticket.ticket_price,
+            unit_price: (ticket.ticket_price).toFixed(2),
             quantity: qty,
-            discount: ticket.discount_percentage,
-            total_price: subtotal,
-            total_discount_price: total
+            discount: (ticket.discount_percentage).toFixed(2),
+            total_price: (subtotal).toFixed(2),
+            total_discount_price: (total).toFixed(2)
         }
 
         const orderData = { product_info: newTicket, amount: amount, ticket: ticket }
