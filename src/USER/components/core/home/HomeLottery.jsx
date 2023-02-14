@@ -52,7 +52,11 @@ const HomeLottery = ({ item, index }) => {
                                     <div className="product_title">
                                         <h2 className="card_title">{ticket_name}</h2>
                                     </div>
-                                    <h3 className="total_ticket">Ticket Quantity : {ticket_quantity}</h3>
+                                    {
+                                        ticket_quantity > 0 ?
+                                            <h3 className="total_ticket">Ticket Quantity : {ticket_quantity}</h3>
+                                            : <h3 className="total_ticket">All tickets sold</h3>
+                                    }
 
                                     {/* Condition for timer run-out */}
                                     {

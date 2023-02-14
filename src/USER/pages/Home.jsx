@@ -16,8 +16,8 @@ import PreLoader from '../components/core/preloader/PreLoader'
 const Home = () => {
     // const token = JSON.parse(window.localStorage.getItem("token"))
     const { fetch_lott_data, category_data, loading } = useSelector((state) => state.lotteryslice)
-    const { cart_data } = useSelector((state) => state.cartslice)
-    const cartLength = cart_data?.length
+    // const { cart_data } = useSelector((state) => state.cartslice)
+    // const cartLength = cart_data?.length
     const dispatch = useDispatch()
 
     // Getting category_name & category_id
@@ -35,12 +35,16 @@ const Home = () => {
     const study_travel = fetch_lott_data?.filter((item) => item.category === categoryObj["Study & abroad"])
     const comp_phn = fetch_lott_data?.filter((item) => item.category === categoryObj["computers & phones"])
 
+
+
     useEffect(() => {
         window.scrollTo(0, 0)
         dispatch(fetchLottery())
         dispatch(fetchCategory())
+        // console.log("fetch category called");
         dispatch(getCart())
-    }, [dispatch, cartLength])
+        // console.log("get cart called");
+    }, [dispatch])
 
 
     return (

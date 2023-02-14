@@ -133,6 +133,9 @@ export const PaymentSlice = createSlice({
     reducers: {
         buyNowItem(state, { payload }) {
             state.buy_now_data = payload
+        },
+        emptyBuyNow(state) {
+            state.buy_now_data = []
         }
     },
     extraReducers: (builder) => {
@@ -233,5 +236,5 @@ export const PaymentSlice = createSlice({
 })
 
 
-export const { buyNowItem } = PaymentSlice.actions
+export const { buyNowItem, emptyBuyNow } = PaymentSlice.actions
 export default PaymentSlice.reducer

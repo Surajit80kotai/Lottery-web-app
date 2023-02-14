@@ -41,6 +41,7 @@ export const getCart = createAsyncThunk("/auth/cart", async () => {
     try {
         if (userID && header) {
             const res = await FETCHCART(userID, header)
+            // console.log("get cart called from slice")
             return res?.data
         }
     } catch (err) {

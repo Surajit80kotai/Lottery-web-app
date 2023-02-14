@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { doLogOut } from '../../../services/slice/AuthSlice'
-import { getCart } from '../../../services/slice/CartSlice'
+import { emptyCart, getCart } from '../../../services/slice/CartSlice'
 import { auth } from '../../../config/firebase'
 import { signOut } from 'firebase/auth'
 
@@ -21,6 +21,7 @@ const NavBar = () => {
     window.localStorage.removeItem("social_user")
     window.localStorage.removeItem("accessToken")
     dispatch(doLogOut())
+    dispatch(emptyCart())
     navigate('/')
   }
 

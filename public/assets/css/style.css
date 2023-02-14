@@ -143,6 +143,18 @@ main {
 	border: 1px solid rgba(229, 101, 150, 1);
 }
 
+.btn2_disabled {
+	text-align: center;
+	padding: 0.6rem 3rem;
+	background-color: #d4d4d4;
+	font-size: 1.5rem;
+	color: var(--white);
+	border-radius: 0.5rem;
+	margin-right: 1rem;
+	border: 1px solid transparent;
+	transition: 0.5s linear;
+}
+
 
 .btn3 {
 	text-align: center;
@@ -2136,8 +2148,6 @@ margin: 0.5rem;
 .product_information_area {
 	margin-left: 2rem;
 }
-
-
 
 /* Payment form */
 

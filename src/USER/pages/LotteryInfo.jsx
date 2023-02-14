@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import TrustedPayment from '../components/common/trustedPayment/TrustedPayment'
 import { useTimer } from '../customHooks/useTimer'
@@ -9,7 +9,7 @@ import { buyNowItem } from '../services/slice/PaymentSlice'
 const LotteryInfo = () => {
     const { lid } = useParams()
     const [timerDays, timerHours, timerMinutes, timerSeconds, startTimer] = useTimer()
-    const [qty, setQty] = useState(1)
+    // const [qty, setQty] = useState(1)
     const dispatch = useDispatch()
     const lottData = JSON.parse(window.localStorage.getItem("data"))
     const userID = (JSON.parse(window.localStorage.getItem("user")))?.user_id
@@ -24,23 +24,26 @@ const LotteryInfo = () => {
 
     const mainimage = ticketInfo[0]?.main_image
     const is_image = ticketInfo[0]?.is_image
-    const list_image = ticketInfo[0]?.list_image
-    const image = process.env.REACT_APP_NODE_HOST
+    const list_image = ticketInfo[0]?.list_image        //list_image list
+    const image = process.env.REACT_APP_NODE_HOST       //base url link
+    const qty = 1                                       // default quantity of a ticket
+
 
     // IncQty function
-    const IncQty = () => {
-        if (qty < 5) {
-            setQty(qty + 1)
-        }
-        return qty
-    }
+    // const IncQty = () => {
+    //     if (qty < 5) {
+    //         setQty(qty + 1)
+    //     }
+    //     return qty
+    // }
     // DecQty function
-    const DecQty = () => {
-        if (qty > 1) {
-            setQty(qty - 1)
-        }
-        return qty
-    }
+    // const DecQty = () => {
+    //     if (qty > 1) {
+    //         setQty(qty - 1)
+    //     }
+    //     return qty
+    // }
+
 
     // Add ticket function
     const addToCart = () => {
@@ -70,6 +73,8 @@ const LotteryInfo = () => {
         dispatch(buyNowItem(orderData))
     }
 
+
+
     useEffect(() => {
         window.scrollTo(0, 0)
         return () => {
@@ -77,6 +82,7 @@ const LotteryInfo = () => {
             dispatch(clearAddStatus())
         }
     }, [dispatch, cartLength, add_cart_status])
+
 
 
     useEffect(() => {
@@ -97,6 +103,7 @@ const LotteryInfo = () => {
                                     {/* carausal images */}
                                     <div className="mainproduct_image img-fluid">
                                         <div id="carouselExampleControls" className="carousel slide" data-bs-ride="carousel">
+                                            {/* Dynamic Image slider */}
                                             <div className="carousel-inner">
                                                 {list_image?.length ?
                                                     list_image?.map((item, index) => {
@@ -120,15 +127,6 @@ const LotteryInfo = () => {
                                                         </div>
                                                 }
 
-                                                {/* <div className="carousel-item active">
-                                                    <img src="/assets/img/imageunavailable.jpeg" className="d-block w-100" alt="" />
-                                                </div>
-                                                 <div className="carousel-item">
-                                                     <img src="/assets/img/imageunavailable.jpeg" className="d-block w-100" alt=""/>
-                                                </div>
-                                                <div className="carousel-item">
-                                                     <img src="/assets/img/imageunavailable.jpeg" className="d-block w-100" alt=""/>
-                                                </div> */}
                                             </div>
                                             <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
                                                 <span className="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -185,7 +183,7 @@ const LotteryInfo = () => {
                                     }
 
                                     {/* Quantity area */}
-                                    <div className="quantity">
+                                    {/* <div className="quantity">
                                         <h3>Quantity</h3>
                                         <p className='fs-5' style={{ "color": "#f9772b" }}>You Can Buy Minimum 5 Tickets*</p>
                                         <div className="col-md-4">
@@ -197,9 +195,9 @@ const LotteryInfo = () => {
                                                 <button className="qty-btn-plus btn-light" type="button" onClick={IncQty}><i className="fa fa-plus"></i></button>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> */}
 
-                                    {
+                                    {/* {
                                         ticketInfo[0]?.discount_percentage ?
                                             <h3>Total Price :&nbsp;&nbsp;
                                                 <span className="discountprice">{ticketInfo[0]?.currency}{(discountedPrice * qty).toFixed(2)}</span>&nbsp;&nbsp;
@@ -208,20 +206,24 @@ const LotteryInfo = () => {
                                             <h3>Ticket Price :&nbsp;&nbsp;
                                                 <span className="discountprice">{ticketInfo[0]?.currency}{(ticketInfo[0]?.ticket_price) * qty}</span>
                                             </h3>
-                                    }
+                                    } */}
 
                                     {/* Add to cart buttton */}
                                     <div className="btn_area mt-5">
                                         {
-                                            token || accessToken ?
-                                                <Link to="#!" onClick={addToCart} className="btn2">Add To Cart</Link>
-                                                : <Link to="/login" className="btn2">Add To Cart</Link>
+                                            ticketInfo[0].ticket_quantity > 0 ?
+                                                token || accessToken ?
+                                                    <Link to="#!" onClick={addToCart} className="btn2">Add To Cart</Link>
+                                                    : <Link to="/login" className="btn2">Add To Cart</Link>
+                                                : <button to="#!" className="btn2_disabled" disabled>Add To Cart</button>
                                         }
 
                                         {
-                                            token || accessToken ?
-                                                <Link to="/placeorder" onClick={() => buyNow(ticketInfo[0])} className="btn2">Buy Ticket</Link>
-                                                : <Link to="/login" className="btn2">Buy Ticket</Link>
+                                            ticketInfo[0].ticket_quantity > 0 ?
+                                                token || accessToken ?
+                                                    <Link to="/placeorder" onClick={() => buyNow(ticketInfo[0])} className="btn2">Buy Ticket</Link>
+                                                    : <Link to="/login" className="btn2">Buy Ticket</Link>
+                                                : <button to="#!" className="btn2_disabled" disabled>Buy Ticket</button>
                                         }
                                     </div>
 
@@ -259,7 +261,7 @@ const LotteryInfo = () => {
                                     <div className="ticket_sold">
                                         <div className="ticket_sold_title">
                                             {
-                                                (ticketInfo[0]?.ticket_quantity) ?
+                                                (ticketInfo[0]?.ticket_quantity) > 0 ?
                                                     <h3>
                                                         <span><img src="/assets/img/9121436 1.png" alt="" /></span>
                                                         Ticket Remains : <strong>{ticketInfo[0]?.ticket_quantity}</strong>
